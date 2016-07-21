@@ -12,7 +12,10 @@ app.route('/profile')
     .get(function (req, res) {
         d3.getProfile('slayeneq-1864')
             .then(function (results) {
-                res.status(200).send(results);
+  var toBeSentBack ={};
+  toBeSentBack.battleTag = results.body.battleTag;
+  toBeSentBack.heroes = results.body.heroes;
+                res.status(200).send(toBeSentBack);
             })
             .catch(function (err) {
                 console.log(err.message);
