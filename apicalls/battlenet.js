@@ -21,3 +21,16 @@ diablo3.getProfile = function (profile) {
 
 
 }  
+
+diablo3.getCharacter = function (bnetTag,characterId) {
+    return new Promise(function(fulfill, reject) {
+        bnet.d3.profile.hero({origin: 'us', tag: bnetTag, hero: characterId}, function(err,res,data) {
+            if (err){
+                reject(err)
+            }
+            else {
+                fulfill(data)
+            }
+        })
+    })
+}
