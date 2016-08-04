@@ -4,8 +4,8 @@ var express = require('express');
 var path = require('path');
 var app = Server.app();
 var d3 = require('./apicalls/battlenet.js');
-//var db = require('./database/db.js');
-//db.ensureSchema();
+var db = require('./database/db.js');
+db.ensureSchema();
 
 app.use('/', express.static(path.join(__dirname, "../Public")));
 app.route('/profile')
