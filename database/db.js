@@ -72,10 +72,106 @@ knex.ensureSchema = function () {
                     console.log('Created stats table');
                 });
             }
-        })
+        }),
+         knex.schema.hasTable('items').then(function (exists) {
+            if (!exists) {
+                knex.schema.createTable('items', function (table) {
+                    table.string('id',30).primary();
+                    table.string('name', 30);
+                    table.string('icon', 50);
+                    table.string('displayColor', 10);
+                    table.string('tooltipParams', 250);
+                    table.string('slot',10);
+                }).then(function () {
+                    console.log('Created items table');
+                });
+            }
+        }), knex.schema.hasTable('setitemsequipped').then(function (exists) {
+            if (!exists) {
+                knex.schema.createTable('setitemsequipped', function (table) {
+                    table.increments('id').primary();
+                    table.string('chest', 30);
+                    table.string('pants', 30);
+                    table.string('shoulder', 30);
+                    table.string('helm', 30);
+                    table.string('gloves', 30);
+                    table.string('boots',30);
+                }).then(function () {
+                    console.log('Created setitemsequipped table');
+                });
+            }
+        }),
+        knex.schema.hasTable('skills').then(function (exists) {
+            if (!exists) {
+                knex.schema.createTable('skills', function (table) {
+                    table.increments('id').primary();
+                    table.string('slug', 30);
+                    table.string('name', 30);
+                    table.string('icon', 30);
+                    table.string('level', 30);
+                    table.string('categorySlug', 30);
+                    table.string('tooltipUrl',30);
+                    table.string('description', 30);
+                    table.string('simpleDescription', 30);
+                    table.string('skillCalcId', 30);                    
+                }).then(function () {
+                    console.log('Created skills table');
+                });
+            }
+        }),
+               knex.schema.hasTable('runes').then(function (exists) {
+            if (!exists) {
+                knex.schema.createTable('runes', function (table) {
+                    table.increments('id').primary();
+                    table.string('slug', 30);
+                    table.string('type', 30);
+                    table.string('name', 30);
+                    table.string('level', 30);
+                    table.string('description', 250);
+                    table.string('simpleDescription', 250);
+                    table.string('tooltipParams', 250);
+                    table.string('skillCalcId', 1);
+                    table.integer('order');                    
+                }).then(function () {
+                    console.log('Created runes table');
+                });
+            }
+        }),
+        
 
-    ]);
+    ])
+}
+
+knex.getprofile = function(profilename){
+    console.log('profilename ', profilename);
+    return knex('profileindex').where({ battleTag: profilename }).select();
 };
+
+knex.insertprofileindex= function(battletag, herotobeadded){   
+     console.log(battletag,herotobeadded); 
+   return knex('profileindex').insert({
+       'battleTag':battletag ,
+       'characterID': herotobeadded.id,
+       'name': herotobeadded.name,
+       'class': herotobeadded.class,
+       'gender': herotobeadded.gender.toString(),
+      'level': herotobeadded.level,
+      'kills': herotobeadded.kills,
+      'paragonLevel': herotobeadded.paragonLevel,
+      'hardcore' : herotobeadded.hardcore,
+      'seasonal' : herotobeadded.seasonal,
+      'lastUpdated' : herotobeadded.lastUpdated,
+      'dead' : herotobeadded.dead
+    }).then(function (item){
+    
+   console.log('after insert',item);
+   return item;
+    })
+       .catch(function(err){
+            console.log(err.message);
+        });
+
+}
 
 
 //close database connection
