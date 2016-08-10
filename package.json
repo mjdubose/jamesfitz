@@ -35,6 +35,7 @@
     "express": "^4.14.0",
     "knex": "^0.11.7",
     "lodash": "^3.10.1",
+    "node-pre-gyp": "^0.6.29",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",

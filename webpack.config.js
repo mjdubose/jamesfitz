@@ -1,10 +1,11 @@
 module.exports = {
   entry: [
-    './frontend/index.js'
+    './frontend/index.jsx'
   ],
   output: { path: __dirname + '/Public', filename: 'bundle.js' },
   module: {
     loaders: [{
+      include: /frontend/,
       exclude: /node_modules/,
       loader: 'babel',
       query: {

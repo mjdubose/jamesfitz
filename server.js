@@ -58,7 +58,7 @@ app.route('/character')
         console.log(err.message);
         res.sendStatus(404)
       })
-  })
+  });
 
 
 console.log('running on port', process.env.PORT || 3000);
