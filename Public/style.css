@@ -1,0 +1,27 @@
+
+
+.battle-tag-header {
+	display: block;
+	text-align: center;
+	width: 280px;
+}
+
+body { font-family: 'Exocet Light'; }
+
+.body {
+	background-image: url('http://blogs-images.forbes.com/insertcoin/files/2014/06/diablo3.jpg');
+	background-repeat: stretch;
+	background-size: cover;
+	color: white;
+	text-shadow: 2px 2px #000000;
+}
+
+ @font-face {
+	 font-family:"Exocet Light";
+	 src:url("EXL_____.eot?") format("eot"),
+	 url("EXL_____.woff") format("woff"),
+	 url("EXL_____.ttf") format("truetype"),
+	 url("EXL_____.svg#ExocetLight") format("svg");
+	 font-weight:normal;
+	 font-style:normal;
+}

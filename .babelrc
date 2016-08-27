@@ -1,3 +1,7 @@
+<<<<<<< 530ec58e6ecb064d60b2f36808f8bbe6a1874da9
 {
   "presets": ["react", "es2015", "stage-1"]
 }
+=======
+{ "presets": ["react", "es2015"] }
+>>>>>>> displays diablo3 image, renders first component

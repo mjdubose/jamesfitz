@@ -6,7 +6,7 @@
   "repository": "",
   "scripts": {
     "start": "node ./server",
-    "build": "webpack --config ./webpack.config.js --progress",
+    "build": "webpack --config ./webpack.config.js --progress --watch",
     "postinstall": "npm run build"
   },
   "author": "",
