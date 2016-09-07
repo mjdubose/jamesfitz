@@ -16,6 +16,14 @@ body { font-family: 'Exocet Light'; }
 	text-shadow: 2px 2px #000000;
 }
 
+.body2 {
+	background-image: url('http://images.mrlazyinc.com/games/diablo3/wallpaper_1920x1080.jpg');
+	background-repeat: stretch;
+	background-size: cover;
+	color: red;
+	text-shadow: 2px 2px #000000;
+}
+
  @font-face {
 	 font-family:"Exocet Light";
 	 src:url("EXL_____.eot?") format("eot"),
@@ -24,4 +32,8 @@ body { font-family: 'Exocet Light'; }
 	 url("EXL_____.svg#ExocetLight") format("svg");
 	 font-weight:normal;
 	 font-style:normal;
+}
+
+.tag-name {
+	width: 250px;
 }
