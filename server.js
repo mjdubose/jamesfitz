@@ -21,7 +21,6 @@ app.route('/profile/')
         if (Array.isArray(results)&&results.length === 0){
           d3.getProfile(id)
             .then(function (results) {
-              console.log('results returned from blizzard',results);
               var toBeSentBack = {};
               var battleTag = results.body.battleTag;
               battleTag = battleTag.toLowerCase();
@@ -29,13 +28,15 @@ app.route('/profile/')
               toBeSentBack.battleTag = battleTag;
               toBeSentBack.heroes = results.body.heroes;
                  return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
-                console.log('inside promise map',toBeSentBack.battleTag,'hero',hero.id);
-                return db.insertprofileindex(toBeSentBack.battleTag, hero);
+                 db.insertprofileindex(toBeSentBack.battleTag, hero);
+                 return toBeSentBack.battleTag;
               })
-              ).then(function (x) {
-                console.log('tobesentback',toBeSentBack);
-                console.log('x',x);
-                res.status(200).send(toBeSentBack);
+              ).then(function (ArrayofBattleTags) {
+                console.log('BattleTag',ArrayofBattleTags[0]);
+                return db.getprofile(ArrayofBattleTags[0]).then(function(results){
+                res.status(200).send(results);
+                })
+               
               })
             })
         } else {         
