@@ -70,6 +70,15 @@ app.route('/character')
               db.insertItem(results.body.id, 'waist', results.body.items.waist);
               db.insertItem(results.body.id, 'rightFinger', results.body.items.rightFinger);
               db.insertItem(results.body.id, 'leftFinger', results.body.items.leftFinger);
+              console.log(results.body.skills.active);
+              var array = results.body.skills.active;
+              array.map(function(skill){
+                db.insertSkill(results.body.id,skill.skill,'active');
+              })
+                 var array = results.body.skills.passive;
+              array.map(function(skill){
+                db.insertSkill(results.body.id,skill.skill,'passive');
+              })
               return results.body.id;
             })
             .then(function (id) {

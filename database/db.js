@@ -110,14 +110,16 @@ knex.ensureSchema = function () {
                 knex.schema.createTable('skills', function (table) {
                     table.increments('id').primary();
                     table.string('slug', 30);
+                    table.integer('CharacterId');
                     table.string('name', 30);
                     table.string('icon', 30);
-                    table.string('level', 30);
+                    table.integer('level');
                     table.string('categorySlug', 30);
                     table.string('tooltipUrl', 30);
-                    table.string('description', 30);
-                    table.string('simpleDescription', 30);
-                    table.string('skillCalcId', 30);
+                    table.string('description', 255);
+                    table.string('simpleDescription', 255);
+                    table.string('skillCalcId', 1);
+                    table.string('state',8);
                 }).then(function () {
                     console.log('Created skills table');
                 });
@@ -143,7 +145,27 @@ knex.ensureSchema = function () {
         }),
     ])
 }
+knex.insertSkill = function(id,skill,state){
+return knex('skills').insert({
+  'slug':skill.slug,
+  'CharacterId': id,
+  'name': skill.name,
+  'icon': skill.icon,
+  'level': skill.level,
+  'categorySlug': skill.categorySlug,
+  'tooltipUrl': skill.tooltipUrl,
+  'description': skill.description,
+  'simpleDescription': skill.simpleDescription,
+  'skillCalcId': skill.skillCalcId,
+  'state': state
+}).then(function(skill){
+    return skill;
+})
+};
 
+knex.getSkills = function(id){
+    return knex('skills').where({CharacterId:id}).select();
+}
 
 knex.getCharacter = function (id){
     return knex('stats').where ({stat_id: id}).select();
