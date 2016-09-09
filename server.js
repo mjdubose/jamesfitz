@@ -16,30 +16,30 @@ app.route('/profile/')
     var id = req.query.id;
     db.getprofile(id)
       .then(function (results) {
-        console.log('results from db',results);
+        console.log('results from db', results);
 
-        if (Array.isArray(results)&&results.length === 0){
+        if (Array.isArray(results) && results.length === 0) {
           d3.getProfile(id)
             .then(function (results) {
               var toBeSentBack = {};
               var battleTag = results.body.battleTag;
               battleTag = battleTag.toLowerCase();
-              battleTag = battleTag.replace("#","-");
+              battleTag = battleTag.replace("#", "-");
               toBeSentBack.battleTag = battleTag;
               toBeSentBack.heroes = results.body.heroes;
-                 return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
-                 db.insertprofileindex(toBeSentBack.battleTag, hero);
-                 return toBeSentBack.battleTag;
+              return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
+                db.insertprofileindex(toBeSentBack.battleTag, hero);
+                return toBeSentBack.battleTag;
               })
               ).then(function (ArrayofBattleTags) {
-                console.log('BattleTag',ArrayofBattleTags[0]);
-                return db.getprofile(ArrayofBattleTags[0]).then(function(results){
-                res.status(200).send(results);
+                console.log('BattleTag', ArrayofBattleTags[0]);
+                return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
+                  res.status(200).send(results);
                 })
-               
+
               })
             })
-        } else {         
+        } else {
           res.status(200).send(results);
         }
       })
@@ -49,7 +49,7 @@ app.route('/profile/')
         res.sendStatus(404);
       });
   });
-  //localhost:3000/character?charId=52519415&id=slayeneq-1864
+//localhost:3000/character?charId=52519415&id=slayeneq-1864
 app.route('/character')
   .get(function (req, res) {
     var charid = req.query.charId;
@@ -59,15 +59,24 @@ app.route('/character')
         if (Array.isArray(results) && results.length === 0) {
           d3.getCharacter(battleTag, charid)
             .then(function (results) {
-              console.log(results.body.items);
-             db.insertCharacter(results.body.id, results.body.stats)
-             return results.body.id;
+              db.insertCharacter(results.body.id, results.body.stats);
+              db.insertItem(results.body.id, 'head', results.body.items.head);
+              db.insertItem(results.body.id, 'torso', results.body.items.torso);
+              db.insertItem(results.body.id, 'feet', results.body.items.feet);
+              db.insertItem(results.body.id, 'hands', results.body.items.hands);
+              db.insertItem(results.body.id, 'legs', results.body.items.legs);
+              db.insertItem(results.body.id, 'bracers', results.body.items.bracers);
+              db.insertItem(results.body.id, 'mainHand', results.body.items.mainHand);
+              db.insertItem(results.body.id, 'waist', results.body.items.waist);
+              db.insertItem(results.body.id, 'rightFinger', results.body.items.rightFinger);
+              db.insertItem(results.body.id, 'leftFinger', results.body.items.leftFinger);
+              return results.body.id;
             })
             .then(function (id) {
-            
+
               return db.getCharacter(id)
                 .then(function (results) {
-                 
+
                   res.status(200).send(results);
                 })
             })
@@ -80,6 +89,14 @@ app.route('/character')
         console.log(err.message);
         res.sendStatus(404);
       })
+  });
+//localhost:3000/character/item?CharId=52519415&slot=boot
+  app.route('/character/item').get(function(req,res){
+     var id = req.query.CharId;
+     var slot = req.query.slot;
+   return  db.getItem(id,slot).then(function(item){
+res.status(200).send(item[0]);
+   });
   });
 
 console.log('running on port', process.env.PORT || 3000);

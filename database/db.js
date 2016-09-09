@@ -73,21 +73,24 @@ knex.ensureSchema = function () {
                     console.log('Created stats table');
                 });
             }
-        }), //
+        }), 
         knex.schema.hasTable('items').then(function (exists) {
             if (!exists) {
                 knex.schema.createTable('items', function (table) {
-                    table.string('id', 30).primary();
+                    table.increments('id').primary();
+                    table.string('item_id',30);
+                    table.integer('characterID');
                     table.string('name', 30);
                     table.string('icon', 50);
-                    table.string('displayColor', 10);
+                  table.string('displayColor', 10);
                     table.string('tooltipParams', 250);
-                    table.string('slot', 10);
+                    table.string('slot', 10); 
                 }).then(function () {
                     console.log('Created items table');
                 });
             }
-        }), knex.schema.hasTable('setitemsequipped').then(function (exists) {
+        }),
+         knex.schema.hasTable('setitemsequipped').then(function (exists) {
             if (!exists) {
                 knex.schema.createTable('setitemsequipped', function (table) {
                     table.increments('id').primary();
@@ -143,12 +146,10 @@ knex.ensureSchema = function () {
 
 
 knex.getCharacter = function (id){
-    return knex('stats').where ({stat_id: id});
+    return knex('stats').where ({stat_id: id}).select();
 };
 
 knex.insertCharacter=function(id,character){
- console.log('id',id,'character',character);
- console.log(character.damageReduction);
   return knex('stats').insert({
          "stat_id": id,
          "life":character.life,
@@ -183,7 +184,7 @@ knex.insertCharacter=function(id,character){
          "primaryResource": character.primaryResource,
          "secondaryResource": character.secondaryResource 
           }).then(function(results){
-              console.log(results);
+             
               return results;
           }).catch(function (err) {
         console.log(err.message);
@@ -219,9 +220,28 @@ knex.insertprofileindex= function(battletag, herotobeadded){
        .catch(function(err){
             console.log(err.message);
         });
-
 }
 
+knex.insertItem = function(charId,slot,item){
+    console.log('charID',charId,'Slot',slot,'item',item);
+    return knex('items').insert({
+   'item_id': item.id,
+   'characterID': charId,
+   'name': item.name,
+   'icon': item.icon,
+  'displayColor': item.displayColor,
+   'tooltipParams': item.tooltipParams,
+   'slot':slot 
+    }).then(function(item){
+return item;
+    }).catch(function (err) {
+        console.log(err.message);       
+      });
+};
+
+knex.getItem = function(charId,slot){
+return knex('items').where ({characterId: charId, slot: slot}).select();
+};
 
 //close database connection
 knex.closeDb = function () {
