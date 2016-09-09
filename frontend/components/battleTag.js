@@ -12,7 +12,7 @@ render () {
 		<div>
 			<form>
 				<label className='battle-tag-header'>Enter Battle Tag</label>
-				<input placeholder='BattleTag: example "name.1234"' type='text' className='tag-name'/>
+				<input placeholder='BattleTag: example "name#1234"' type='text' className='tag-name'/>
 				<button type='submit'>Request the hero</button>
 			</form>
 			<Audio />

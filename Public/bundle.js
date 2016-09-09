@@ -19825,7 +19825,7 @@
 							{ className: 'battle-tag-header' },
 							'Enter Battle Tag'
 						),
-						_react2.default.createElement('input', { placeholder: 'BattleTag: example "name.1234"', type: 'text', className: 'tag-name' }),
+						_react2.default.createElement('input', { placeholder: 'BattleTag: example "name#1234"', type: 'text', className: 'tag-name' }),
 						_react2.default.createElement(
 							'button',
 							{ type: 'submit' },
