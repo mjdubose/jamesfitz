@@ -38,7 +38,7 @@ knex.ensureSchema = function () {
                 knex.schema.createTable('stats', function (table) {
                     table.increments('id').primary();
                     table.integer('stat_id');
-                   table.integer('life');
+                    table.integer('life');
                     table.integer('damage');
                     table.integer('toughness');
                     table.integer('healing');
@@ -55,12 +55,12 @@ knex.ensureSchema = function () {
                     table.integer('poisonResist');
                     table.integer('arcaneResist');
                     table.integer('critDamage');
-                   table.float('blockChance');
+                    table.float('blockChance');
                     table.integer('blockAmountMin');
                     table.integer('blockAmountMax');
                     table.integer('damageIncrease');
                     table.float('critChance');
-                   table.float('damageReduction');
+                    table.float('damageReduction');
                     table.integer('thorns');
                     table.integer('lifeSteal');
                     table.integer('lifePerKill');
@@ -68,29 +68,29 @@ knex.ensureSchema = function () {
                     table.float('magicFind');
                     table.integer('lifeOnHit');
                     table.integer('primaryResource');
-                    table.integer('secondaryResource'); 
+                    table.integer('secondaryResource');
                 }).then(function () {
                     console.log('Created stats table');
                 });
             }
-        }), 
+        }),
         knex.schema.hasTable('items').then(function (exists) {
             if (!exists) {
                 knex.schema.createTable('items', function (table) {
                     table.increments('id').primary();
-                    table.string('item_id',30);
+                    table.string('item_id', 30);
                     table.integer('characterID');
                     table.string('name', 30);
                     table.string('icon', 50);
-                  table.string('displayColor', 10);
+                    table.string('displayColor', 10);
                     table.string('tooltipParams', 250);
-                    table.string('slot', 10); 
+                    table.string('slot', 10);
                 }).then(function () {
                     console.log('Created items table');
                 });
             }
         }),
-         knex.schema.hasTable('setitemsequipped').then(function (exists) {
+        knex.schema.hasTable('setitemsequipped').then(function (exists) {
             if (!exists) {
                 knex.schema.createTable('setitemsequipped', function (table) {
                     table.increments('id').primary();
@@ -119,7 +119,7 @@ knex.ensureSchema = function () {
                     table.string('description', 255);
                     table.string('simpleDescription', 255);
                     table.string('skillCalcId', 1);
-                    table.string('state',8);
+                    table.string('state', 8);
                 }).then(function () {
                     console.log('Created skills table');
                 });
@@ -145,73 +145,71 @@ knex.ensureSchema = function () {
         }),
     ])
 }
-knex.insertSkill = function(id,skill,state){
-return knex('skills').insert({
-  'slug':skill.slug,
-  'CharacterId': id,
-  'name': skill.name,
-  'icon': skill.icon,
-  'level': skill.level,
-  'categorySlug': skill.categorySlug,
-  'tooltipUrl': skill.tooltipUrl,
-  'description': skill.description,
-  'simpleDescription': skill.simpleDescription,
-  'skillCalcId': skill.skillCalcId,
-  'state': state
-}).then(function(skill){
-    return skill;
-})
+knex.insertSkill = function (id, skill, state) {
+    return knex('skills').insert({
+        'slug': skill.slug,
+        'CharacterId': id,
+        'name': skill.name,
+        'icon': skill.icon,
+        'level': skill.level,
+        'categorySlug': skill.categorySlug,
+        'tooltipUrl': skill.tooltipUrl,
+        'description': skill.description,
+        'simpleDescription': skill.simpleDescription,
+        'skillCalcId': skill.skillCalcId,
+        'state': state
+    }).then(function (skill) {
+        return skill;
+    })
 };
 
-knex.getSkills = function(id){
-    return knex('skills').where({CharacterId:id}).select();
+knex.getSkills = function (id) {
+    return knex('skills').where({ CharacterId: id }).select();
 }
 
-knex.getCharacter = function (id){
-    return knex('stats').where ({stat_id: id}).select();
+knex.getCharacter = function (id) {
+    return knex('stats').where({ stat_id: id }).select();
 };
 
-knex.insertCharacter=function(id,character){
-  return knex('stats').insert({
-         "stat_id": id,
-         "life":character.life,
-         "damage": character.damage,
-         "toughness": character.toughness,
-         "healing": character.healing,
-         "attackSpeed": character.attackSpeed,
-         "armor": character.armor,
-         "strength":character.strength,
-         "dexterity": character.dexterity,
-         "vitality": character.vitality,
-         "intelligence": character.intelligence,
-         "physicalResist": character.physicalResist,
-         "fireResist": character.fireResist,
-         "coldResist": character.coldResist,
-         "lightningResist": character.lightningResist,
-         "poisonResist": character.poisonResist,
-         "arcaneResist": character.arcaneResist,
-         "critDamage": character.critDamage,
-         "blockChance": character.blockChance,
-         "blockAmountMin": character.blockAmountMin,
-         "blockAmountMax": character.blockAmountMax,
+knex.insertCharacter = function (id, character) {
+    return knex('stats').insert({
+        "stat_id": id,
+        "life": character.life,
+        "damage": character.damage,
+        "toughness": character.toughness,
+        "healing": character.healing,
+        "attackSpeed": character.attackSpeed,
+        "armor": character.armor,
+        "strength": character.strength,
+        "dexterity": character.dexterity,
+        "vitality": character.vitality,
+        "intelligence": character.intelligence,
+        "physicalResist": character.physicalResist,
+        "fireResist": character.fireResist,
+        "coldResist": character.coldResist,
+        "lightningResist": character.lightningResist,
+        "poisonResist": character.poisonResist,
+        "arcaneResist": character.arcaneResist,
+        "critDamage": character.critDamage,
+        "blockChance": character.blockChance,
+        "blockAmountMin": character.blockAmountMin,
+        "blockAmountMax": character.blockAmountMax,
         "damageIncrease": character.damageIncrease,
         "critChance": character.critChance,
-         "damageReduction": character.damageReduction,
+        "damageReduction": character.damageReduction,
         "thorns": character.thorns,
         "lifeSteal": character.lifeSteal,
-         "lifePerKill": character.lifePerKill,
-         "goldFind": character.goldFind,
-         "magicFind": character.magicFind,
-         "lifeOnHit": character.lifeOnHit,
-         "primaryResource": character.primaryResource,
-         "secondaryResource": character.secondaryResource 
-          }).then(function(results){
-             
-              return results;
-          }).catch(function (err) {
+        "lifePerKill": character.lifePerKill,
+        "goldFind": character.goldFind,
+        "magicFind": character.magicFind,
+        "lifeOnHit": character.lifeOnHit,
+        "primaryResource": character.primaryResource,
+        "secondaryResource": character.secondaryResource
+    }).then(function (results) {
+        return results;
+    }).catch(function (err) {
         console.log(err.message);
-       
-      });
+    });
 };
 
 knex.getprofile = function (profilename) {
@@ -219,50 +217,48 @@ knex.getprofile = function (profilename) {
     return knex('profileindex').where({ battleTag: profilename }).select();
 };
 
-knex.insertprofileindex= function(battletag, herotobeadded){   
-     console.log(battletag,herotobeadded); 
-   return knex('profileindex').insert({
-       'battleTag':battletag ,
-       'characterID': herotobeadded.id,
-       'name': herotobeadded.name,
-       'class': herotobeadded.class,
-       'gender': herotobeadded.gender.toString(),
-      'level': herotobeadded.level,
-      'kills': herotobeadded.kills,
-      'paragonLevel': herotobeadded.paragonLevel,
-      'hardcore' : herotobeadded.hardcore,
-      'seasonal' : herotobeadded.seasonal,
-      'lastUpdated' : herotobeadded.lastUpdated,
-      'dead' : herotobeadded.dead
-    }).then(function (item){
-    
-   console.log('after insert',item);
-   return item;
+knex.insertprofileindex = function (battletag, herotobeadded) {
+    console.log(battletag, herotobeadded);
+    return knex('profileindex').insert({
+        'battleTag': battletag,
+        'characterID': herotobeadded.id,
+        'name': herotobeadded.name,
+        'class': herotobeadded.class,
+        'gender': herotobeadded.gender.toString(),
+        'level': herotobeadded.level,
+        'kills': herotobeadded.kills,
+        'paragonLevel': herotobeadded.paragonLevel,
+        'hardcore': herotobeadded.hardcore,
+        'seasonal': herotobeadded.seasonal,
+        'lastUpdated': herotobeadded.lastUpdated,
+        'dead': herotobeadded.dead
+    }).then(function (item) {
+        return item;
     })
-       .catch(function(err){
+        .catch(function (err) {
             console.log(err.message);
         });
 }
 
-knex.insertItem = function(charId,slot,item){
-    console.log('charID',charId,'Slot',slot,'item',item);
+knex.insertItem = function (charId, slot, item) {
+    console.log('charID', charId, 'Slot', slot, 'item', item);
     return knex('items').insert({
-   'item_id': item.id,
-   'characterID': charId,
-   'name': item.name,
-   'icon': item.icon,
-  'displayColor': item.displayColor,
-   'tooltipParams': item.tooltipParams,
-   'slot':slot 
-    }).then(function(item){
-return item;
+        'item_id': item.id,
+        'characterID': charId,
+        'name': item.name,
+        'icon': item.icon,
+        'displayColor': item.displayColor,
+        'tooltipParams': item.tooltipParams,
+        'slot': slot
+    }).then(function (item) {
+        return item;
     }).catch(function (err) {
-        console.log(err.message);       
-      });
+        console.log(err.message);
+    });
 };
 
-knex.getItem = function(charId,slot){
-return knex('items').where ({characterId: charId, slot: slot}).select();
+knex.getItem = function (charId, slot) {
+    return knex('items').where({ characterId: charId, slot: slot }).select();
 };
 
 //close database connection

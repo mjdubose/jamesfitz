@@ -82,10 +82,8 @@ app.route('/character')
               return results.body.id;
             })
             .then(function (id) {
-
               return db.getCharacter(id)
                 .then(function (results) {
-
                   res.status(200).send(results);
                 })
             })
@@ -113,4 +111,4 @@ app.listen(process.env.PORT || 3000);
 //                                
 //http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
 // icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
-//pngname is stored in items or skills database table under icon.
+//.png name is stored in items or skills database table under icon.
