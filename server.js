@@ -49,18 +49,39 @@ app.route('/profile/')
         res.sendStatus(404);
       });
   });
+  //localhost:3000/character?charId=52519415&id=slayeneq-1864
 app.route('/character')
   .get(function (req, res) {
-    d3.getCharacter('slayeneq-1864', 3772318)
+    var charid = req.query.charId;
+    var battleTag = req.query.id;
+    db.getCharacter(charid)
       .then(function (results) {
-        res.status(200).send(results)
-      })
-      .catch(function (err) {
+        if (Array.isArray(results) && results.length === 0) {
+          d3.getCharacter(battleTag, charid)
+            .then(function (results) {
+              console.log(results.body.items);
+             db.insertCharacter(results.body.id, results.body.stats)
+             return results.body.id;
+            })
+            .then(function (id) {
+            
+              return db.getCharacter(id)
+                .then(function (results) {
+                 
+                  res.status(200).send(results);
+                })
+            })
+
+        } else {
+          res.status(200).send(results);
+        }
+      }
+      ).catch(function (err) {
         console.log(err.message);
-        res.sendStatus(404)
+        res.sendStatus(404);
       })
   });
 
-
 console.log('running on port', process.env.PORT || 3000);
 app.listen(process.env.PORT || 3000);
+//
