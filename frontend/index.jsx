@@ -11,7 +11,7 @@ import BattleTag from './components/battleTag.js';
 
 // const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
-ReactDOM.render( 
+ReactDOM.render(
 	<BattleTag/>, document.querySelector('.app'));
 
 

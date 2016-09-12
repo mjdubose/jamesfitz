@@ -11,7 +11,4 @@ export default(
 					<IndexRoute component={BattleTag} />
 				</Route>
 )
-					// <Route path="/Package/:package_name" component={CardBox} />
-					// <Route path="/HowItWorks" component={MissionStatement} />
-					// <Route path="/MeetTheDevs" component={MeetTheDevs} />
-					// <Route path="/Preferences" component={UserForm} />
+				

@@ -138,6 +138,7 @@ knex.ensureSchema = function () {
                     table.string('tooltipParams', 250);
                     table.string('skillCalcId', 1);
                     table.integer('order');
+                 
                 }).then(function () {
                     console.log('Created runes table');
                 });
