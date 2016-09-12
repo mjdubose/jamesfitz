@@ -5,9 +5,7 @@ import Audio from './audio.js'
 
 export default class BattleTag extends React.Component {
 
-render () {
-
-	
+render () {	
 	return (
 		<div>
 			<form>
