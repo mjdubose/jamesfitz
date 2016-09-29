@@ -8,6 +8,7 @@ var db = require('./database/db.js');
 var _ = require('underscore');
 console.log('calling db.ensureSchema');
 db.ensureSchema();
+module.exports = Server
 
 app.use('/', express.static(path.join(__dirname, "../Public")));
 // http://localhost:3000/profile?id=slayeneq-1864
@@ -103,7 +104,8 @@ app.route('/character')
      var slot = req.query.slot;
    return  db.getItem(id,slot).then(function(item){
 res.status(200).send(item[0]);
-   });
+   }).catch(function(err){ 
+    res.sendStatus(404)});
   });
 
 console.log('running on port', process.env.PORT || 3000);
