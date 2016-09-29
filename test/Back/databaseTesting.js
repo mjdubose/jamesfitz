@@ -7,42 +7,44 @@ var server = require('../../server');
 var chaiAsPromised = require('chai-as-promised');
 server = server.app
 chai.use(chaiHttp);
-chai.use(chaiAsPromised);
+//chai.use(chaiAsPromised);
 var should = chai.should();
-var expect = chai.expect;
+var expect = chai.expect();
 
 
 describe('Database calls', function(){
 	it('should accept valid id on /profile?id= GET and return status 200',
-	 			 function() { return expect(function(){ 
+	 			 function(done) { 
 				chai.request(server)
 				.get('/profile')
 				.query({id:'slayeneq-1864'})
 				.end(
-					function(err, res) {
-					// console.log(res)
-					// return res.status
-					// res.body.should.have.length(1000);
-					// res.should.be.json;
-				}
-				)} ).should.eventually.equal(status)}
-			);
+					function( res) {					 					
+					 res.should.have.status(200);
+				    done();
+					 
+				})
+				  });
+				
+		
 	it('should accept invalid id on /profile?id= GET and return status 404',
-	 			function(){ 
+	 			function(done){ 
 				chai.request(server)
 				.get('/profile')
 				.query({id:'slayeneq'})
-				.end(function(err, res) {
-					res.should.have.status(404)
+				.end(function( res) {
+					 res.should.have.status(200)
+					done();
 				})
 			});
 	it('should return a charater and accepts two arguments, charId and battletag, and return status 200 GET',
-		function(){
+		function(done){
 			chai.request(server)
 			.get('/profile')
 			.query({charId:'52519415', id: 'slayeneq-1864'})
 			.end(function(err, res) {
 				res.should.have.status(200)
+				done();
 			})
 		});
 	it('')
