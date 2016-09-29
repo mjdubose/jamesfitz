@@ -4,8 +4,8 @@ var mocha = require('mocha');
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../../server');
-var chaiAsPromised = require('chai-as-promised');
-server = server.app
+//var chaiAsPromised = require('chai-as-promised');
+server = server.app();
 chai.use(chaiHttp);
 //chai.use(chaiAsPromised);
 var should = chai.should();
@@ -16,10 +16,9 @@ describe('Database calls', function(){
 	it('should accept valid id on /profile?id= GET and return status 200',
 	 			 function(done) { 
 				chai.request(server)
-				.get('/profile')
-				.query({id:'slayeneq-1864'})
-				.end(
-					function( res) {					 					
+				.get('http://localhost:3000/profile?id=slayeneq-1864')
+			    .end(
+					function(err, res) {					 					
 					 res.should.have.status(200);
 				    done();
 					 
@@ -32,8 +31,8 @@ describe('Database calls', function(){
 				chai.request(server)
 				.get('/profile')
 				.query({id:'slayeneq'})
-				.end(function( res) {
-					 res.should.have.status(200)
+				.end(function(err, res) {
+					 res.should.have.status(404)
 					done();
 				})
 			});
