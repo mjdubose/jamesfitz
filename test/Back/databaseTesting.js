@@ -14,13 +14,12 @@ var expect = chai.expect();
 
 describe('Database calls', function(){
 	it('should accept valid id on /profile?id= GET and return status 200',
-	 			 function(done) { 
+	 			 function() { 
 				chai.request(server)
 				.get('http://localhost:3000/profile?id=slayeneq-1864')
-			    .end(
-					function(err, res) {					 					
-					 res.should.have.status(200);
-				    done();
+			    .then(
+					function( res) {					 					
+					expect(res).to.have.status(404);			
 					 
 				})
 				  });
