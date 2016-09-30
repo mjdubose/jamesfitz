@@ -8,7 +8,7 @@
     "start": "node ./server",
     "build": "webpack --config ./webpack.config.js --progress --watch",
     "postinstall": "npm run build",
-    "test_Backend": " mocha test/Back/databaseTesting.js"
+    "test_Backend": "mocha test/Back/databaseTesting.js --require test/helper.js"
   },
   "author": "",
   "license": "ISC",
