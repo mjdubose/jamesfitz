@@ -8,7 +8,7 @@ var db = require('./database/db.js');
 var _ = require('underscore');
 console.log('calling db.ensureSchema');
 db.ensureSchema();
-module.exports = Server.app();
+module.exports = app;
 
 app.use('/', express.static(path.join(__dirname, "../Public")));
 // http://localhost:3000/profile?id=slayeneq-1864
