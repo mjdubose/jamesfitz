@@ -20,7 +20,7 @@ diablo3.getProfile = function (profile) {
 
 
 
-}  
+};
 
 diablo3.getCharacter = function (bnetTag,characterId) {
     return new Promise(function(fulfill, reject) {
@@ -33,4 +33,4 @@ diablo3.getCharacter = function (bnetTag,characterId) {
             }
         })
     })
-}
+};

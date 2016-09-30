@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var mocha = require('mocha');
 var chai = require('chai');
@@ -29,7 +29,7 @@ describe('Database calls', function(){
 				chai.request('http://localhost:3000')
 				.get('/profile?id=slayeneq')			
 				.end(function(err, res) {
-				expect(res).to.have.status(404)
+				expect(res).to.have.status(404);
 				done();
 				})
 			});
@@ -39,10 +39,10 @@ describe('Database calls', function(){
 			.get('/profile')
 			.query({charId:'52519415', id: 'slayeneq-1864'})
 			.end(function(err, res) {
-				expect(res).to.have.status(200)
+				expect(res).to.have.status(200);
 				done();
 			})
 		});
 	// it('')
 	// it('should return chatacter/item and accpets two arguements, charId and slots  GET');
-})
+});

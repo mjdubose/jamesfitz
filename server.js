@@ -80,11 +80,11 @@ app.route('/character')
               var array = results.body.skills.active;
               array.map(function(skill){
                 db.insertSkill(results.body.id,skill.skill,'active');
-              })
-                 var array = results.body.skills.passive;
+              });
+                 array = results.body.skills.passive;
               array.map(function(skill){
                 db.insertSkill(results.body.id,skill.skill,'passive');
-              })
+              });
               return results.body.id;
             })
             .then(function (id) {

@@ -145,7 +145,7 @@ knex.ensureSchema = function () {
             }
         }),
     ])
-}
+};
 knex.insertSkill = function (id, skill, state) {
     return knex('skills').insert({
         'slug': skill.slug,
@@ -166,7 +166,7 @@ knex.insertSkill = function (id, skill, state) {
 
 knex.getSkills = function (id) {
     return knex('skills').where({ CharacterId: id }).select();
-}
+};
 
 knex.getCharacter = function (id) {
     return knex('stats').where({ stat_id: id }).select();
@@ -239,7 +239,7 @@ knex.insertprofileindex = function (battletag, herotobeadded) {
         .catch(function (err) {
             console.log(err.message);
         });
-}
+};
 
 knex.insertItem = function (charId, slot, item) {
     console.log('charID', charId, 'Slot', slot, 'item', item);
