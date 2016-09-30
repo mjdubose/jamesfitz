@@ -8,7 +8,7 @@ var db = require('./database/db.js');
 var _ = require('underscore');
 console.log('calling db.ensureSchema');
 db.ensureSchema();
-module.exports = Server.app();
+module.exports = app;
 
 app.use('/', express.static(path.join(__dirname, "../Public")));
 // http://localhost:3000/profile?id=slayeneq-1864
@@ -93,12 +93,11 @@ app.route('/character')
                   res.status(200).send(results);
                 })
             })
-
         } else {
           res.status(200).send(results);
         }
-      }
-      ).catch(function (err) {
+      })
+    .catch(function (err) {
         console.log(err.message);
         res.sendStatus(404);
       })
@@ -108,13 +107,15 @@ app.route('/character')
      var id = req.query.CharId;
      var slot = req.query.slot;
    return  db.getItem(id,slot).then(function(item){
-res.status(200).send(item[0]);
-   }).catch(function(err){ 
-    res.sendStatus(404)});
-  });
+        res.status(200).send(item[0]);
+      }).catch(function(err){
+        res.sendStatus(404)});
+      });
 
-console.log('running on port', process.env.PORT || 3000);
-app.listen(process.env.PORT || 3000);
+
+const port = process.env.PORT ? process.env.PORT : (process.env.NODE_ENV==='test' ? 4000 : 3000 )
+console.log('running on port', port);
+app.listen(port);
 //                                
 //http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
 // icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
