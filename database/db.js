@@ -214,12 +214,15 @@ knex.insertCharacter = function (id, character) {
 };
 
 knex.getprofile = function (profilename) {
-    console.log('profilename ', profilename);
+  
     return knex('profileindex').where({ battleTag: profilename }).select();
 };
 
 knex.insertprofileindex = function (battletag, herotobeadded) {
-    console.log(battletag, herotobeadded);
+   if (!Date.now){
+       Date.now = function(){return new Date().getTime();}
+   }
+   var time = Math.floor(Date.now() / 1000);
     return knex('profileindex').insert({
         'battleTag': battletag,
         'characterID': herotobeadded.id,
@@ -231,7 +234,7 @@ knex.insertprofileindex = function (battletag, herotobeadded) {
         'paragonLevel': herotobeadded.paragonLevel,
         'hardcore': herotobeadded.hardcore,
         'seasonal': herotobeadded.seasonal,
-        'lastUpdated': herotobeadded.lastUpdated,
+        'lastUpdated': time,
         'dead': herotobeadded.dead
     }).then(function (item) {
         return item;

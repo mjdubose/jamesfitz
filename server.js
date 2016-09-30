@@ -76,7 +76,6 @@ app.route('/character')
               db.insertItem(results.body.id, 'waist', results.body.items.waist);
               db.insertItem(results.body.id, 'rightFinger', results.body.items.rightFinger);
               db.insertItem(results.body.id, 'leftFinger', results.body.items.leftFinger);
-              console.log(results.body.skills.active);
               var array = results.body.skills.active;
               array.map(function(skill){
                 db.insertSkill(results.body.id,skill.skill,'active');
@@ -97,20 +96,21 @@ app.route('/character')
           res.status(200).send(results);
         }
       })
-    .catch(function (err) {
-        console.log(err.message);
+    .catch(function (err) {       
         res.sendStatus(404);
       })
   });
-//localhost:3000/character/item?CharId=52519415&slot=boot
+//localhost:3000/character/item?charId=52519415&slot=feet
   app.route('/character/item').get(function(req,res){
-     var id = req.query.CharId;
+     var id = req.query.charId;
      var slot = req.query.slot;
    return  db.getItem(id,slot).then(function(item){
         res.status(200).send(item[0]);
       }).catch(function(err){
-        res.sendStatus(404)});
-      });
+        res.sendStatus(404);
+      })
+      
+  });
 
 
 const port = process.env.PORT ? process.env.PORT : (process.env.NODE_ENV==='test' ? 4000 : 3000 )

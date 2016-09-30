@@ -24,7 +24,6 @@ describe('Database calls', function(){
 				
 		
 	it('should accept invalid id on /profile?id= GET and return status 404',
-
 	 		function(done){
 				chai.request(app)
 					.get('/profile?id=slayeneq')			
@@ -43,7 +42,38 @@ describe('Database calls', function(){
 					done();
 			})
 		});
-	xit('')
-	xit('should return chatacter/item and accpets two arguements, charId and slots  GET');
-})
+
+			it('should accept two arguments, (invalid) charId and (invalid) battletag, and return status 404 GET',
+			function(done){
+				chai.request(app)
+				.get('/profile')
+				.query({charId:'5251941', id: 'slayeneq-186'})
+				.end(function(err, res) {
+					expect(res).to.have.status(404)
+					done();
+			})
+		});
+
+	it('should return character/item and accepts two arguements, charId and slots and return status 200 GET',
+		function(done){
+				chai.request(app)
+				.get('/character/item')
+				///character/item?CharId=52519415&slot=feet
+				.query({charId:'52519415', slot:'feet'})
+				.end(function(err, res) {
+					expect(res).to.have.status(200)
+					done();
+			})
+		})
+	it('should accept two arguments, (invalid) charId and (invalid) slot, charId and slot and return 404  GET',
+		function(done){
+				chai.request(app)
+				.get('/character/item')			
+				.query({charId:'5251941', slot:'boot'})
+				.end(function(err, res) {
+					expect(res).to.have.status(200)
+					done();
+			})
+		})
+});
 
