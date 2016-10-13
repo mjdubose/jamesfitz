@@ -32,11 +32,16 @@
 -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
 <script>var app = angular.module('D3App', []);
-app.controller('SearchBar', function($scope){
+app.controller('SearchBar', function($scope, $http){
 	$scope.battleTag = 'bob';
-	$scope.getHeroInformation = function () {
-		alert($scope.battleTag)
+	$scope.getHeroInformation = function (tag) {
+
+		$http.get('/profile?id=slayeneq-1864').then(function(response) {
+			alert( response.data)
+		})
+		alert()
 	}
+
 	} ) </script>
 
 <!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator 
