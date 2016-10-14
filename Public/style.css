@@ -9,6 +9,7 @@
 body { font-family: 'Exocet Light'; }
 
 .body {
+	display: inline;
 	background-image: url('http://blogs-images.forbes.com/insertcoin/files/2014/06/diablo3.jpg');
 	background-repeat: stretch;
 	background-size: cover;
@@ -34,6 +35,18 @@ body { font-family: 'Exocet Light'; }
 	 font-style:normal;
 }
 
+.search-bar {
+	display: inline;
+}
+
+.hero {
+	cursor: pointer;
+	margin-top: 20px;
+	margin-bottom: 0px;
+}
+.hero-equipment {
+	float: right;
+}
 .tag-name {
 	width: 250px;
 }

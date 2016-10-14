@@ -6,16 +6,23 @@
 	<link href='/public/style.css' rel='stylesheet'>
 </head>
 <body ng-app="D3App" class='body'>
-<div ng-controller="SearchBar"> 
+
+<div class='search-bar' ng-controller="SearchBar"> 
 <input type='text' ng-model='battleTag' />
-<input type='button' value='I need a hero"- bonnie Tyler' ng-click='getHeroInformation(battleTag)'/>
+<input type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'/>
 
-	<div ng-repeat='hero in heroList'>
-		<div class='hero' ng-model='hero'>
-			{{hero.name}} -	 Lvl: {{hero.level}} , {{hero.class}}
+	<div >
+		<div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
+			<div class='hero' ng-model='hero' >
+				{{hero.name}} -	 Lvl: {{hero.level}} , {{hero.class}}
+			</div>
 		</div>
-
 	</div>
+
+<div class='hero-equipment' ng-controller='Displayer' ng-click='showData()'>
+	Hero's Equipment {{current.Hero}}
+</div>
+
 </div>
 
 <!-- <script>
@@ -38,29 +45,44 @@
 -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
 <script>var app = angular.module('D3App', []);
-app.controller('SearchBar', function($scope, $http){
+app.controller('SearchBar', function($scope, $http, heroService){
 	$scope.heroList;
 	$scope.battleTag = 'slayeneq-1864';
 
-	$scope.getHeroInformation = function (tag) {
+	$scope.getHeroInformation = function (tag){
 
-		$http.get('/profile?id=' + tag).then(function(response) {
+		$http.get('/profile?id=' + tag).then(function(response){
 			$scope.heroList = response.data;
-			console.log($scope.heroList)
 		})
+	}
+	$scope.displayHeroInformation = function (hero){
+		console.log(hero)
+		heroService._addBattleTag(hero.battleTag);
+		heroService._addCharacterId(hero.characterID);
 	}
 
 
-	} )
-	app.controller('HeroList', function($scope){
 	})
-	app.controller('Displayer', function($scope, $http) {
+	app.controller('Displayer', function($scope, $http, heroService) {
+				$scope.heroService = heroService._currentHeroData
+				$scope.showData = function(){console.log(heroService._currentHeroData)}
+	})
 
-		$scope.displayHeroInformation = function () {
-
+	app.service('heroService', function(){
+		var currentHero={}
+		_addBattleTag = function(battleTag){
+			currentHero.battleTag = battleTag;
 		}
+		_addCharacterId = function(charaID){
+			currentHero.characterID = charaID;
+		}
+		_currentHeroData = function(){
+			return currentHero;
+		}
+		return {_addCharacterId :_addCharacterId,
+						_addBattleTag: _addBattleTag,
+						_currentHeroData:_currentHeroData()};
 	})
-
 	 </script>
 
 <!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator 
