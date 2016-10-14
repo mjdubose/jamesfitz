@@ -15,9 +15,12 @@ app.use('/', express.static(path.join(__dirname, "../Public")));
 app.route('/profile/')
   .get(function (req, res) {
     var id = req.query.id;
+       if (id.indexOf('-')=== -1 && id.indexOf('#')===-1){
+           res.sendStatus(404);
+    }
     db.getprofile(id)
       .then(function (results) {
-      //  console.log('results from db', results);
+
 
         if (Array.isArray(results) && results.length === 0) {
           d3.getProfile(id).then(function(results){
