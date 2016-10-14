@@ -15,6 +15,10 @@ app.use('/', express.static(path.join(__dirname, "../Public")));
 app.route('/profile/')
   .get(function (req, res) {
     var id = req.query.id;
+    if (id.indexOf('-')=== -1 && id.indexOf('#')===-1){
+      console.log('invalid request');
+      res.sendStatus(404);
+    }
     db.getprofile(id)
       .then(function (results) {
       //  console.log('results from db', results);
