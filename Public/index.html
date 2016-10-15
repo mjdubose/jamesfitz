@@ -19,8 +19,10 @@
 		</div>
 	</div>
 
-<div class='hero-equipment' ng-controller='Displayer' ng-click='showData()'>
-	Hero's Equipment {{current.Hero}}
+<div class='hero-equipment' ng-controller='Displayer' >
+	<div ng-model = 'a'>
+	Hero's Equipment {{ CharId() }} {{ BattleTag() }}
+</div>
 </div>
 
 </div>
@@ -59,29 +61,40 @@ app.controller('SearchBar', function($scope, $http, heroService){
 		console.log(hero)
 		heroService._addBattleTag(hero.battleTag);
 		heroService._addCharacterId(hero.characterID);
+
 	}
 
 
 	})
+
 	app.controller('Displayer', function($scope, $http, heroService) {
-				$scope.heroService = heroService._currentHeroData
-				$scope.showData = function(){console.log(heroService._currentHeroData)}
+				$scope.BattleTag = heroService._currentHeroBattleTag;
+				$scope.CharId =  heroService._currentHeroId;
+					
 	})
 
 	app.service('heroService', function(){
 		var currentHero={}
+		 currentHero.characterID ='none';
+	 currentHero.battleTag = 'none';
 		_addBattleTag = function(battleTag){
 			currentHero.battleTag = battleTag;
 		}
-		_addCharacterId = function(charaID){
-			currentHero.characterID = charaID;
+		_addCharacterId = function(charID){
+			currentHero.characterID = charID;
 		}
-		_currentHeroData = function(){
-			return currentHero;
+		_currentHeroId = function(){
+	
+			return currentHero.characterID;
+		}
+		_currentHeroBattleTag = function(){
+			return currentHero.battleTag;
 		}
 		return {_addCharacterId :_addCharacterId,
 						_addBattleTag: _addBattleTag,
-						_currentHeroData:_currentHeroData()};
+						_currentHeroId:_currentHeroId,
+						_currentHeroBattleTag: _currentHeroBattleTag
+						};
 	})
 	 </script>
 
