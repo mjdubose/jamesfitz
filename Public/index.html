@@ -13,10 +13,11 @@
 </video>
 
 <div class='container' ng-controller="SearchBar"> 
-	<div class='search-bar-and-heros'>
+
+	<div class='search-bar-and-heros-container'>
 		<div class='search-bar-inputs'>
 			<input type='text' ng-model='battleTag' />
-			<input type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'/>
+			<input style= "cursor: url('/Public/images/CursorDI.png'), auto;" type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'/>
 		</div>
 		<div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
 			<div class='hero' ng-model='hero' >
@@ -24,18 +25,23 @@
 			</div>
 		</div>
 	</div>
+
 	<div class='hero-equipment-container' ng-controller='Displayer'>
-		<div class='hero-equipment' ng-model='a'>
-			Hero's Equipment 
-			<div>{{ CharId() }} {{ BattleTag() }}
-			</div>
+		<div class='hero-stats'>
+			Character Stats {{ CharId() }} {{ BattleTag() }} <br> Needs to be fetched and displayed <br>
+		</div>
+		<div class='hero-equipment'>
+			Hero's Equipment {{ CharId() }} {{ BattleTag() }}
+			<br> Needs to be fetched and displayed <br>
 		</div>
 	</div>
+
 </div>
 
 
 
 <!--  <script>
+
 	const function run(interval, frames) {
 		var int = 1;
 		function func(){
