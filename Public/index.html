@@ -28,10 +28,10 @@
 
 	<div class='hero-equipment-container' ng-controller='Displayer'>
 		<div class='hero-stats'>
-			Character Stats {{ CharId() }} {{ BattleTag() }} <br> Needs to be fetched and displayed <br>
+			Character Stats {{ showId()}} {{ showbattleTag() }} <br> Needs to be fetched and displayed <br>
 		</div>
 		<div class='hero-equipment'>
-			Hero's Equipment {{ CharId() }} {{ BattleTag() }}
+			Hero's Equipment {{ showId ()}} {{ showbattleTag() }}
 			<br> Needs to be fetched and displayed <br>
 		</div>
 	</div>
@@ -63,9 +63,10 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
 <script>var app = angular.module('D3App', []);
 
-app.controller('SearchBar', function($scope, $http, heroService){
+app.controller('SearchBar', function($scope, $http, heroBackendService){
 	$scope.heroList;
 	$scope.battleTag = 'slayeneq-1864';
+	$scope.selectedId ='';
 
 	$scope.getHeroInformation = function (tag){
 		$http.get('/profile?id=' + tag).then(function(response){
@@ -73,42 +74,23 @@ app.controller('SearchBar', function($scope, $http, heroService){
 		})
 	}
 	$scope.displayHeroInformation = function (hero){
-		console.log(hero);
-		heroService._addBattleTag(hero.battleTag);
-		heroService._addCharacterId(hero.characterID);
+		$scope.selectedId=hero.characterID;
+	  console.log(hero);
 	}
 	})
 
-	app.controller('Displayer', function($scope, $http, heroService) {
-
-				$scope.BattleTag = heroService._currentHeroBattleTag;
-				$scope.CharId =  heroService._currentHeroId;
+	app.controller('Displayer', function($scope, $http, heroBackendService) {
+	$scope.showId = function( ){
+		return $scope.selectedId;
+	}
+	$scope.showbattleTag = function( ){
+		return $scope.battleTag;
+	}		
 					
 	})
 
-	app.service('heroService', function(){
-		var currentHero={}
-		 currentHero.characterID ='none';
-	     currentHero.battleTag = 'none';
-		_addBattleTag = function(battleTag){
-			currentHero.battleTag = battleTag;
-		}
-		_addCharacterId = function(charID){
-			currentHero.characterID = charID;
-		}
-		_currentHeroId = function(){	
-			return currentHero.characterID;
-		}
-		_currentHeroBattleTag = function(){
-			return currentHero.battleTag;
-		}
-		
-		return {
-		        _addCharacterId :_addCharacterId,
-						_addBattleTag: _addBattleTag,
-						_currentHeroId:_currentHeroId,
-						_currentHeroBattleTag: _currentHeroBattleTag
-				};
+	app.service('heroBackendService', function(){
+
 	})
 	 </script>
 
