@@ -7,40 +7,41 @@
 </head>
 
 <body ng-app="D3App" class='body'>
-<Video class='background' autoplay loop>
-	<source src="/public/videos/malthael.webm" type="video/webm" />
-	<source src="/public/videos/malthael.mp4" type="video/mp4" />
-</video>
+	<Video class='background' autoplay loop>
+		<source src="/public/videos/malthael.webm" type="video/webm" />
+		<source src="/public/videos/malthael.mp4" type="video/mp4" />
+	</video>
 
-<div class='container' ng-controller="SearchBar"> 
+	<div class='container' ng-controller="SearchBar">
 
-	<div class='search-bar-and-heros-container'>
-		<div class='search-bar-inputs'>
-			<input type='text' ng-model='battleTag' />
-			<input style= "cursor: url('/Public/images/CursorDI.png'), auto;" type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'/>
-		</div>
-		<div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
-			<div class='hero' ng-model='hero' >
-				{{hero.name}} -	 Lvl: {{hero.level}} , {{hero.class}}
+		<div class='search-bar-and-heros-container'>
+			<div class='search-bar-inputs'>
+				<input type='text' ng-model='battleTag' />
+				<input style="cursor: url('/Public/images/CursorDI.png'), auto;" type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'
+				/>
+			</div>
+			<div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
+				<div class='hero' ng-model='hero'>
+					{{hero.name}} - Lvl: {{hero.level}} , {{hero.class}}
+				</div>
 			</div>
 		</div>
+
+		<div class='hero-equipment-container' ng-controller='Displayer'>
+			<div class='hero-stats'>
+				Character Stats {{ showId()}} {{ showbattleTag() }} <br> Needs to be fetched and displayed <br>
+			</div>
+			<div class='hero-equipment'>
+				Hero's Equipment {{ showId ()}} {{ showbattleTag() }}
+				<br> Needs to be fetched and displayed <br>
+			</div>
+		</div>
+
 	</div>
 
-	<div class='hero-equipment-container' ng-controller='Displayer'>
-		<div class='hero-stats'>
-			Character Stats {{ showId()}} {{ showbattleTag() }} <br> Needs to be fetched and displayed <br>
-		</div>
-		<div class='hero-equipment'>
-			Hero's Equipment {{ showId ()}} {{ showbattleTag() }}
-			<br> Needs to be fetched and displayed <br>
-		</div>
-	</div>
-
-</div>
 
 
-
-<!--  <script>
+	<!--  <script>
 
 	const function run(interval, frames) {
 		var int = 1;
@@ -56,21 +57,23 @@
 <video xmlns="http://www.w3.org/1999/xhtml" id="malthael-video" class="video-bg is-active" loop="loop" poster="/public/images/malthael.jpg">
 </script> -->
 
-<!-- <audio controls className='audio' autoplay>
+	<!-- <audio controls className='audio' autoplay>
 	{"<source src='/Public/03-new-tristram.mp3' type='audio/mp3'>"}
 </audio> -->
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
-<script>var app = angular.module('D3App', []);
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
+	<script>var app = angular.module('D3App', []);
 
-app.controller('SearchBar', function($scope, $http, heroBackendService){
+app.controller('SearchBar', function($scope, heroBackendService){
+	$scope.heroBackendService = heroBackendService;
 	$scope.heroList;
 	$scope.battleTag = 'slayeneq-1864';
 	$scope.selectedId ='';
 
 	$scope.getHeroInformation = function (tag){
-		$http.get('/profile?id=' + tag).then(function(response){
-			$scope.heroList = response.data;
+		heroBackendService.getProfile(tag).then(function(response){
+			console.log(response.data)
+			$scope.heroList = response;
 		})
 	}
 	$scope.displayHeroInformation = function (hero){
@@ -89,8 +92,19 @@ app.controller('SearchBar', function($scope, $http, heroBackendService){
 					
 	})
 
-	app.service('heroBackendService', function(){
+	app.factory('heroBackendService', function($http){
+		serviceObj = {};
+		serviceObj.getProfile = function (tag ){
+           var chars = $http({method: 'Get', url: '/profile?id=' + tag})
+         //  chars =	$http.get('/profile?id=' + tag)
+		   .then(function(response){
+			   console.log(response.data);
+			return response.data;
+		      })
+		   return chars;
+		};
 
+ return serviceObj;
 	})
 	 </script>
 
