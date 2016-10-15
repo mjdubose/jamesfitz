@@ -1,33 +1,34 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
 	<link href='/public/stylesheet.css' rel='stylesheet'>
 	<link href='/public/style.css' rel='stylesheet'>
 </head>
+
 <body ng-app="D3App" class='body'>
 
-<div class='search-bar' ng-controller="SearchBar"> 
-<input type='text' ng-model='battleTag' />
-<input type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'/>
+	<div class='search-bar' ng-controller="SearchBar">
+		<input type='text' ng-model='battleTag' />
+		<input type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)' />
 
-	<div >
-		<div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
-			<div class='hero' ng-model='hero' >
-				{{hero.name}} -	 Lvl: {{hero.level}} , {{hero.class}}
+		<div>
+			<div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
+				<div class='hero' ng-model='hero'>
+					{{hero.name}} - Lvl: {{hero.level}} , {{hero.class}}
+				</div>
 			</div>
 		</div>
+
+		<div class='hero-equipment' ng-controller='Displayer'>
+			<div ng-model='a'>
+				Hero's Equipment {{ CharId() }} {{ BattleTag() }}
+			</div>
+		</div>
+
 	</div>
 
-<div class='hero-equipment' ng-controller='Displayer' >
-	<div ng-model = 'a'>
-	Hero's Equipment {{ CharId() }} {{ BattleTag() }}
-</div>
-</div>
-
-</div>
-
-<!-- <script>
+	<!-- <script>
 	const function run(interval, frames) {
 		var int = 1;
 		function func(){
@@ -45,26 +46,22 @@
 	{"<source src='/Public/20-heaven-s-gate.mp3' type='audio/mp3'>"}
 </audio>
 -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
-<script>var app = angular.module('D3App', []);
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
+	<script>var app = angular.module('D3App', []);
 app.controller('SearchBar', function($scope, $http, heroService){
 	$scope.heroList;
 	$scope.battleTag = 'slayeneq-1864';
 
 	$scope.getHeroInformation = function (tag){
-
 		$http.get('/profile?id=' + tag).then(function(response){
 			$scope.heroList = response.data;
 		})
 	}
 	$scope.displayHeroInformation = function (hero){
-		console.log(hero)
+		console.log(hero);
 		heroService._addBattleTag(hero.battleTag);
 		heroService._addCharacterId(hero.characterID);
-
 	}
-
-
 	})
 
 	app.controller('Displayer', function($scope, $http, heroService) {
@@ -76,34 +73,36 @@ app.controller('SearchBar', function($scope, $http, heroService){
 	app.service('heroService', function(){
 		var currentHero={}
 		 currentHero.characterID ='none';
-	 currentHero.battleTag = 'none';
+	     currentHero.battleTag = 'none';
 		_addBattleTag = function(battleTag){
 			currentHero.battleTag = battleTag;
 		}
 		_addCharacterId = function(charID){
 			currentHero.characterID = charID;
 		}
-		_currentHeroId = function(){
-	
+		_currentHeroId = function(){	
 			return currentHero.characterID;
 		}
 		_currentHeroBattleTag = function(){
 			return currentHero.battleTag;
 		}
-		return {_addCharacterId :_addCharacterId,
+		
+		return {
+		            	_addCharacterId :_addCharacterId,
 						_addBattleTag: _addBattleTag,
 						_currentHeroId:_currentHeroId,
 						_currentHeroBattleTag: _currentHeroBattleTag
-						};
+				};
 	})
 	 </script>
 
-<!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator 
+	<!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator 
 //                                
 //http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
 // icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
 //.png name is stored in items or skills database table under icon.
 -->
-<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
+	<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
 </body>
+
 </html>
