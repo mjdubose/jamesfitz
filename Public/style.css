@@ -43,7 +43,7 @@ body { font-family: 'Exocet Light'; }
 
 .hero-equipment-container {
 	cursor: default;
-	background-color:  rgba(0,0,0, .5);
+	background-color: rgba(0,0,0, .5);
 	width: 66%;
 	display: inline;
 	margin-top: 20px;	
@@ -52,7 +52,7 @@ body { font-family: 'Exocet Light'; }
 }
 
 .hero-equipment {
-	cursor: default;
+	cursor: default;	
 	display: inline;
 	text-align: center;
 	width : 50%;
