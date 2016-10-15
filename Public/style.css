@@ -1,21 +1,15 @@
 
 
-.battle-tag-header {
-	display: block;
-	text-align: center;
-	width: 280px;
-}
-
 body { font-family: 'Exocet Light'; }
 
- @font-face {
-	 font-family:"Exocet Light";
-	 src:url("EXL_____.eot?") format("eot"),
-	 url("EXL_____.woff") format("woff"),
-	 url("EXL_____.ttf") format("truetype"),
-	 url("EXL_____.svg#ExocetLight") format("svg");
-	 font-weight:normal;
-	 font-style:normal;
+@font-face {
+ font-family:"Exocet Light";
+ src:url("EXL_____.eot?") format("eot"),
+ url("EXL_____.woff") format("woff"),
+ url("EXL_____.ttf") format("truetype"),
+ url("EXL_____.svg#ExocetLight") format("svg");
+ font-weight:normal;
+ font-style:normal;
 }
 
 .body {
@@ -39,11 +33,15 @@ body { font-family: 'Exocet Light'; }
 	margin-bottom: 0px;
 }
 
+.hero-equipment-container {
+}
+
 .hero-equipment {
 	display: inline;
 	margin-top: 20px;	
 	margin-right: 30px;
 	float: right;
+
 }
 
 .tag-name {

@@ -1,10 +1,11 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
 	<link href='/public/stylesheet.css' rel='stylesheet'>
 	<link href='/public/style.css' rel='stylesheet'>
 </head>
+
 <body ng-app="D3App" class='body'>
 <Video class='background' autoplay loop>
 	<source src="/public/videos/malthael.webm" type="video/webm" />
@@ -23,12 +24,16 @@
 			</div>
 		</div>
 	</div>
-
-<div class='hero-equipment' ng-controller='Displayer' ng-click='showData()'>
-	Hero's Equipment {{myHero}}
+	<div class='hero-equipment-container' ng-controller='Displayer'>
+		<div class='hero-equipment' ng-model='a'>
+			Hero's Equipment 
+			<div>{{ CharId() }} {{ BattleTag() }}
+			</div>
+		</div>
+	</div>
 </div>
 
-</div>
+
 
 <!--  <script>
 	const function run(interval, frames) {
@@ -51,57 +56,63 @@
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
 <script>var app = angular.module('D3App', []);
+
 app.controller('SearchBar', function($scope, $http, heroService){
 	$scope.heroList;
 	$scope.battleTag = 'slayeneq-1864';
 
 	$scope.getHeroInformation = function (tag){
-
 		$http.get('/profile?id=' + tag).then(function(response){
 			$scope.heroList = response.data;
 		})
 	}
 	$scope.displayHeroInformation = function (hero){
-		console.log(hero)
+		console.log(hero);
 		heroService._addBattleTag(hero.battleTag);
 		heroService._addCharacterId(hero.characterID);
 	}
-
-
 	})
-	app.controller('Displayer', function($scope, $http, heroService) {
-				$scope.heroService = heroService._currentHeroData
-				if(heroService._currentHeroData.battleTag !== undefined) {
-					myHero = heroService._currentHeroData
-				}
-				$scope.showData = function(){console.log(heroService._currentHeroData)}
-				$scope.myHero = ''
 
+	app.controller('Displayer', function($scope, $http, heroService) {
+
+				$scope.BattleTag = heroService._currentHeroBattleTag;
+				$scope.CharId =  heroService._currentHeroId;
+					
 	})
 
 	app.service('heroService', function(){
 		var currentHero={}
+		 currentHero.characterID ='none';
+	     currentHero.battleTag = 'none';
 		_addBattleTag = function(battleTag){
 			currentHero.battleTag = battleTag;
 		}
-		_addCharacterId = function(charaID){
-			currentHero.characterID = charaID;
+		_addCharacterId = function(charID){
+			currentHero.characterID = charID;
 		}
-		_currentHeroData = function(){
-			return currentHero;
+		_currentHeroId = function(){	
+			return currentHero.characterID;
 		}
-		return {_addCharacterId :_addCharacterId,
+		_currentHeroBattleTag = function(){
+			return currentHero.battleTag;
+		}
+		
+		return {
+		        _addCharacterId :_addCharacterId,
 						_addBattleTag: _addBattleTag,
-						_currentHeroData:_currentHeroData()};
+						_currentHeroId:_currentHeroId,
+						_currentHeroBattleTag: _currentHeroBattleTag
+				};
 	})
 	 </script>
 
-<!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator 
+	<!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator 
 //                                
 //http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
 // icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
 //.png name is stored in items or skills database table under icon.
 -->
-<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
+	<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
 </body>
+
 </html>
