@@ -29,10 +29,41 @@
 
 		<div class='hero-equipment-container' ng-controller='Displayer'>
 			<div class='hero-stats'>
-				Character Stats {{ showId()}} {{ showbattleTag() }} <br> Needs to be fetched and displayed <br>
+				Character Stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
+				  Life: {{character.life}} <br>
+				  Damage: {{character.damage}} <br>
+				  Toughness: {{character.toughness}} <br>
+				  Healing: {{character.healing}} <br>
+				  Attack Speed: {{character.attackSpeed}} <br>
+				  Armor: {{character.armor}} <br>
+				  Strength: {{character.strength}} <br>
+				  Dexterity: {{character.dexterity}} <br>
+				  Vitality: {{character.vitality}} <br>
+				  Intelligence: {{character.intelligence}} <br>
+                  Physical Resist: {{character.physicalResist}} <br>
+				  Fire Resist: {{character.fireResist}} <br>
+				  Cold Resist:{{character.coldResist}} <br>
+				  Lightning Resist: {{character.lightningResist}}<br>
+	              Posion Resist: {{character.poisonResist}} <br>
+				  Arcane Resist: {{character.arcaneResist}}<br>
+				  Crit Damage: {{character.critDamage}}<br>
+				  Block Chance:  {{character.blockChance}} <br>
+				  Block Amount: {{character.blockAmountMin}} <br>
+				  Block Amount Max: {{character.blockAmountMax}} <br>
+				  Damage Increase: {{character.damageIncrease}} <br>
+				  Critical Chance: {{character.critChance}} <br>
+				  Damage Reduction: {{character.damageReduction}} <br>
+				  Thorn Damage: {{character.thorns}} <br>
+				  Life Steal : {{character.lifeSteal}} <br>
+				  Life Per Kill: {{character.lifePerKill}} <br>
+				  Gold Find: {{character.goldFind}} <br>
+				  Magic Find: {{character.magicFind}} <br>
+				  Life On Hit: {{character.lifeOnHit}} <br>
+				  Primary Resource: {{character.primaryResource}} <br>
+				  Secondary Resource: {{character.secondaryResource}} <br>
 			</div>
 			<div class='hero-equipment'>
-				Hero's Equipment {{ showId ()}} {{ showbattleTag() }}
+				Hero's Equipment
 				<br> Needs to be fetched and displayed <br>
 			</div>
 		</div>
@@ -72,17 +103,27 @@ app.controller('SearchBar', function($scope, heroBackendService){
 
 	$scope.getHeroInformation = function (tag){
 		heroBackendService.getProfile(tag).then(function(response){
-			console.log(response.data)
-			$scope.heroList = response;
-		})
-	}
+		$scope.heroList = response;
+		}) };
+		
 	$scope.displayHeroInformation = function (hero){
 		$scope.selectedId=hero.characterID;
-	  console.log(hero);
+		 heroBackendService.getStats($scope.selectedId,$scope.battleTag).then(function(response){	   	 
+       $scope.character = response;	 
+	   $scope.character.name = hero.name;
+	   $scope.character.level = hero.level;
+	   $scope.character.class = hero.class;	  
+	   })	
 	}
 	})
 
 	app.controller('Displayer', function($scope, $http, heroBackendService) {
+	  
+	   $scope.getCharacter = function (){
+		   return $scope.character;
+	   }
+
+	
 	$scope.showId = function( ){
 		return $scope.selectedId;
 	}
@@ -96,13 +137,17 @@ app.controller('SearchBar', function($scope, heroBackendService){
 		serviceObj = {};
 		serviceObj.getProfile = function (tag ){
            var chars = $http({method: 'Get', url: '/profile?id=' + tag})
-         //  chars =	$http.get('/profile?id=' + tag)
 		   .then(function(response){
-			   console.log(response.data);
-			return response.data;
+			  return response.data;
 		      })
 		   return chars;
 		};
+       serviceObj.getStats = function(charId,battleTag){
+		   var char = $http({method: 'Get', url: '/character?charId='+charId+'&id='+battleTag}) .then(function(response){
+			  return response.data[0];
+		      })
+		   return char;
+	   }
 
  return serviceObj;
 	})
