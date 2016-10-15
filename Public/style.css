@@ -65,7 +65,9 @@ body { font-family: 'Exocet Light'; }
 	width: 50%;
 	float: left;
 }
-
+.stat-listing {
+	text-align: left;
+}
 .background {
   display: block;
   position: absolute;	

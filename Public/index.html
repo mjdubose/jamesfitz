@@ -27,9 +27,11 @@
 			</div>
 		</div>
 
-		<div class='hero-equipment-container' ng-controller='Displayer'>
+		<div class='hero-equipment-container' ng-controller='Displayer' ng-show="show">
 			<div class='hero-stats'>
 				Character Stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
+				Paragon Level : {{character.paragonLevel}} <br>
+				<div class = "stat-listing">
 				  Life: {{character.life}} <br>
 				  Damage: {{character.damage}} <br>
 				  Toughness: {{character.toughness}} <br>
@@ -61,6 +63,7 @@
 				  Life On Hit: {{character.lifeOnHit}} <br>
 				  Primary Resource: {{character.primaryResource}} <br>
 				  Secondary Resource: {{character.secondaryResource}} <br>
+				  </div>
 			</div>
 			<div class='hero-equipment'>
 				Hero's Equipment
@@ -96,7 +99,7 @@
 	<script>var app = angular.module('D3App', []);
 
 app.controller('SearchBar', function($scope, heroBackendService){
-	$scope.heroBackendService = heroBackendService;
+	$scope.show = false;
 	$scope.heroList;
 	$scope.battleTag = 'slayeneq-1864';
 	$scope.selectedId ='';
@@ -112,7 +115,11 @@ app.controller('SearchBar', function($scope, heroBackendService){
        $scope.character = response;	 
 	   $scope.character.name = hero.name;
 	   $scope.character.level = hero.level;
-	   $scope.character.class = hero.class;	  
+	   $scope.character.class = hero.class;	 
+	   $scope.character.paragonLevel = hero.paragonLevel;
+	   console.log(hero)
+
+	   $scope.show = true; 
 	   })	
 	}
 	})
