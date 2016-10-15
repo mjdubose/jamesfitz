@@ -35,17 +35,26 @@ body { font-family: 'Exocet Light'; }
 	 font-style:normal;
 }
 
-.search-bar {
-	display: inline;
+.search-bar { width: 33%;
+	float: left;
 }
+.displayer {
+	width: 66%;
 
+	float:left;
+}
 .hero {
 	cursor: pointer;
 	margin-top: 20px;
 	margin-bottom: 0px;
 }
 .hero-equipment {
-
+	width : 50%;
+	float: left;
+}
+.hero-stats {
+	width: 50%;
+	float: left;
 }
 .tag-name {
 	width: 250px;

@@ -19,14 +19,19 @@
 				</div>
 			</div>
 		</div>
-
-		<div class='hero-equipment' ng-controller='Displayer'>
-			<div ng-model='a'>
-				Hero's Equipment {{ CharId() }} {{ BattleTag() }}
-			</div>
-		</div>
-
 	</div>
+	<div class="displayer" ng-controller="Displayer">
+		<div class='hero-stats'>
+			Character Stats {{ CharId() }} {{ BattleTag() }} <br> Needs to be fetched and displayed <br>
+		</div>
+		<div class='hero-equipment'>
+
+			Hero's Equipment {{ CharId() }} {{ BattleTag() }}
+			<br> Needs to be fetched and displayed <br>
+
+		</div>
+	</div>
+
 
 	<!-- <script>
 	const function run(interval, frames) {
