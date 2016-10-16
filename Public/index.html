@@ -120,7 +120,40 @@ app.controller('SearchBar', function($scope, heroBackendService){
 	   console.log(hero)
 
 	   $scope.show = true; 
-	   })	
+	   })
+	   .then(function(){heroBackendService.getGear($scope.selectedId,'feet')	   
+		   .then(function(response){	$scope.character.feet = response; })
+	       .then(function(){heroBackendService.getGear($scope.selectedId,'head') 
+		   .then(function(response){	$scope.character.head = response; })
+           .then(function(){heroBackendService.getGear($scope.selectedId,'neck')   
+		   .then(function(response){	$scope.character.neck = response; })
+		   .then(function(){heroBackendService.getGear($scope.selectedId,'waist')   
+		   .then(function(response){	$scope.character.waist = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'shoulders')   
+		   .then(function(response){	$scope.character.shoulders = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'bracers')   
+		   .then(function(response){	$scope.character.bracers = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'hands')   
+		   .then(function(response){	$scope.character.hands = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'torso')   
+		   .then(function(response){	$scope.character.torso = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'rightFinger')   
+		   .then(function(response){	$scope.character.rightFinger = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'mainHand')   
+		   .then(function(response){	$scope.character.mainHand = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'offHand')   
+		   .then(function(response){	$scope.character.offHand = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'legs')   
+		   .then(function(response){	$scope.character.legs = response; })  
+           .then(function(){heroBackendService.getGear($scope.selectedId,'leftFinger')   
+		   .then(function(response){	$scope.character.leftFinger = response; 
+		   console.log($scope.character)})  
+
+
+
+
+	   })	 })	 })	}) }) }) }) }) }) }) }) }) })
+	 
 	}
 	})
 
@@ -155,7 +188,13 @@ app.controller('SearchBar', function($scope, heroBackendService){
 		      })
 		   return char;
 	   }
-
+          serviceObj.getGear = function(charId,slot){
+		   var char = $http({method: 'Get', url: '/character/item?charId='+charId+'&slot='+slot}) .then(function(response){
+			 
+			  return response.data;
+		      })
+		   return char;
+	   }
  return serviceObj;
 	})
 	 </script>
