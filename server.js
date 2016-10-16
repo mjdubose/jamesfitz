@@ -15,21 +15,21 @@ app.use('/', express.static(path.join(__dirname, "../Public")));
 app.route('/profile/')
   .get(function (req, res) {
     var id = req.query.id;
-       if (id.indexOf('-')=== -1 && id.indexOf('#')===-1){
-           res.sendStatus(404);
+    if (id.indexOf('-') === -1 && id.indexOf('#') === -1) {
+      res.sendStatus(404);
     }
     db.getprofile(id)
       .then(function (results) {
 
 
         if (Array.isArray(results) && results.length === 0) {
-          d3.getProfile(id).then(function(results){
-            if (results.body.code==='NOTFOUND'){
-                 res.sendStatus(404);            
+          d3.getProfile(id).then(function (results) {
+            if (results.body.code === 'NOTFOUND') {
+              res.sendStatus(404);
             }
-       return results;
-          }) 
-            .then(function (results) {          
+            return results;
+          })
+            .then(function (results) {
               var toBeSentBack = {};
               var battleTag = results.body.battleTag;
               battleTag = battleTag.toLowerCase();
@@ -38,10 +38,10 @@ app.route('/profile/')
               toBeSentBack.heroes = results.body.heroes;
               return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
                 db.insertprofileindex(toBeSentBack.battleTag, hero);
-                return toBeSentBack.battleTag;            
+                return toBeSentBack.battleTag;
               })
               ).then(function (ArrayofBattleTags) {
-             //   console.log('BattleTag', ArrayofBattleTags[0]);
+                //   console.log('BattleTag', ArrayofBattleTags[0]);
                 return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
                   res.status(200).send(results);
                 })
@@ -54,7 +54,7 @@ app.route('/profile/')
       })
 
       .catch(function (err) {
-       // console.log(err.message);
+        // console.log(err.message);
         res.sendStatus(404);
       });
   });
@@ -68,24 +68,56 @@ app.route('/character')
         if (Array.isArray(results) && results.length === 0) {
           d3.getCharacter(battleTag, charid)
             .then(function (results) {
+
               db.insertCharacter(results.body.id, results.body.stats);
-              db.insertItem(results.body.id, 'head', results.body.items.head);
-              db.insertItem(results.body.id, 'torso', results.body.items.torso);
-              db.insertItem(results.body.id, 'feet', results.body.items.feet);
-              db.insertItem(results.body.id, 'hands', results.body.items.hands);
-              db.insertItem(results.body.id, 'legs', results.body.items.legs);
-              db.insertItem(results.body.id, 'bracers', results.body.items.bracers);
+              if (typeof results.body.items.torso != 'undefined') {
+                db.insertItem(results.body.id, 'head', results.body.items.head);
+              }
+              if (typeof results.body.items.torso != 'undefined') {
+                db.insertItem(results.body.id, 'torso', results.body.items.torso);
+              }
+              if (typeof results.body.items.feet != 'undefined') {
+                db.insertItem(results.body.id, 'feet', results.body.items.feet);
+              }
+              if (typeof results.body.items.hands != 'undefined') {
+                db.insertItem(results.body.id, 'hands', results.body.items.hands);
+              }
+              if (typeof results.body.items.legs != 'undefined') {
+                db.insertItem(results.body.id, 'legs', results.body.items.legs);
+              }
+              if (typeof results.body.items.bracers != 'undefined') {
+                db.insertItem(results.body.id, 'bracers', results.body.items.bracers);
+              }
+              if (typeof results.body.items.mainHand != 'undefined')
+              {
               db.insertItem(results.body.id, 'mainHand', results.body.items.mainHand);
+              }
+              if (typeof results.body.items.waist != 'undefined')
+              {
               db.insertItem(results.body.id, 'waist', results.body.items.waist);
+              }
+              if (typeof results.body.items.rightFinger != 'undefined'){
               db.insertItem(results.body.id, 'rightFinger', results.body.items.rightFinger);
+              }
+              if (typeof results.body.items.leftFinger != 'undefined'){
               db.insertItem(results.body.id, 'leftFinger', results.body.items.leftFinger);
+              }
+              if (typeof results.body.items.shoulders != 'undefined'){
+              db.insertItem(results.body.id, 'shoulders', results.body.items.shoulders);
+              }
+              if (typeof results.body.items.offHand != 'undefined'){
+              db.insertItem(results.body.id, 'offHand', results.body.items.offHand);
+              }
+              if (typeof results.body.items.neck != 'undefined'){
+              db.insertItem(results.body.id, 'neck', results.body.items.neck);
+              }
               var array = results.body.skills.active;
-              array.map(function(skill){
-                db.insertSkill(results.body.id,skill.skill,'active');
+              array.map(function (skill) {
+                db.insertSkill(results.body.id, skill.skill, 'active');
               });
-                 array = results.body.skills.passive;
-              array.map(function(skill){
-                db.insertSkill(results.body.id,skill.skill,'passive');
+              array = results.body.skills.passive;
+              array.map(function (skill) {
+                db.insertSkill(results.body.id, skill.skill, 'passive');
               });
               return results.body.id;
             })
@@ -99,24 +131,24 @@ app.route('/character')
           res.status(200).send(results);
         }
       })
-    .catch(function (err) {       
+      .catch(function (err) {
         res.sendStatus(404);
       })
   });
 //localhost:3000/character/item?charId=52519415&slot=feet
-  app.route('/character/item').get(function(req,res){
-     var id = req.query.charId;
-     var slot = req.query.slot;
-   return  db.getItem(id,slot).then(function(item){
-        res.status(200).send(item[0]);
-      }).catch(function(err){
-        res.sendStatus(404);
-      })
-      
-  });
+app.route('/character/item').get(function (req, res) {
+  var id = req.query.charId;
+  var slot = req.query.slot;
+  return db.getItem(id, slot).then(function (item) {
+    res.status(200).send(item[0]);
+  }).catch(function (err) {
+    res.sendStatus(404);
+  })
+
+});
 
 
-const port = process.env.PORT ? process.env.PORT : (process.env.NODE_ENV==='test' ? 4000 : 3000 )
+const port = process.env.PORT ? process.env.PORT : (process.env.NODE_ENV === 'test' ? 4000 : 3000)
 console.log('running on port', port);
 app.listen(port);
 //                                
