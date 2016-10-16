@@ -66,8 +66,13 @@
 				  </div>
 			</div>
 			<div class='hero-equipment'>
-				Hero's Equipment
-				<br> Needs to be fetched and displayed <br>
+			<table> <tr><th> </th><th> 	Hero's Equipment </th><th></th></tr>
+			        <tr><td>{{character.shoulders.name}} <img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.shoulders.icon}}.png" ></td><td>{{character.head.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.head.icon}}.png" ></td><td>{{character.neck.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.neck.icon}}.png" ></td></tr>
+		            <tr><td>{{character.hands.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.hands.icon}}.png" ></td><td>{{character.torso.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.torso.icon}}.png" ></td><td>{{character.bracers.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.bracers.icon}}.png" ></td></tr>
+					<tr><td>{{character.rightFinger.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.rightFinger.icon}}.png" ></td><td>{{character.waist.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.waist.icon}}.png" ></td><td>{{character.leftFinger.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.leftFinger.icon}}.png" ></td></tr>
+					<tr><td>{{character.mainHand.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.mainHand.icon}}.png" ></td><td>{{character.legs.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.legs.icon}}.png" ></td><td>{{character.offHand.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.offHand.icon}}.png" ></td></tr>
+				    <tr><td></td><td>{{character.feet.name}}<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.feet.icon}}.png" ></td><td></td></tr>
+			</table>
 			</div>
 		</div>
 
