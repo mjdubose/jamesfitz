@@ -26,12 +26,15 @@ body { font-family: 'Exocet Light'; }
 
 .search-bar-and-heros-container {
 	cursor: url('/Public/images/CursorDI.png'), auto;
-	background-color:  rgba(0,0,0, .5);
+	background-color:  rgba(0,0,0, .75);
 	max-width: 33%;
 	margin-top: 20px;	
 	margin-left: 30px;
 	float: left;
 	display: inline;
+}
+
+.search-bar-inputs {
 }
 
 .hero {
@@ -40,10 +43,17 @@ body { font-family: 'Exocet Light'; }
 	margin-top: 20px;
 	margin-bottom: 0px;
 }
+	/*text-shadow: 0 0 20px rgb(254,252,201) , 10px -10px 30px rgb(254,236,133) , -20px -20px 40px rgb(255,174,52) , 20px -40px 50px rgb(236,118,12) , -20px -60px 60px rgb(205,70,6) , 0 -80px 70px rgb(151,55,22) , 10px -90px 80px rgb(69,27,14);*/
+.hero:hover {
+	text-shadow: 1px -1px 2px orange;
+	color: #8C001A;
+}
 
 .hero-equipment-container {
+	padding-left: 10px;
+	line-height: 32px;
 	cursor: default;
-	background-color: rgba(0,0,0, .5);
+	background-color: rgba(0,0,0, .9);
 	width: 66%;
 	display: inline;
 	margin-top: 20px;	
@@ -52,7 +62,8 @@ body { font-family: 'Exocet Light'; }
 }
 
 .hero-equipment {
-	overflow: auto;
+	text-shadow: 1px -5px 10px rgba(252, 121, 1, 1);
+	color: #8C7300;
 	max-height: 500px;
 	cursor: default;	
 	display: inline;
@@ -62,7 +73,8 @@ body { font-family: 'Exocet Light'; }
 }
 
 .hero-stats {
-	overflow: auto;
+	font-weight: bold;
+	color: #8C001A;
 	max-height: 500px;
 	display: inline;
 	text-align: center;
@@ -70,6 +82,10 @@ body { font-family: 'Exocet Light'; }
 	float: left;
 }
 .stat-listing {
+	text-shadow: 1px -5px 10px rgba(252, 121, 1, 1);
+	color: #8C7300;
+	overflow: auto;
+	max-height: 400px;
 	text-align: left;
 }
 .background {
