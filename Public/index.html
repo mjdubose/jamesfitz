@@ -1,12 +1,82 @@
+<!DOCTYPE html>
+<html>
+
 <head>
 	<link href='/public/stylesheet.css' rel='stylesheet'>
 	<link href='/public/style.css' rel='stylesheet'>
 </head>
-<body class='body'>
-<div class='app'></div>
+
+<body ng-app="D3App" class='body'>
+	<Video class='background' autoplay loop>
+		<source src="/public/videos/malthael.webm" type="video/webm" />
+		<source src="/public/videos/malthael.mp4" type="video/mp4" />
+	</video>
+
+	<div class='container' ng-controller="SearchBar">
+
+		<div class='search-bar-and-heros-container'>
+			<div class='search-bar-inputs'>
+				<input type='text' ng-model='battleTag' />
+				<input style="cursor: url('/Public/images/CursorDI.png'), auto;" type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'
+				/>
+			</div>
+			<div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
+				<div class='hero' ng-model='hero'>
+					{{hero.name}} - Lvl: {{hero.level}} , {{hero.class}}
+				</div>
+			</div>
+		</div>
+
+		<div class='hero-equipment-container' ng-controller='Displayer' ng-show="show">
+			<div class='hero-stats'>
+				Character Stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
+				Paragon Level : {{character.paragonLevel}} <br>
+				<div class = "stat-listing">
+				  Life: {{character.life}} <br>
+				  Damage: {{character.damage}} <br>
+				  Toughness: {{character.toughness}} <br>
+				  Healing: {{character.healing}} <br>
+				  Attack Speed: {{character.attackSpeed}} <br>
+				  Armor: {{character.armor}} <br>
+				  Strength: {{character.strength}} <br>
+				  Dexterity: {{character.dexterity}} <br>
+				  Vitality: {{character.vitality}} <br>
+				  Intelligence: {{character.intelligence}} <br>
+                  Physical Resist: {{character.physicalResist}} <br>
+				  Fire Resist: {{character.fireResist}} <br>
+				  Cold Resist:{{character.coldResist}} <br>
+				  Lightning Resist: {{character.lightningResist}}<br>
+	              Posion Resist: {{character.poisonResist}} <br>
+				  Arcane Resist: {{character.arcaneResist}}<br>
+				  Crit Damage: {{character.critDamage}}<br>
+				  Block Chance:  {{character.blockChance}} <br>
+				  Block Amount: {{character.blockAmountMin}} <br>
+				  Block Amount Max: {{character.blockAmountMax}} <br>
+				  Damage Increase: {{character.damageIncrease}} <br>
+				  Critical Chance: {{character.critChance}} <br>
+				  Damage Reduction: {{character.damageReduction}} <br>
+				  Thorn Damage: {{character.thorns}} <br>
+				  Life Steal : {{character.lifeSteal}} <br>
+				  Life Per Kill: {{character.lifePerKill}} <br>
+				  Gold Find: {{character.goldFind}} <br>
+				  Magic Find: {{character.magicFind}} <br>
+				  Life On Hit: {{character.lifeOnHit}} <br>
+				  Primary Resource: {{character.primaryResource}} <br>
+				  Secondary Resource: {{character.secondaryResource}} <br>
+				  </div>
+			</div>
+			<div class='hero-equipment'>
+				Hero's Equipment
+				<br> Needs to be fetched and displayed <br>
+			</div>
+		</div>
+
+	</div>
 
 
-<!-- <script>
+
+	<!--  <script>
+
 	const function run(interval, frames) {
 		var int = 1;
 		function func(){
@@ -18,18 +88,85 @@
 		var swap = window.setInterval(func, interval);
 	}
 	run (1000,10);
-</script>
- -->
+<video xmlns="http://www.w3.org/1999/xhtml" id="malthael-video" class="video-bg is-active" loop="loop" poster="/public/images/malthael.jpg">
+</script> -->
 
-<audio controls className='audio' autoplay>
-	{"<source src='/Public/20-heaven-s-gate.mp3' type='audio/mp3'>"}
-</audio>
-<script src='/public/bundle.js'></script>
-<!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator 
+	<!-- <audio controls className='audio' autoplay>
+	{"<source src='/Public/03-new-tristram.mp3' type='audio/mp3'>"}
+</audio> -->
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
+	<script>var app = angular.module('D3App', []);
+
+app.controller('SearchBar', function($scope, heroBackendService){
+	$scope.show = false;
+	$scope.heroList;
+	$scope.battleTag = 'slayeneq-1864';
+	$scope.selectedId ='';
+
+	$scope.getHeroInformation = function (tag){
+		heroBackendService.getProfile(tag).then(function(response){
+		$scope.heroList = response;
+		}) };
+		
+	$scope.displayHeroInformation = function (hero){
+		$scope.selectedId=hero.characterID;
+		 heroBackendService.getStats($scope.selectedId,$scope.battleTag).then(function(response){	   	 
+       $scope.character = response;	 
+	   $scope.character.name = hero.name;
+	   $scope.character.level = hero.level;
+	   $scope.character.class = hero.class;	 
+	   $scope.character.paragonLevel = hero.paragonLevel;
+	   console.log(hero)
+
+	   $scope.show = true; 
+	   })	
+	}
+	})
+
+	app.controller('Displayer', function($scope, $http, heroBackendService) {
+	  
+	   $scope.getCharacter = function (){
+		   return $scope.character;
+	   }
+
+	
+	$scope.showId = function( ){
+		return $scope.selectedId;
+	}
+	$scope.showbattleTag = function( ){
+		return $scope.battleTag;
+	}		
+					
+	})
+
+	app.factory('heroBackendService', function($http){
+		serviceObj = {};
+		serviceObj.getProfile = function (tag ){
+           var chars = $http({method: 'Get', url: '/profile?id=' + tag})
+		   .then(function(response){
+			  return response.data;
+		      })
+		   return chars;
+		};
+       serviceObj.getStats = function(charId,battleTag){
+		   var char = $http({method: 'Get', url: '/character?charId='+charId+'&id='+battleTag}) .then(function(response){
+			  return response.data[0];
+		      })
+		   return char;
+	   }
+
+ return serviceObj;
+	})
+	 </script>
+
+	<!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator 
 //                                
 //http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
 // icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
 //.png name is stored in items or skills database table under icon.
 -->
-<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
+	<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
 </body>
+
+</html>
