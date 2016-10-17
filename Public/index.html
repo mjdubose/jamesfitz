@@ -30,163 +30,166 @@
 
     <div class='hero-equipment-container' ng-controller='Displayer' ng-show="show">
         <div class='hero-stats'>
-            Character Stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
+        <div class='hero-stats-header'>
+            Character stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
             Paragon Level : {{character.paragonLevel}} <br>
-            <div class="stat-listing">
+        </div>
+            <div class="stat-listing" >
+            <br>
                 <div class = "red">
                 Life:
-                </div>{{character.life}} <br>
+                </div>
+                <div class='chara-stat'>{{character.life}}</div> <br>
                 <div class = "red">
                 Damage:
-                </div> {{character.damage}} <br>
+                </div>
+                <div class='chara-stat'> {{character.damage}}</div> <br>
                 <div class = "red">
                 Toughness:
-                </div> {{character.toughness}} <br>
+                </div><div class='chara-stat'> {{character.toughness}}</div> <br>
                <div class = "red">
                 Healing:
-               </div> {{character.healing}} <br>
+               </div><div class='chara-stat'> {{character.healing}}</div> <br>
                 <div class = "red">
                 Attack Speed:
-                </div> {{character.attackSpeed}} <br>
+                </div><div class='chara-stat'> {{character.attackSpeed}}</div> <br>
                <div class = "red">
                 Armor:
-               </div> {{character.armor}} <br>
+               </div><div class='chara-stat'> {{character.armor}}</div> <br>
                 <div class = "red">
                 Strength:
-                </div> {{character.strength}} <br>
+                </div><div class='chara-stat'> {{character.strength}}</div> <br>
                 <div class = "red">
                 Dexterity:
-                </div> {{character.dexterity}} <br>
+                </div><div class='chara-stat'> {{character.dexterity}}</div> <br>
                <div class = "red">
                 Vitality:
-               </div> {{character.vitality}} <br>
+               </div><div class='chara-stat'> {{character.vitality}}</div> <br>
                 <div class = "red">
                 Intelligence:
-                </div> {{character.intelligence}} <br>
+                </div><div class='chara-stat'> {{character.intelligence}}</div> <br>
                 <div class = "red">
                 Physical Resist:
-                </div> {{character.physicalResist}} <br>
+                </div><div class='chara-stat'> {{character.physicalResist}}</div> <br>
                 <div class = "red">
                 Fire Resist:
-                </div> {{character.fireResist}} <br>
+                </div><div class='chara-stat'> {{character.fireResist}}</div> <br>
                 <div class = "red">
                 Cold Resist:
-                </div>{{character.coldResist}} <br>
+                </div><div class='chara-stat'>{{character.coldResist}}</div> <br>
                <div class = "red">
                 Lightning Resist:
-               </div> {{character.lightningResist}}<br>
+               </div><div class='chara-stat'> {{character.lightningResist}}</div><br>
                 <div class = "red">
                 Poison Resist:
-                </div> {{character.poisonResist}} <br>
+                </div><div class='chara-stat'> {{character.poisonResist}}</div> <br>
                <div class = "red">
                 Arcane Resist:
-               </div> {{character.arcaneResist}}<br>
+               </div><div class='chara-stat'> {{character.arcaneResist}}</div><br>
                <div class = "red">
                 Crit Damage:
-               </div> {{character.critDamage}}<br>
+               </div><div class='chara-stat'> {{character.critDamage}}</div><br>
                <div class = "red">
                 Block Chance:
-               </div> {{character.blockChance}} <br>
+               </div><div class='chara-stat'> {{character.blockChance}}</div> <br>
                 <div class = "red">
                 Block Amount:
-                </div> {{character.blockAmountMin}} <br>
+                </div><div class='chara-stat'> {{character.blockAmountMin}}</div> <br>
                 <div class = "red">
                 Block Amount Max:
-                </div> {{character.blockAmountMax}} <br>
+                </div><div class='chara-stat'> {{character.blockAmountMax}}</div> <br>
                 <div class = "red">
                 Damage Increase:
-                </div> {{character.damageIncrease}} <br>
+                </div><div class='chara-stat'> {{character.damageIncrease}}</div> <br>
                <div class = "red">
                 Critical Chance:
-               </div>{{character.critChance}} <br>
+               </div><div class='chara-stat'>{{character.critChance}}</div> <br>
                <div class = "red">
                 Damage Reduction:
-               </div> {{character.damageReduction}} <br>
+               </div><div class='chara-stat'> {{character.damageReduction}}</div> <br>
                 <div class = "red">
                 Thorn Damage:
-                </div> {{character.thorns}} <br>
+                </div><div class='chara-stat'> {{character.thorns}}</div> <br>
                 <div class = "red">
                 Life Steal :
-                </div> {{character.lifeSteal}} <br>
+                </div><div class='chara-stat'> {{character.lifeSteal}}</div> <br>
                 <div class = "red">
                 Life Per Kill:
-                </div> {{character.lifePerKill}} <br>
+                </div><div class='chara-stat'> {{character.lifePerKill}}</div> <br>
                 <div class = "red">
                 Gold Find:
-                </div> {{character.goldFind}} <br>
+                </div><div class='chara-stat'> {{character.goldFind}}</div> <br>
                 <div class = "red">
                 Magic Find:
-                </div> {{character.magicFind}} <br>
+                </div><div class='chara-stat'> {{character.magicFind}}</div> <br>
                 <div class = "red">
                 Life On Hit:
-                </div> {{character.lifeOnHit}} <br>
+                </div><div class='chara-stat'> {{character.lifeOnHit}}</div> <br>
                 <div class = "red">
                 Primary Resource:
-                </div> {{character.primaryResource}} <br>
+                </div><div class='chara-stat'> {{character.primaryResource}}</div> <br>
                 <div class = "red">
                 Secondary Resource:
-                </div> {{character.secondaryResource}} <br>
+                </div><div class='chara-stat'> {{character.secondaryResource}}</div> <br>
             </div>
         </div>
-        <div class='hero-equipment equipment-scroll'>
-            <table class= 'hero-equipment-table'>
-                <tr>
-                    <th></th>
-                    <th> Hero's Equipment</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.shoulders.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.shoulders.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.head.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.head.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.neck.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.neck.icon}}.png"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.hands.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.hands.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell' ><a href="http://us.battle.net/d3/en/{{character.torso.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.torso.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.bracers.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.bracers.icon}}.png"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.rightFinger.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.rightFinger.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.waist.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.waist.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.leftFinger.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.leftFinger.icon}}.png"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.mainHand.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.mainHand.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.legs.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.legs.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.offHand.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.offHand.icon}}.png"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class='equipment-cell'></td>
-                    <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.feet.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.feet.icon}}.png"></a>
-                    </td>
-                    <td class='equipment-cell'></td>
-                </tr>
-            </table>
+        <div class='hero-equipment '> 
+            <div class='hero-equipment-header'>Hero's Equipment</div>
+            <div class='equipment-scroll'>
+                <table class= 'hero-equipment-table'>
+                    <tr>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.shoulders.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.shoulders.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.head.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.head.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.neck.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.neck.icon}}.png"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.hands.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.hands.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell' ><a href="http://us.battle.net/d3/en/{{character.torso.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.torso.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.bracers.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.bracers.icon}}.png"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.rightFinger.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.rightFinger.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.waist.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.waist.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.leftFinger.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.leftFinger.icon}}.png"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.mainHand.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.mainHand.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.legs.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.legs.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.offHand.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.offHand.icon}}.png"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='equipment-cell'></td>
+                        <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.feet.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{character.feet.icon}}.png"></a>
+                        </td>
+                        <td class='equipment-cell'></td>
+                    </tr>
+                </table>
+            </div>
 
         </div>
     </div>

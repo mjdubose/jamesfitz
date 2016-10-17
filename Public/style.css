@@ -37,6 +37,7 @@ body { font-family: 'Exocet Light'; }
 }
 
 .hero {
+	font-weight: bold;
 	cursor: url('/Public/images/CursorDI.png'), auto;
 	display: block;
 	margin-top: 20px;
@@ -62,9 +63,9 @@ body { font-family: 'Exocet Light'; }
 
 .hero-equipment {
 	text-align: center;
-	text-shadow: 1px -5px 10px rgba(252, 121, 1, 1);
+	text-shadow: 1px -5px 20px rgba(252, 121, 1, 1);
 	color: #8C7300;
-	max-height: 500px;
+	max-height: 525px;
 	cursor: default;	
 	text-align: center;
 	width : 50%;
@@ -72,7 +73,10 @@ body { font-family: 'Exocet Light'; }
 }
 
 .hero-equipment-header {
+	margin-top: 20px;
+	padding-bottom: 25px;
 	text-align: center;
+	border-bottom: thin solid rgba(229, 228, 226, .5);
 }
 
 .hero-equipemnt-table {
@@ -92,6 +96,7 @@ body { font-family: 'Exocet Light'; }
 	max-height: 450px;
 }
 .red {
+	display: inline;
 	color: #8C001A;
 }
 
@@ -103,8 +108,12 @@ body { font-family: 'Exocet Light'; }
 	width: 50%;
 	float: left;
 }
+.hero-stats-header {
+	text-shadow: 1px -2px 20px rgba(229, 228, 226, .5);
+	border-bottom: thin solid rgba(229, 228, 226, .5);
+	padding-top: 12px;
+}
 .stat-listing {
-	text-shadow: 1px -4px 18px rgba(252, 121, 1, 1);
 	color: #8C7300;
 	overflow: auto;
 	max-height: 450px;
@@ -121,8 +130,12 @@ body { font-family: 'Exocet Light'; }
 	margin: 0;
 	padding: 0;
 }
+	/*text-shadow: .5px -1px 20px rgba(252, 121, 1, 1);*/
 .chara-stat {
+	margin-right: 10px;
 	display: inline;
+	text-align: right;
+	float: right;
 }
 
 .background {
