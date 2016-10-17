@@ -87,7 +87,10 @@ body { font-family: 'Exocet Light'; }
 	margin: 0;
 	padding: 0;
 }
-
+.equipment-scroll {
+	overflow: auto;
+	max-height: 450px;
+}
 .red {
 	color: #8C001A;
 }
@@ -110,7 +113,14 @@ body { font-family: 'Exocet Light'; }
 .stat {
 	display: inline;
 }
-
+.hero-equipment-table {
+	margin-left: auto;
+	margin-right: auto;
+}
+.equipment-cell {
+	margin: 0;
+	padding: 0;
+}
 .chara-stat {
 	display: inline;
 }
