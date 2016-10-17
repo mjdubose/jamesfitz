@@ -7,206 +7,213 @@
 </head>
 
 <body ng-app="D3App" class='body'>
-<Video class='background' autoplay loop>
-    <source src="/public/videos/malthael.webm" type="video/webm"/>
-    <source src="/public/videos/malthael.mp4" type="video/mp4"/>
-</video>
 
-<div class='container' ng-controller="SearchBar">
+	<Video class='background' autoplay loop>
+		<source src="/public/videos/malthael.webm" type="video/webm" />
+		<source src="/public/videos/malthael.mp4" type="video/mp4" />
+	</video>
 
-    <div class='search-bar-and-heros-container'>
-        <div class='search-bar-inputs'>
-            <input type='text' ng-model='battleTag'/>
-            <input style="cursor: url('/Public/images/CursorDI.png'), auto;" type='button'
-                   value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'
-            />
-        </div>
-        <div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
-            <div class='hero' ng-model='hero'>
-                {{hero.name}} - Lvl: {{hero.level}} , {{hero.class}}
-            </div>
-        </div>
-    </div>
+	<div class='container' ng-controller="SearchBar">
 
-    <div class='hero-equipment-container' ng-controller='Displayer' ng-show="show">
-        <div class='hero-stats'>
-            Character Stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
-            Paragon Level : {{character.paragonLevel}} <br>
-            <div class="stat-listing">
-                <div class = "red">
-                Life:
-                </div>{{character.life}} <br>
-                <div class = "red">
-                Damage:
-                </div> {{character.damage}} <br>
-                <div class = "red">
-                Toughness:
-                </div> {{character.toughness}} <br>
-               <div class = "red">
-                Healing:
-               </div> {{character.healing}} <br>
-                <div class = "red">
-                Attack Speed:
-                </div> {{character.attackSpeed}} <br>
-               <div class = "red">
-                Armor:
-               </div> {{character.armor}} <br>
-                <div class = "red">
-                Strength:
-                </div> {{character.strength}} <br>
-                <div class = "red">
-                Dexterity:
-                </div> {{character.dexterity}} <br>
-               <div class = "red">
-                Vitality:
-               </div> {{character.vitality}} <br>
-                <div class = "red">
-                Intelligence:
-                </div> {{character.intelligence}} <br>
-                <div class = "red">
-                Physical Resist:
-                </div> {{character.physicalResist}} <br>
-                <div class = "red">
-                Fire Resist:
-                </div> {{character.fireResist}} <br>
-                <div class = "red">
-                Cold Resist:
-                </div>{{character.coldResist}} <br>
-               <div class = "red">
-                Lightning Resist:
-               </div> {{character.lightningResist}}<br>
-                <div class = "red">
-                Poison Resist:
-                </div> {{character.poisonResist}} <br>
-               <div class = "red">
-                Arcane Resist:
-               </div> {{character.arcaneResist}}<br>
-               <div class = "red">
-                Crit Damage:
-               </div> {{character.critDamage}}<br>
-               <div class = "red">
-                Block Chance:
-               </div> {{character.blockChance}} <br>
-                <div class = "red">
-                Block Amount:
-                </div> {{character.blockAmountMin}} <br>
-                <div class = "red">
-                Block Amount Max:
-                </div> {{character.blockAmountMax}} <br>
-                <div class = "red">
-                Damage Increase:
-                </div> {{character.damageIncrease}} <br>
-               <div class = "red">
-                Critical Chance:
-               </div>{{character.critChance}} <br>
-               <div class = "red">
-                Damage Reduction:
-               </div> {{character.damageReduction}} <br>
-                <div class = "red">
-                Thorn Damage:
-                </div> {{character.thorns}} <br>
-                <div class = "red">
-                Life Steal :
-                </div> {{character.lifeSteal}} <br>
-                <div class = "red">
-                Life Per Kill:
-                </div> {{character.lifePerKill}} <br>
-                <div class = "red">
-                Gold Find:
-                </div> {{character.goldFind}} <br>
-                <div class = "red">
-                Magic Find:
-                </div> {{character.magicFind}} <br>
-                <div class = "red">
-                Life On Hit:
-                </div> {{character.lifeOnHit}} <br>
-                <div class = "red">
-                Primary Resource:
-                </div> {{character.primaryResource}} <br>
-                <div class = "red">
-                Secondary Resource:
-                </div> {{character.secondaryResource}} <br>
-            </div>
-        </div>
-        <div class='hero-equipment'>
-            <table>
-                <tr>
-                    <th></th>
-                    <th> Hero's Equipment</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td><a href="http://us.battle.net/d3/en/{{character.shoulders.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.shoulders.icon}}.png"></a>
-                    </td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.head.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.head.icon}}.png"></a>
-                    </td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.neck.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.neck.icon}}.png"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a href="http://us.battle.net/d3/en/{{character.hands.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.hands.icon}}.png"></a>
-                    </td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.torso.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.torso.icon}}.png"></a>
-                    </td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.bracers.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.bracers.icon}}.png"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a href="http://us.battle.net/d3/en/{{character.rightFinger.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.rightFinger.icon}}.png"></a>
-                    </td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.waist.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.waist.icon}}.png"></a>
-                    </td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.leftFinger.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.leftFinger.icon}}.png"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><a href="http://us.battle.net/d3/en/{{character.mainHand.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.mainHand.icon}}.png"></a>
-                    </td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.legs.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.legs.icon}}.png"></a>
-                    </td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.offHand.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.offHand.icon}}.png"></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><a href="http://us.battle.net/d3/en/{{character.feet.tooltipParams}}"><img
-                            src="http://media.blizzard.com/d3/icons/items/large/{{character.feet.icon}}.png"></a>
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
+		<div class='search-bar-and-heros-container'>
+			<div class='search-bar-inputs'>
+				<input type='text' ng-model='battleTag' />
+				<input style="cursor: url('/Public/images/CursorDI.png'), auto;" type='button' value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'
+				/>
+			</div>
+			<div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
+				<div class='hero' ng-model='hero'>
+					{{hero.name}} - Lvl: {{hero.level}} , {{hero.class}}
+				</div>
+			</div>
+		</div>
 
-        </div>
-    </div>
+		<div class='hero-equipment-container' ng-controller='Displayer' ng-show="show">
+			<div class='hero-stats'>
+				Character Stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
+				Paragon Level : {{character.paragonLevel}} <br>
 
-</div>
+				<div class = 'stat-listing'>
+
+				  <div class='stat'>Life: </div> <div class='chara-stat'>{{character.life}}</div> <br>
+
+				  <div class='stat'>Damage: </div> <div class='chara-stat'> {{character.damage}}</div> <br>
+
+				  <div class='stat'>Toughness: </div> <div class='chara-stat'> {{character.toughness}}</div> <br>
+
+				  <div class='stat'>Healing: </div> <div class='chara-stat'> {{character.healing}}</div> <br>
+
+				  <div class='stat'>Attack Speed: </div> <div class='chara-stat'> {{character.attackSpeed}}</div> <br>
+
+				  <div class='stat'>Armor: </div> <div class='chara-stat'> {{character.armor}}</div> <br>
+
+				  <div class='stat'>Strength: </div> <div class='chara-stat'> {{character.strength}}</div> <br>
+
+				  <div class='stat'>Dexterity: </div> <div class='chara-stat'> {{character.dexterity}}</div> <br>
+
+				  <div class='stat'>Vitality: </div> <div class='chara-stat'> {{character.vitality}}</div> <br>
+
+				  <div class='stat'>Intelligence: </div> <div class='chara-stat'> {{character.intelligence}}</div> <br>
+
+          <div class='stat'>Physical Resist: </div> <div class='chara-stat'> {{character.physicalResist}}</div> <br>
+
+				 	<div class='stat'> Fire Resist: </div> <div class='chara-stat'> {{character.fireResist}}</div> <br>
+
+				  <div class='stat'>Cold Resist:</div> <div class='chara-stat'> {{character.coldResist}}</div> <br>
+
+				  <div class='stat'>Lightning Resist: </div> <div class='chara-stat'> {{character.lightningResist}}</div> <br>
+
+	        <div class='stat'>Posion Resist: </div> <div class='chara-stat'> {{character.poisonResist}}</div> <br>
+
+				  <div class='stat'>Arcane Resist: </div> <div class='chara-stat'> {{character.arcaneResist}}</div> <br>
+
+				  <div class='stat'>Crit Damage: </div> <div class='chara-stat'> {{character.critDamage}}</div> <br>
+
+				  <div class='stat'>Block Chance:  </div> <div class='chara-stat'> {{character.blockChance}}</div> <br>
+
+				  <div class='stat'>Block Amount: </div> <div class='chara-stat'> {{character.blockAmountMin}}</div> <br>
+
+				  <div class='stat'>Block Amount Max: </div> <div class='chara-stat'> {{character.blockAmountMax}}</div> <br>
+				  <div class='stat'>Damage Increase: </div> <div class='chara-stat'> {{character.damageIncrease}}</div> <br>
+
+				  <div class='stat'>Critical Chance: </div> <div class='chara-stat'> {{character.critChance}}</div> <br>
+
+				  <div class='stat'>Damage Reduction: </div> <div class='chara-stat'> {{character.damageReduction}}</div> <br>
+
+				  <div class='stat'>Thorn Damage: </div> <div class='chara-stat'> {{character.thorns}}</div> <br>
+
+				  <div class='stat'>Life Steal : </div> <div class='chara-stat'> {{character.lifeSteal}}</div> <br>
+
+				  <div class='stat'>Life Per Kill: </div> <div class='chara-stat'> {{character.lifePerKill}}</div> <br>
+
+				  <div class='stat'>Gold Find: </div> <div class='chara-stat'> {{character.goldFind}}</div> <br>
+
+				  <div class='stat'>Magic Find: </div> <div class='chara-stat'> {{character.magicFind}}</div> <br>
+
+				  <div class='stat'>Life On Hit: </div> <div class='chara-stat'> {{character.lifeOnHit}}</div> <br>
+				  <div class='stat'>Primary Resource: </div> <div class='chara-stat'> {{character.primaryResource}}</div> <br>
+
+				  <div class='stat'>Secondary Resource: </div> <div class='chara-stat'> {{character.secondaryResource}}</div>
+
+				  </div>
+			</div>
+			<div class='hero-equipment'> 
+				<div>
+					<br>
+					Hero's Equipment<br>
+					<br>
+					<div class='equipmennt-scroll'>
+						<table class='hero-equipemnt-table'> 
+							<tbody>
+
+				        <tr>
+				        	<td class='equipment-cell'>
+				        		<a href ="http://us.battle.net/d3/en/{{character.shoulders.tooltipParams}}" >
+				        			<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.shoulders.icon}}.png" >
+				        		</a>
+				        	</td>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.head.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.head.icon}}.png" >
+										</a>
+									</td>
+									<td class='equipment-cell' class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.neck.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.neck.icon}}.png" >
+										</a>
+									</td>
+								</tr>
+
+						    <tr>
+						     	<td class='equipment-cell'>
+						     		<a href ="http://us.battle.net/d3/en/{{character.hands.tooltipParams}}" >
+						     			<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.hands.icon}}.png" >
+						     		</a>
+						     	</td>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.torso.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.torso.icon}}.png" >
+										</a>
+									</td>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.bracers.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.bracers.icon}}.png" >
+										</a>
+									</td>
+								</tr>
+
+								<tr>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.rightFinger.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.rightFinger.icon}}.png" >
+										</a>
+									</td>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.waist.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.waist.icon}}.png" >
+										</a>
+									</td>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.leftFinger.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.leftFinger.icon}}.png" >
+										</a>
+									</td>
+								</tr>
+
+									<tr>
+										<td class='equipment-cell'>
+											<a href ="http://us.battle.net/d3/en/{{character.mainHand.tooltipParams}}" >
+												<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.mainHand.icon}}.png" >
+											</a>
+										</td>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.legs.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.legs.icon}}.png" >
+										</a>
+									</td>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.offHand.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.offHand.icon}}.png" >
+										</a>
+									</td>
+								</tr>
+
+								<tr>
+									<td class='equipment-cell'></td>
+									<td class='equipment-cell'>
+										<a href ="http://us.battle.net/d3/en/{{character.feet.tooltipParams}}" >
+											<img ng-src="http://media.blizzard.com/d3/icons/items/large/{{character.feet.icon}}.png" >
+										</a>
+									</td>
+									<td class='equipment-cell'></td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+		
+			</div>
+		</div>
+
+	</div>
 
 
-<!--  <script>
 
-const function run(interval, frames) {
-    var int = 1;
-    function func(){
-        document.body.class = 'b'+int
-        int++
-        if (int === frames) {int = 1;}
-    }
-    console.log(int)
-    var swap = window.setInterval(func, interval);
-}
-run (1000,10);
+	<!--  <script>
+
+	const function run(interval, frames) {
+		var int = 1;
+		function func(){
+			document.body.class = 'b'+int
+			int++
+			if (int === frames) {int = 1;}
+		}
+		console.log(int)
+		var swap = window.setInterval(func, interval);
+	}
+	run (1000,10);
+
 <video xmlns="http://www.w3.org/1999/xhtml" id="malthael-video" class="video-bg is-active" loop="loop" poster="/public/images/malthael.jpg">
 </script> -->
 
@@ -242,100 +249,85 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
 
             $scope.show = true;
         })
-                .then(function () {
-                    heroBackendService.getGear($scope.selectedId, 'feet')
-                            .then(function (response) {
-                                $scope.character.feet = {};
-                                $scope.character.feet = response;
-                            })
-                            .then(function () {
-                                heroBackendService.getGear($scope.selectedId, 'head')
-                                        .then(function (response) {
-                                            $scope.character.head = {};
-                                            $scope.character.head = response;
-                                        })
-                                        .then(function () {
-                                            heroBackendService.getGear($scope.selectedId, 'neck')
-                                                    .then(function (response) {
-                                                        $scope.character.neck = {};
-                                                        $scope.character.neck = response;
-                                                    })
-                                                    .then(function () {
-                                                        heroBackendService.getGear($scope.selectedId, 'waist')
-                                                                .then(function (response) {
-                                                                    $scope.character.waist = {};
-                                                                    $scope.character.waist = response;
-                                                                })
-                                                                .then(function () {
-                                                                    heroBackendService.getGear($scope.selectedId, 'shoulders')
-                                                                            .then(function (response) {
-                                                                                $scope.character.shoulders = {};
-                                                                                $scope.character.shoulders = response;
-                                                                            })
-                                                                            .then(function () {
-                                                                                heroBackendService.getGear($scope.selectedId, 'bracers')
-                                                                                        .then(function (response) {
-                                                                                            $scope.character.bracers = {};
-                                                                                            $scope.character.bracers = response;
-                                                                                        })
-                                                                                        .then(function () {
-                                                                                            heroBackendService.getGear($scope.selectedId, 'hands')
-                                                                                                    .then(function (response) {
-                                                                                                        $scope.character.hands = {};
-                                                                                                        $scope.character.hands = response;
-                                                                                                    })
-                                                                                                    .then(function () {
-                                                                                                        heroBackendService.getGear($scope.selectedId, 'torso')
-                                                                                                                .then(function (response) {
-                                                                                                                    $scope.character.torso = {};
-                                                                                                                    $scope.character.torso = response;
-                                                                                                                })
-                                                                                                                .then(function () {
-                                                                                                                    heroBackendService.getGear($scope.selectedId, 'rightFinger')
-                                                                                                                            .then(function (response) {
-                                                                                                                                $scope.character.rightFinger = {};
-                                                                                                                                $scope.character.rightFinger = response;
-                                                                                                                            })
-                                                                                                                            .then(function () {
-                                                                                                                                heroBackendService.getGear($scope.selectedId, 'mainHand')
-                                                                                                                                        .then(function (response) {
-                                                                                                                                            $scope.character.mainHand = {};
-                                                                                                                                            $scope.character.mainHand = response;
-                                                                                                                                        })
-                                                                                                                                        .then(function () {
-                                                                                                                                            heroBackendService.getGear($scope.selectedId, 'offHand')
-                                                                                                                                                    .then(function (response) {
-                                                                                                                                                        $scope.character.offHand = {};
-                                                                                                                                                        $scope.character.offHand = response;
-                                                                                                                                                    })
-                                                                                                                                                    .then(function () {
-                                                                                                                                                        heroBackendService.getGear($scope.selectedId, 'legs')
-                                                                                                                                                                .then(function (response) {
-                                                                                                                                                                    $scope.character.legs = {};
-                                                                                                                                                                    $scope.character.legs = response;
-                                                                                                                                                                })
-                                                                                                                                                                .then(function () {
-                                                                                                                                                                    heroBackendService.getGear($scope.selectedId, 'leftFinger')
-                                                                                                                                                                            .then(function (response) {
-                                                                                                                                                                                $scope.character.leftFinger = {};
-                                                                                                                                                                                $scope.character.leftFinger = response;
-                                                                                                                                                                                console.log($scope.character)
-                                                                                                                                                                            })
-                                                                                                                                                                })
-                                                                                                                                                    })
-                                                                                                                                        })
-                                                                                                                            })
-                                                                                                                })
-                                                                                                    })
-                                                                                        })
-                                                                            })
-                                                                })
-                                                    })
-                                        })
-                            })
-                })
-    }
-});
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'feet')
+
+            .then(function (response) {
+                $scope.character.feet = {};
+                $scope.character.feet = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'head')
+            .then(function (response) {
+                $scope.character.head = {};
+                $scope.character.head = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'neck')
+            .then(function (response) {
+                $scope.character.neck = {};
+                $scope.character.neck = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'waist')
+            .then(function (response) {
+                $scope.character.waist = {};
+                $scope.character.waist = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'shoulders')
+            .then(function (response) {
+                $scope.character.shoulders = {};
+                $scope.character.shoulders = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'bracers')
+            .then(function (response) {
+                $scope.character.bracers = {};
+                $scope.character.bracers = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'hands')
+            .then(function (response) {
+                $scope.character.hands = {};
+                $scope.character.hands = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'torso')
+            .then(function (response) {
+                $scope.character.torso = {};
+                $scope.character.torso = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'rightFinger')
+            .then(function (response) {
+                $scope.character.rightFinger = {};
+                $scope.character.rightFinger = response;
+            })
+	          .then(function () {
+	              heroBackendService.getGear($scope.selectedId, 'mainHand')
+            .then(function (response) {
+                $scope.character.mainHand = {};
+                $scope.character.mainHand = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'offHand')
+            .then(function (response) {
+                $scope.character.offHand = {};
+                $scope.character.offHand = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'legs')
+            .then(function (response) {
+                $scope.characte= {};
+                $scope.character.legs = response;
+            })
+            .then(function () {
+                heroBackendService.getGear($scope.selectedId, 'leftFinger')
+            .then(function (response) {
+                $scope.character.leftFinger = {};
+                $scope.character.leftFinger = response;
+						})})})})})})})})})})})})})})}});
 
 app.controller('Displayer', function ($scope, $http, heroBackendService) {
 
