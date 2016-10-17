@@ -13,7 +13,6 @@ body { font-family: 'Exocet Light'; }
 }
 
 .body {
-	display: inline;
 	background-repeat: stretch;
 	background-size: cover;
 	color: white;
@@ -47,11 +46,11 @@ body { font-family: 'Exocet Light'; }
 .hero:hover {
 	text-shadow: 1px -1px 2px orange;
 	color: #8C001A;
+	font-weight: bold;
 }
 
 .hero-equipment-container {
 	padding-left: 10px;
-	line-height: 32px;
 	cursor: default;
 	background-color: rgba(0,0,0, .9);
 	width: 66%;
@@ -62,33 +61,60 @@ body { font-family: 'Exocet Light'; }
 }
 
 .hero-equipment {
+	text-align: center;
 	text-shadow: 1px -5px 10px rgba(252, 121, 1, 1);
 	color: #8C7300;
 	max-height: 500px;
 	cursor: default;	
 	text-align: center;
-	width : 60%;
+	width : 50%;
 	float: right;
 }
+
+.hero-equipment-header {
+	text-align: center;
+}
+
+.hero-equipemnt-table {
+	margin-left: auto;
+	margin-right: auto;
+}
+.equipmennt-scroll {
+	overflow: auto;
+	max-height: 450px;
+}
+.equipment-cell {
+	margin: 0;
+	padding: 0;
+}
+
 .red {
 	color: #8C001A;
 }
+
 .hero-stats {
 	font-weight: bold;
 	color: #8C001A;
 	max-height: 500px;
-	
 	text-align: center;
-	width: 40%;
+	width: 50%;
 	float: left;
 }
 .stat-listing {
-	text-shadow: 1px -5px 10px rgba(252, 121, 1, 1);
+	text-shadow: 1px -4px 18px rgba(252, 121, 1, 1);
 	color: #8C7300;
 	overflow: auto;
-	max-height: 400px;
+	max-height: 450px;
 	text-align: left;
 }
+.stat {
+	display: inline;
+}
+
+.chara-stat {
+	display: inline;
+}
+
 .background {
     position: fixed;
     top: 50%;
