@@ -30,11 +30,13 @@
 
     <div class='hero-equipment-container' ng-controller='Displayer' ng-show="show">
         <div class='hero-stats'>
-        <div class='hero-stats-header'>
+        <div class='hero-stats-header' ng-click='showStats()'>
             Character stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
             Paragon Level : {{character.paragonLevel}} <br>
         </div>
-            <div class="stat-listing" >
+        <div class='border'>
+        </div>
+            <div class="stat-listing" ng-show='statListing'>
             <br>
                 <div class = "red">
                 Life:
@@ -69,23 +71,28 @@
                 Intelligence:
                 </div><div class='chara-stat'> {{character.intelligence}}</div> <br>
                 <div class = "red">
+                <div class='border'>
+                </div>
                 Physical Resist:
-                </div><div class='chara-stat'> {{character.physicalResist}}</div> <br>
-                <div class = "red">
-                Fire Resist:
-                </div><div class='chara-stat'> {{character.fireResist}}</div> <br>
-                <div class = "red">
-                Cold Resist:
-                </div><div class='chara-stat'>{{character.coldResist}}</div> <br>
-               <div class = "red">
-                Lightning Resist:
-               </div><div class='chara-stat'> {{character.lightningResist}}</div><br>
-                <div class = "red">
-                Poison Resist:
-                </div><div class='chara-stat'> {{character.poisonResist}}</div> <br>
-               <div class = "red">
-                Arcane Resist:
-               </div><div class='chara-stat'> {{character.arcaneResist}}</div><br>
+                </div>
+                    <div class='chara-stat'> {{character.physicalResist}}</div> <br>
+                    <div class = "red">
+                    Fire Resist:
+                    </div><div class='chara-stat'> {{character.fireResist}}</div> <br>
+                    <div class = "red">
+                    Cold Resist:
+                    </div><div class='chara-stat'>{{character.coldResist}}</div> <br>
+                   <div class = "red">
+                    Lightning Resist:
+                   </div><div class='chara-stat'> {{character.lightningResist}}</div><br>
+                    <div class = "red">
+                    Poison Resist:
+                    </div><div class='chara-stat'> {{character.poisonResist}}</div> <br>
+                   <div class = "red">
+                    Arcane Resist:
+                   </div><div class='chara-stat'> {{character.arcaneResist}}</div><br>
+                <div class='border'>
+               </div>
                <div class = "red">
                 Crit Damage:
                </div><div class='chara-stat'> {{character.critDamage}}</div><br>
@@ -134,8 +141,9 @@
             </div>
         </div>
         <div class='hero-equipment '> 
-            <div class='hero-equipment-header'>Hero's Equipment</div>
-            <div class='equipment-scroll'>
+            <div class='hero-equipment-header' ng-click='showEquipment()'>Hero's Equipment</div>
+            <div class='border'></div>
+            <div class='equipment-scroll' ng-show='equipment'>
                 <table class= 'hero-equipment-table'>
                     <tr>
                         <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.shoulders.tooltipParams}}"><img
@@ -320,6 +328,8 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
                  })})})})})})})})})})})})})})}
 });
 app.controller('Displayer', function ($scope, $http, heroBackendService) {
+    $scope.equipment = false;
+    $scope.statListing = false;
     $scope.getCharacter = function () {
         return $scope.character;
     };
@@ -328,6 +338,12 @@ app.controller('Displayer', function ($scope, $http, heroBackendService) {
     };
     $scope.showbattleTag = function () {
         return $scope.battleTag;
+    }
+    $scope.showStats = function() {
+      $scope.statListing = !$scope.statListing;  
+    }
+    $scope.showEquipment  = function() {
+        $scope.equipment = !$scope.equipment;
     }
 });
 app.factory('heroBackendService', function ($http) {

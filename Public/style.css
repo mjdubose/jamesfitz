@@ -47,40 +47,61 @@ body { font-family: 'Exocet Light'; }
 }
 	/*text-shadow: 0 0 20px rgb(254,252,201) , 10px -10px 30px rgb(254,236,133) , -20px -20px 40px rgb(255,174,52) , 20px -40px 50px rgb(236,118,12) , -20px -60px 60px rgb(205,70,6) , 0 -80px 70px rgb(151,55,22) , 10px -90px 80px rgb(69,27,14);*/
 .hero:hover {
-	text-shadow: 1px -1px 2px orange;
-	color: #8C001A;
+	text-shadow: 5px 0px 20px rgba(252, 121, 1, 1),
+	-10px 0px 20px rgba(252, 121, 1, 1), 0px 0px 20px rgba(252, 121, 1, 1);
 	font-weight: bold;
 }
+/*	text-shadow: 1px -1px 2px orange;
+	color: #8C001A;*/
 
 .hero-equipment-container {
+	padding-right: 10px;
 	padding-left: 10px;
 	cursor: default;
-	background-color: rgba(0,0,0, .9);
 	width: 66%;
 	display: inline;
 	margin-top: 20px;	
-	margin-right: 30px;
+/*	margin-right: 30px;*/
 	float: right;
 }
 
 	/*text-shadow: 1px -5px 20px rgba(252, 121, 1, 1);*/
 .hero-equipment {
+	background-color: rgba(0,0,0, .9);
+	margin-left: 20px;
 	text-align: center;
-	color: #8C7300;
-	max-height: 525px;
+	color: rgba(229, 228, 226, 1);
 	cursor: default;	
 	text-align: center;
 	width : 50%;
 	float: right;
- 	text-shadow: 1px -5px 20px rgba(252, 121, 1, 1);
+}
+ 	/*text-shadow: 1px -5px 20px rgba(252, 121, 1, 1);*/
+
+.border {
+  margin: 20px 55px 20px 55px;
+	border-bottom: thin solid #8C7300;
+	animation: 	glow 2s infinite	alternate;
+}
+@keyframes glow {
+    to {
+	box-shadow	: 5px 0px 10px rgba(252, 121, 1, 1),
+	-10px 0px 20px rgba(252, 121, 1, 1), 0px 0px 10px rgba(252, 121, 1, 1);
+    }
 }
 
-
 .hero-equipment-header {
-	margin-top: 20px;
-	padding-bottom: 25px;
-	text-align: center;
-	border-bottom: thin solid rgba(229, 228, 226, .5);
+	  font-weight: bold;
+    margin-left: 5px;
+    text-align: center;
+    color: #5C3317;
+    text-shadow: 0px -1px 1px red, 0px 1px 1px rgba(252, 121, 1, 1);
+    font-size: 20px;
+}
+
+.hero-equipment-header:hover {
+	box-shadow	: 5px 0px 10px rgba(252, 121, 1, 1),
+	-10px 0px 20px rgba(252, 121, 1, 1), 0px 0px 10px rgba(252, 121, 1, 1);
 }
 
 .hero-equipemnt-table {
@@ -88,16 +109,12 @@ body { font-family: 'Exocet Light'; }
 	margin-right: auto;
 }
 .equipmennt-scroll {
-	overflow: auto;
-	max-height: 450px;
 }
 .equipment-cell {
 	margin: 0;
 	padding: 0;
 }
 .equipment-scroll {
-	overflow: auto;
-	max-height: 450px;
 }
 .red {
 	display: inline;
@@ -106,23 +123,30 @@ body { font-family: 'Exocet Light'; }
 
 .hero-stats {
 	font-weight: bold;
-	color: #8C001A;
-	max-height: 500px;
 	text-align: center;
 	width: 50%;
-	float: left;
+	background-color: rgba(0,0,0, .9);
+	float: right;
 }
 .hero-stats-header {
-	text-shadow: 1px -2px 25px rgba(229, 228, 226, .5);
-	border-bottom: thin solid rgba(229, 228, 226, .5);
-	padding-top: 12px;
+	margin-right: 5px;
+	padding-top: 	10px;
+	min-height: 60px;
+	font-weight: 	bold;
+	color: #5C3317;
+  text-shadow: -1px 0px 1px red, 1px 0px 1px rgba(252, 121, 1, 1);
+  font-size: 20px;
 }
+
+.hero-stats-header:hover {
+	box-shadow	: 5px 0px 10px rgba(252, 121, 1, 1),
+	-10px 0px 20px rgba(252, 121, 1, 1), 0px 0px 10px rgba(252, 121, 1, 1);
+}
+/*	text-shadow: 1px -2px 25px rgba(229, 228, 226, .5);*/
+	/*text-shadow: 1px -2px 25px rgba(229, 228, 226, .5);*/
 .stat-listing {
 	color: #8C7300;
-	overflow: auto;
-	max-height: 450px;
 	text-align: left;
-	text-shadow: 1px -2px 25px rgba(229, 228, 226, .5);
 }
 .stat {
 	display: inline;
