@@ -30,8 +30,10 @@
 
     <div class='hero-equipment-container' ng-controller='Displayer' ng-show="show">
         <div class='hero-stats'>
+          <div class='hero-stats-header'>
             Character Stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
             Paragon Level : {{character.paragonLevel}} <br>
+          </div>
             <div class="stat-listing">
                 <div class = "red">
                 Life:
@@ -129,7 +131,10 @@
             </div>
         </div>
         <div class='hero-equipment equipment-scroll'>
-            <table class= 'hero-equipment-table'>
+            <div class='hero-equipment-header'>
+              Hero's Equipment
+            </div>
+            <table class= 'hero-equipment-table equipment-scroll'>
                 <tr>
                     <th></th>
                     <th> Hero's Equipment</th>
@@ -356,8 +361,8 @@ app.factory('heroBackendService', function ($http) {
 </script>
 
 <!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator
-//                                
-//http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
+//
+//http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png
 // icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
 //.png name is stored in items or skills database table under icon.
 -->
