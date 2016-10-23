@@ -230,7 +230,7 @@ knex.insertprofileindex = function (battletag, herotobeadded) {
         'class': herotobeadded.class,
         'gender': herotobeadded.gender.toString(),
         'level': herotobeadded.level,
-        'kills': herotobeadded.kills,
+        'kills': herotobeadded.kills.elites,
         'paragonLevel': herotobeadded.paragonLevel,
         'hardcore': herotobeadded.hardcore,
         'seasonal': herotobeadded.seasonal,

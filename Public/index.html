@@ -38,6 +38,7 @@
         <div class='hero-stats-header' style="cursor: url('/Public/images/CursorDI.png'), auto;" ng-click='showStats()' ng-cloak>
             Character stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
             Paragon Level : {{character.paragonLevel}} <br>
+            Kills : {{character.kills}}<br>
         </div>
         <div class='border'>
         </div>
@@ -274,6 +275,7 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
         })
     };
     $scope.displayHeroInformation = function (hero) {
+        console.log(hero);
         $scope.selectedId = hero.characterID;
         heroBackendService.getStats($scope.selectedId, $scope.battleTag).then(function (response) {
             $scope.character = {};
@@ -282,6 +284,7 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
             $scope.character.level = hero.level;
             $scope.character.class = hero.class;
             $scope.character.paragonLevel = hero.paragonLevel;
+            $scope.character.kills = hero.kills;
             $scope.show = true;
         })
                 .then(function () {
