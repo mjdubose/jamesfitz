@@ -211,6 +211,19 @@
             </div>
 
         </div>
+        <!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator
+//                                
+//http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
+// icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
+//.png name is stored in items or skills database table under icon.
+-->
+        <div class="skills" ng-show="true">
+             skills
+             <div ng-repeat="skill in character.skills">
+            <a href="http://us.battle.net/d3/en/class/{{character.class}}/{{skill.state}}/{{skill.slug}}"  /><img
+                                src="http://media.blizzard.com/d3/icons/skills/42/{{skill.icon}}.png"></a>
+              </div>
+        </div>
     </div>
 
     <div class='bottom-runner'></div>
@@ -275,7 +288,7 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
         })
     };
     $scope.displayHeroInformation = function (hero) {
-        console.log(hero);
+      
         $scope.selectedId = hero.characterID;
         heroBackendService.getStats($scope.selectedId, $scope.battleTag).then(function (response) {
             $scope.character = {};
@@ -286,6 +299,10 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
             $scope.character.paragonLevel = hero.paragonLevel;
             $scope.character.kills = hero.kills;
             $scope.show = true;
+        }).then(function(){
+            heroBackendService.getSkills($scope.selectedId).then(function(response){
+                $scope.character.skills = response;
+            })
         })
                 .then(function () {
                 heroBackendService.getGear($scope.selectedId, 'feet')
@@ -363,8 +380,7 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
                  heroBackendService.getGear($scope.selectedId, 'leftFinger')
                  .then(function (response) {
                  $scope.character.leftFinger = {};
-                 $scope.character.leftFinger = response;
-                 console.log($scope.character)
+                 $scope.character.leftFinger = response;            
                  })})})})})})})})})})})})})})}
 });
 app.controller('Displayer', function ($scope, $http, heroBackendService) {
@@ -385,6 +401,7 @@ app.controller('Displayer', function ($scope, $http, heroBackendService) {
     $scope.showEquipment  = function() {
         $scope.equipment = !$scope.equipment;
     }
+  
 });
 app.factory('heroBackendService', function ($http) {
     serviceObj = {};
@@ -410,6 +427,16 @@ app.factory('heroBackendService', function ($http) {
             return response.data;
         });
     };
+    serviceObj.getSkills = function(charId){
+        return $http({
+            method: 'Get',
+            url: '/character/skills?charId=' +charId
+        }).then(function (response){
+         return response.data;
+        });
+    }
+
+
     return serviceObj;
 })
 </script>
