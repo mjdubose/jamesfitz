@@ -12,11 +12,134 @@ body { font-family: 'Exocet Light'; }
  font-style:normal;
 }
 
+@keyframes heart-beat{
+  60%  {transform: scaleY(1.04);}
+  80%  {transform: scaleY(0.92);}
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+.bottom-runner {
+	background-color: black;
+	position: absolute;
+	bottom: 0px;
+	min-height: 25px;
+	width: 100%;
+	box-shadow: 0px -15px 25px rgba(0,0,0, 1);
+}
+
+.heart-beat {
+	animation-name: heart-beat;
+  animation-duration:800ms;
+  animation-delay:400ms;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
 .body {
 	background-repeat: stretch;
 	background-size: cover;
 	color: white;
 	text-shadow: 2px 2px #000000;
+	background-color: black;
+}
+
+.butcher-container {
+	position: absolute;
+	bottom: 0px;
+	right: 10px;
+	z-index: -2;
+   -webkit-animation: fadein 30s; /* Safari, Chrome and Opera > 12.1 */
+ -moz-animation: fadein 30s; /* Firefox < 16 */
+  -ms-animation: fadein 30s; /* Internet Explorer */
+   -o-animation: fadein 30s; /* Opera < 12.1 */
+      animation: fadein 30s;
+}
+
+.butcher {
+	z-index: -2;
+	max-height: 15em;
+}
+
+.butcher-light {
+	z-index: -1;
+	background-color: bottom: 10px;
+	right: 10px;
+	min-height: 100px;
+	min-width: 100px;
+	position: absolute;
+	bottom: 45px;
+	right: 90px;
+	box-shadow: 1px -5px 250px rgba(252, 121, 20, 1), 1px -5px 250px rgba(252, 121, 20, 1);
+	border-bottom-right-radius: 99%;
+  border-bottom-left-radius: 99%;
+  border-top-left-radius: 99%;
+  border-top-right-radius: 99%;
+}
+
+.leoric-container {
+	position: absolute;
+	bottom: 0px;
+	right: 200px;
+	z-index: -2;
+ -webkit-animation: fadein 20s; /* Safari, Chrome and Opera > 12.1 */
+ -moz-animation: fadein 20s; /* Firefox < 16 */
+ -ms-animation: fadein 20s; /* Internet Explorer */
+ -o-animation: fadein 20s; /* Opera < 12.1 */
+ 	animation: fadein 20s;
+}
+
+.leoric {
+	z-index: -2;
+	max-height: 15em;
+}
+
+.leoric-light {
+	z-index: -1;
+	background-color: bottom: 10px;
+	right: 10px;
+	min-height: 100px;
+	min-width: 52px;
+	position: absolute;
+	bottom: 60px;
+	right: 118px;
+	box-shadow: 1px -5px 250px rgba(252, 121, 20, 1), 1px -5px 250px rgba(252, 121, 20, 1);
+	border-bottom-right-radius: 99%;
+  border-bottom-left-radius: 99%;
+  border-top-left-radius: 99%;
+  border-top-right-radius: 99%;
 }
 
 .container {
@@ -25,7 +148,6 @@ body { font-family: 'Exocet Light'; }
 
 .search-bar-and-heros-container {
 	cursor: url('/Public/images/CursorDI.png'), auto;
-	background-color:  rgba(0,0,0, .75);
 	max-width: 33%;
 	margin-top: 20px;	
 	margin-left: 30px;
@@ -35,8 +157,21 @@ body { font-family: 'Exocet Light'; }
 }
 
 .search-bar-inputs {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+ -webkit-animation: fadein 10s; /* Safari, Chrome and Opera > 12.1 */
+ -moz-animation: fadein 10s; /* Firefox < 16 */
+ -ms-animation: fadein 10s; /* Internet Explorer */
+ -o-animation: fadein 10s; /* Opera < 12.1 */
+  animation: fadein 10s;
 }
 
+.hero-names {
+	padding-top: 3px;
+	padding-bottom: 20px;
+	background-color:  rgba(0,0,0, .75);
+}
 .hero {
 	margin-left: 40px;
 	font-weight: bold;
@@ -55,6 +190,9 @@ body { font-family: 'Exocet Light'; }
 	color: #8C001A;*/
 
 .hero-equipment-container {
+	position: absolute;
+	right: 20px;
+	top: 20px;
 	padding-right: 10px;
 	padding-left: 10px;
 	cursor: default;
@@ -117,6 +255,7 @@ body { font-family: 'Exocet Light'; }
 .equipment-scroll {
 }
 .red {
+	padding-left: 10px;
 	display: inline;
 	color: #8C001A;
 }
@@ -182,4 +321,9 @@ body { font-family: 'Exocet Light'; }
     transform: translateX(-50%) translateY(-50%);
     background: url(polina.jpg) no-repeat;
     background-size: cover; 
+    -webkit-animation: fadein 20s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 20s; /* Firefox < 16 */
+  	-ms-animation: fadein 20s; /* Internet Explorer */
+  	-o-animation: fadein 20s; /* Opera < 12.1 */
+  	animation: fadein 20s;
 }

@@ -15,28 +15,43 @@
 <div class='container' ng-controller="SearchBar">
 
     <div class='search-bar-and-heros-container'>
+        <div class='bottom-runner'></div>
+
+        <div class='butcher-container'>
+            <div class='butcher-light heart-beat'></div>
+            <img class='butcher' src='/Public/images/Butcher.png' />
+        </div>
+
+        <div class='leoric-container'>
+            <div class='leoric-light heart-beat'></div>
+            <img class='leoric' src='/Public/images/Leoric.png' />
+        </div>
+
         <div class='search-bar-inputs'>
             <input type='text' ng-model='battleTag'/>
             <input style="cursor: url('/Public/images/CursorDI.png'), auto;" type='button'
                    value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'
             />
         </div>
-        <div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
-            <div class='hero' ng-model='hero'>
-                {{hero.name}} - Lvl: {{hero.level}} , {{hero.class}}
+
+        <div class='hero-names'>
+            <div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
+                <div class='hero' ng-model='hero'>
+                    {{hero.name}} - Lvl: {{hero.level}} , {{hero.class}}
+                </div>
             </div>
         </div>
     </div>
 
-    <div class='hero-equipment-container' ng-controller='Displayer' ng-show="show">
+    <div class='hero-equipment-container' ng-controller='Displayer' ng-show="show" ng-cloak>
         <div class='hero-stats'>
-        <div class='hero-stats-header' ng-click='showStats()'>
+        <div class='hero-stats-header' ng-click='showStats()' ng-cloak>
             Character stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
             Paragon Level : {{character.paragonLevel}} <br>
         </div>
         <div class='border'>
         </div>
-            <div class="stat-listing" ng-show='statListing'>
+            <div class="stat-listing" ng-show='statListing' ng-cloak>
             <br>
                 <div class = "red">
                 Life:
@@ -70,28 +85,33 @@
                 <div class = "red">
                 Intelligence:
                 </div><div class='chara-stat'> {{character.intelligence}}</div> <br>
-                <div class = "red">
-                <div class='border'>
+                <div class='border' ng-cloak>
                 </div>
+                <div class = "red">
                 Physical Resist:
                 </div>
-                    <div class='chara-stat'> {{character.physicalResist}}</div> <br>
-                    <div class = "red">
-                    Fire Resist:
-                    </div><div class='chara-stat'> {{character.fireResist}}</div> <br>
-                    <div class = "red">
-                    Cold Resist:
-                    </div><div class='chara-stat'>{{character.coldResist}}</div> <br>
-                   <div class = "red">
-                    Lightning Resist:
-                   </div><div class='chara-stat'> {{character.lightningResist}}</div><br>
-                    <div class = "red">
-                    Poison Resist:
-                    </div><div class='chara-stat'> {{character.poisonResist}}</div> <br>
-                   <div class = "red">
-                    Arcane Resist:
-                   </div><div class='chara-stat'> {{character.arcaneResist}}</div><br>
-                <div class='border'>
+                <div class='chara-stat'> {{character.physicalResist}}</div> <br>
+                <div class = "red">
+                Fire Resist:
+                </div>
+                <div class='chara-stat'> {{character.fireResist}}</div> <br>
+                <div class = "red">
+                Cold Resist:
+                </div>
+                <div class='chara-stat'>{{character.coldResist}}</div> <br>
+               <div class = "red">
+                Lightning Resist:
+               </div>
+               <div class='chara-stat'> {{character.lightningResist}}</div><br>
+                <div class = "red">
+                Poison Resist:
+                </div>
+                <div class='chara-stat'> {{character.poisonResist}}</div> <br>
+               <div class = "red">
+                Arcane Resist:
+               </div>
+               <div class='chara-stat'> {{character.arcaneResist}}</div><br>
+                <div class='border' ng-cloak>
                </div>
                <div class = "red">
                 Crit Damage:
