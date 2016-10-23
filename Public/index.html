@@ -7,7 +7,7 @@
 </head>
 
 <body ng-app="D3App" class='body'>
-<Video class='background' autoplay loop>
+<Video class='background delay-fade' autoplay loop>
     <source src="/public/videos/malthael.webm" type="video/webm"/>
     <source src="/public/videos/malthael.mp4" type="video/mp4"/>
 </video>
@@ -15,20 +15,10 @@
 <div class='container' ng-controller="SearchBar">
 
     <div class='search-bar-and-heros-container'>
-        <div class='bottom-runner'></div>
 
-        <div class='butcher-container'>
-            <div class='butcher-light heart-beat'></div>
-            <img class='butcher' src='/Public/images/Butcher.png' />
-        </div>
-
-        <div class='leoric-container'>
-            <div class='leoric-light heart-beat'></div>
-            <img class='leoric' src='/Public/images/Leoric.png' />
-        </div>
-
-        <div class='search-bar-inputs'>
-            <input type='text' ng-model='battleTag'/>
+        <div class='search-bar-inputs tooltip'>
+            <span class='tooltiptext'>"Well ... what can I do for ya?" - Griswold, Diablo 1.  <br> <br> Enter any North American Blizard battletag to retrieved all the Diablo 3 heros belonging to that battletag.  <br> <br> HURRY! The forces of evil aren't sitting idly by. <br> <br> "And may light protect you!"</span>
+            <input type='text' ng-model='battleTag'/ >
             <input style="cursor: url('/Public/images/CursorDI.png'), auto;" type='button'
                    value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'
             />
@@ -43,15 +33,15 @@
         </div>
     </div>
 
-    <div class='hero-equipment-container' ng-controller='Displayer' ng-show="show" ng-cloak>
+    <div class='hero-equipment-container ' ng-controller='Displayer' ng-show="show" ng-cloak>
         <div class='hero-stats'>
-        <div class='hero-stats-header' ng-click='showStats()' ng-cloak>
+        <div class='hero-stats-header' style="cursor: url('/Public/images/CursorDI.png'), auto;" ng-click='showStats()' ng-cloak>
             Character stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
             Paragon Level : {{character.paragonLevel}} <br>
         </div>
         <div class='border'>
         </div>
-            <div class="stat-listing" ng-show='statListing' ng-cloak>
+            <div class='stat-listing ' ng-show='statListing' ng-cloak>
             <br>
                 <div class = "red">
                 Life:
@@ -163,7 +153,7 @@
         <div class='hero-equipment '> 
             <div class='hero-equipment-header' ng-click='showEquipment()'>Hero's Equipment</div>
             <div class='border'></div>
-            <div class='equipment-scroll' ng-show='equipment'>
+            <div class='equipment-scroll ' ng-show='equipment'>
                 <table class= 'hero-equipment-table'>
                     <tr>
                         <td class='equipment-cell'><a href="http://us.battle.net/d3/en/{{character.shoulders.tooltipParams}}"><img
@@ -222,6 +212,33 @@
         </div>
     </div>
 
+    <div class='bottom-runner'></div>
+
+    <div class='butcher-container delay-fade'>
+        <div class='butcher-light heart-beat'></div>
+        <img class='butcher' src='/Public/images/Butcher.png' />
+    </div>
+
+    <div class='leoric-container delay-fade'>
+        <div class='leoric-light heart-beat'></div>
+        <img class='leoric' src='/Public/images/Leoric.png' />
+    </div>
+
+    <div class='tyrael-container delay-fade'>
+        <div class='tyrael-light heart-beat'></div>
+        <img class='tyrael' src='/Public/images/Tyrael.png' />
+    </div>
+
+    <div class='auriel-container delay-fade'>
+        <div class='auriel-light '></div>
+        <img class='auriel' src='/Public/images/Auriel.png' />
+    </div>
+
+    <div class='diablo-container '>
+        <div class='diablo-light heart-beat'></div>
+        <img class='diablo' src='/Public/images/Diablo.png' />
+    </div>
+
 </div>
 
 
@@ -240,9 +257,9 @@ run (1000,10);
 <video xmlns="http://www.w3.org/1999/xhtml" id="malthael-video" class="video-bg is-active" loop="loop" poster="/public/images/malthael.jpg">
 </script> -->
 
-<!-- <audio controls className='audio' autoplay>
-{"<source src='/Public/03-new-tristram.mp3' type='audio/mp3'>"}
-</audio> -->
+<audio className='audio' autoplay>
+    {"<source src='/Public/20-heaven-s-gate.mp3' type='audio/mp3'>"}
+</audio>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
 <script>var app = angular.module('D3App', []);
