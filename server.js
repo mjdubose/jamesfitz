@@ -133,6 +133,17 @@ app.route('/character')
                 res.sendStatus(404);
             })
     });
+
+//localhost:3000/character/skills?charId=52519415
+app.route('/character/skills').get(function(req,res){
+    var id = req.query.charId;
+    return db.getSkills(id).then(function(skills){
+       res.status(200).send(skills);
+    }).catch(function(err){
+       res.sendStatus(404);
+    })
+});
+
 //localhost:3000/character/item?charId=52519415&slot=feet
 app.route('/character/item').get(function (req, res) {
     var id = req.query.charId;
