@@ -159,8 +159,11 @@ knex.insertSkill = function (id, skill, state) {
         'simpleDescription': skill.simpleDescription,
         'skillCalcId': skill.skillCalcId,
         'state': state
-    }).then(function (skill) {
-        return skill;
+    }).then(function(result){
+        console.log('result from skill insert',result);
+        return result;
+    }).catch(function(err){
+        console.log(err);
     })
 };
 
@@ -206,8 +209,6 @@ knex.insertCharacter = function (id, character) {
         "lifeOnHit": character.lifeOnHit,
         "primaryResource": character.primaryResource,
         "secondaryResource": character.secondaryResource
-    }).then(function (results) {
-        return results;
     }).catch(function (err) {
         console.log(err.message);
     });
@@ -236,16 +237,13 @@ knex.insertprofileindex = function (battletag, herotobeadded) {
         'seasonal': herotobeadded.seasonal,
         'lastUpdated': time,
         'dead': herotobeadded.dead
-    }).then(function (item) {
-        return item;
-    })
-        .catch(function (err) {
+    }).catch(function (err) {
             console.log(err.message);
         });
 };
 
 knex.insertItem = function (charId, slot, item) {
-    console.log('charID', charId, 'Slot', slot, 'item', item);
+ 
     return knex('items').insert({
         'item_id': item.id,
         'characterID': charId,

@@ -115,17 +115,17 @@ app.route('/character')
                             });
                             array = results.body.skills.passive;
                             array.map(function (skill) {
-                                db.insertSkill(results.body.id, skill.skill, 'passive');
+                                db.insertSkill(results.body.id, skill.skill, 'passive').catch(function(err){console.log(err)});
                             });
-                            return results.body.id;
-                        })
-                        .then(function (id) {
-                            return db.getCharacter(id)
+
+                            return db.getCharacter(results.body.id)
                                 .then(function (results) {
                                     res.status(200).send(results);
                                 })
-                        })
-                } else {
+
+                          
+                        })}
+                         else {
                     res.status(200).send(results);
                 }
             })
