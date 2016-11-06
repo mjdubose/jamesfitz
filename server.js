@@ -41,7 +41,6 @@ app.route('/profile/')
                                     return toBeSentBack.battleTag;
                                 })
                             ).then(function (ArrayofBattleTags) {
-                                //   console.log('BattleTag', ArrayofBattleTags[0]);
                                 return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
                                     res.status(200).send(results);
                                 })
@@ -110,13 +109,22 @@ app.route('/character')
                                 db.insertItem(results.body.id, 'neck', results.body.items.neck);
                             }
                             var array = results.body.skills.active;
-                            array.map(function (skill) {
-                                db.insertSkill(results.body.id, skill.skill, 'active');
-                            });
+
+                            if (array.length > 0) {
+                                array.map(function (skill) {
+
+                                    db.insertSkill(results.body.id, skill.skill, 'active');
+                                });
+                            }
                             array = results.body.skills.passive;
-                            array.map(function (skill) {
-                                db.insertSkill(results.body.id, skill.skill, 'passive').catch(function(err){console.log(err)});
-                            });
+                            if (array.length >0) {
+                                array.map(function (skill) {
+
+                                    db.insertSkill(results.body.id, skill.skill, 'passive').catch(function (err) {
+                                        console.log(err)
+                                    });
+                                });
+                            }
 
                             return db.getCharacter(results.body.id)
                                 .then(function (results) {
@@ -146,10 +154,9 @@ app.route('/character/skills').get(function(req,res){
 
 //localhost:3000/character/item?charId=52519415&slot=feet
 app.route('/character/item').get(function (req, res) {
-    var id = req.query.charId;
-    var slot = req.query.slot;
-    return db.getItem(id, slot).then(function (item) {
-        res.status(200).send(item[0]);
+    var id = req.query.charId;    
+    return db.getItems(id).then(function (items) {
+        res.status(200).send(items);
     }).catch(function (err) {
         res.sendStatus(404);
     })

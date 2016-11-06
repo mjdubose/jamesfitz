@@ -143,7 +143,7 @@ knex.ensureSchema = function () {
                     console.log('Created runes table');
                 });
             }
-        }),
+        })
     ])
 };
 knex.insertSkill = function (id, skill, state) {
@@ -259,8 +259,8 @@ knex.insertItem = function (charId, slot, item) {
     });
 };
 
-knex.getItem = function (charId, slot) {
-    return knex('items').where({ characterId: charId, slot: slot }).select();
+knex.getItems = function (charId) {
+    return knex('items').where({ characterId: charId}).select();
 };
 
 //close database connection
