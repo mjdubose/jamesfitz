@@ -82,10 +82,9 @@ app.route('/character')
 
                                 if (Array.isArray(array) && array.length > 0) {
                                     array.map(function (skill) {
-
-                                        db.insertSkill(results.body.id, skill.skill, 'active').catch(function (err) {
-
-                                        });
+                                        if (skill.skill !==undefined) {
+                                            db.insertSkill(results.body.id, skill.skill, 'active');
+                                        }
                                     });
                                 }
                                 return results;
@@ -93,11 +92,11 @@ app.route('/character')
                               var  array = results.body.skills.passive;
 
                                 if (Array.isArray(array) && array.length > 0) {
+
                                     array.map(function (skill) {
-                                        db.insertSkill(results.body.id, skill.skill, 'passive').catch(function (err) {
-                                            console.log(err.message);
-                                            res.status(404).send('error inserting passive skill ' + err.message);
-                                        });
+                                        if (skill.skill !==undefined) {
+                                            db.insertSkill(results.body.id, skill.skill, 'passive');
+                                        }
                                     });
                                 }
                                 return results;
