@@ -143,25 +143,27 @@ knex.ensureSchema = function () {
                     console.log('Created runes table');
                 });
             }
-        }),
+        })
     ])
 };
 knex.insertSkill = function (id, skill, state) {
-    return knex('skills').insert({
-        'slug': skill.slug,
-        'CharacterId': id,
-        'name': skill.name,
-        'icon': skill.icon,
-        'level': skill.level,
-        'categorySlug': skill.categorySlug,
-        'tooltipUrl': skill.tooltipUrl,
-        'description': skill.description,
-        'simpleDescription': skill.simpleDescription,
-        'skillCalcId': skill.skillCalcId,
-        'state': state
-    }).then(function (skill) {
-        return skill;
-    })
+         return knex('skills').insert({
+             'slug': skill.slug ,
+             'CharacterId': id,
+             'name': skill.name ,
+             'icon': skill.icon ,
+             'level': skill.level ,
+             'categorySlug': skill.categorySlug ,
+             'tooltipUrl': skill.tooltipUrl ,
+             'description': skill.description ,
+             'simpleDescription': skill.simpleDescription,
+             'skillCalcId': skill.skillCalcId ,
+             'state': state
+         }).then(function (result) {
+             console.log('result from skill insert', result + 'skill' + state);
+             return result;
+         })
+
 };
 
 knex.getSkills = function (id) {
@@ -206,8 +208,6 @@ knex.insertCharacter = function (id, character) {
         "lifeOnHit": character.lifeOnHit,
         "primaryResource": character.primaryResource,
         "secondaryResource": character.secondaryResource
-    }).then(function (results) {
-        return results;
     }).catch(function (err) {
         console.log(err.message);
     });
@@ -230,22 +230,19 @@ knex.insertprofileindex = function (battletag, herotobeadded) {
         'class': herotobeadded.class,
         'gender': herotobeadded.gender.toString(),
         'level': herotobeadded.level,
-        'kills': herotobeadded.kills,
+        'kills': herotobeadded.kills.elites,
         'paragonLevel': herotobeadded.paragonLevel,
         'hardcore': herotobeadded.hardcore,
         'seasonal': herotobeadded.seasonal,
         'lastUpdated': time,
         'dead': herotobeadded.dead
-    }).then(function (item) {
-        return item;
-    })
-        .catch(function (err) {
+    }).catch(function (err) {
             console.log(err.message);
         });
 };
 
 knex.insertItem = function (charId, slot, item) {
-    console.log('charID', charId, 'Slot', slot, 'item', item);
+ 
     return knex('items').insert({
         'item_id': item.id,
         'characterID': charId,
@@ -261,8 +258,8 @@ knex.insertItem = function (charId, slot, item) {
     });
 };
 
-knex.getItem = function (charId, slot) {
-    return knex('items').where({ characterId: charId, slot: slot }).select();
+knex.getItems = function (charId) {
+    return knex('items').where({ characterId: charId}).select();
 };
 
 //close database connection
