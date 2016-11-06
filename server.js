@@ -13,110 +13,134 @@ module.exports = app;
 app.use('/', express.static(path.join(__dirname, "../Public")));
 // http://localhost:3000/profile?id=slayeneq-1864
 app.route('/profile/')
-  .get(function (req, res) {
-    var id = req.query.id;
-       if (id.indexOf('-')=== -1 && id.indexOf('#')===-1){
-           res.sendStatus(404);
-    }
-    db.getprofile(id)
-      .then(function (results) {
-
-
-        if (Array.isArray(results) && results.length === 0) {
-          d3.getProfile(id).then(function(results){
-            if (results.body.code==='NOTFOUND'){
-                 res.sendStatus(404);            
-            }
-       return results;
-          }) 
-            .then(function (results) {          
-              var toBeSentBack = {};
-              var battleTag = results.body.battleTag;
-              battleTag = battleTag.toLowerCase();
-              battleTag = battleTag.replace("#", "-");
-              toBeSentBack.battleTag = battleTag;
-              toBeSentBack.heroes = results.body.heroes;
-              return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
-                db.insertprofileindex(toBeSentBack.battleTag, hero);
-                return toBeSentBack.battleTag;            
-              })
-              ).then(function (ArrayofBattleTags) {
-             //   console.log('BattleTag', ArrayofBattleTags[0]);
-                return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
-                  res.status(200).send(results);
-                })
-
-              })
-            })
-        } else {
-          res.status(200).send(results);
+    .get(function (req, res) {
+        var id = req.query.id;
+        if (id.indexOf('-') === -1 && id.indexOf('#') === -1) {
+            res.sendStatus(404);
         }
-      })
+        db.getprofile(id)
+            .then(function (results) {
 
-      .catch(function (err) {
-       // console.log(err.message);
-        res.sendStatus(404);
-      });
-  });
+
+                if (Array.isArray(results) && results.length === 0) {
+                    d3.getProfile(id).then(function (results) {
+                        if (results.body.code === 'NOTFOUND') {
+                            res.sendStatus(404);
+                        }
+                        return results;
+                    })
+                        .then(function (results) {
+                            var toBeSentBack = {};
+                            var battleTag = results.body.battleTag;
+                            battleTag = battleTag.toLowerCase();
+                            battleTag = battleTag.replace("#", "-");
+                            toBeSentBack.battleTag = battleTag;
+                            toBeSentBack.heroes = results.body.heroes;
+                            return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
+                                    db.insertprofileindex(toBeSentBack.battleTag, hero);
+                                    return toBeSentBack.battleTag;
+                                })
+                            ).then(function (ArrayofBattleTags) {
+                                return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
+                                    res.status(200).send(results);
+                                })
+
+                            })
+                        })
+                } else {
+                    res.status(200).send(results);
+                }
+            })
+
+            .catch(function (err) {
+                // console.log(err.message);
+                res.sendStatus(404);
+            });
+    });
 //localhost:3000/character?charId=52519415&id=slayeneq-1864
 app.route('/character')
-  .get(function (req, res) {
-    var charid = req.query.charId;
-    var battleTag = req.query.id;
-    db.getCharacter(charid)
-      .then(function (results) {
-        if (Array.isArray(results) && results.length === 0) {
-          d3.getCharacter(battleTag, charid)
+    .get(function (req, res) {
+        var charid = req.query.charId;
+        var battleTag = req.query.id;
+        db.getCharacter(charid)
             .then(function (results) {
-              db.insertCharacter(results.body.id, results.body.stats);
-              db.insertItem(results.body.id, 'head', results.body.items.head);
-              db.insertItem(results.body.id, 'torso', results.body.items.torso);
-              db.insertItem(results.body.id, 'feet', results.body.items.feet);
-              db.insertItem(results.body.id, 'hands', results.body.items.hands);
-              db.insertItem(results.body.id, 'legs', results.body.items.legs);
-              db.insertItem(results.body.id, 'bracers', results.body.items.bracers);
-              db.insertItem(results.body.id, 'mainHand', results.body.items.mainHand);
-              db.insertItem(results.body.id, 'waist', results.body.items.waist);
-              db.insertItem(results.body.id, 'rightFinger', results.body.items.rightFinger);
-              db.insertItem(results.body.id, 'leftFinger', results.body.items.leftFinger);
-              var array = results.body.skills.active;
-              array.map(function(skill){
-                db.insertSkill(results.body.id,skill.skill,'active');
-              });
-                 array = results.body.skills.passive;
-              array.map(function(skill){
-                db.insertSkill(results.body.id,skill.skill,'passive');
-              });
-              return results.body.id;
+                if (Array.isArray(results) && results.length === 0) {
+                    d3.getCharacter(battleTag, charid)
+                        .then(function (results) {
+
+                            var items = results.body.items;
+
+                            db.insertCharacter(results.body.id, results.body.stats).then(function () {
+                                for (var prop in items) {
+
+                                    db.insertItem(results.body.id, prop, results.body.items[prop]);
+                                }
+                                return results;
+                            }).then(function ( results) {
+
+                                var array = results.body.skills.active;
+
+                                if (Array.isArray(array) && array.length > 0) {
+                                    array.map(function (skill) {
+                                        if (skill.skill !==undefined) {
+                                            db.insertSkill(results.body.id, skill.skill, 'active');
+                                        }
+                                    });
+                                }
+                                return results;
+                            }).then(function (results) {
+                              var  array = results.body.skills.passive;
+
+                                if (Array.isArray(array) && array.length > 0) {
+
+                                    array.map(function (skill) {
+                                        if (skill.skill !==undefined) {
+                                            db.insertSkill(results.body.id, skill.skill, 'passive');
+                                        }
+                                    });
+                                }
+                                return results;
+                            }).then(function (results) {
+                                return db.getCharacter(results.body.id)
+                                    .then(function (results) {
+                                        res.status(200).send(results);
+                                    })
+                            })
+
+                        })
+                }
+                         else {
+                    res.status(200).send(results);
+                }
             })
-            .then(function (id) {
-              return db.getCharacter(id)
-                .then(function (results) {
-                  res.status(200).send(results);
-                })
+            .catch(function (err) {
+                res.sendStatus(404);
             })
-        } else {
-          res.status(200).send(results);
-        }
-      })
-    .catch(function (err) {       
-        res.sendStatus(404);
-      })
-  });
+    });
+
+//localhost:3000/character/skills?charId=52519415
+app.route('/character/skills').get(function(req,res){
+    var id = req.query.charId;
+    return db.getSkills(id).then(function(skills){
+       res.status(200).send(skills);
+    }).catch(function(err){
+       res.sendStatus(404);
+    })
+});
+
 //localhost:3000/character/item?charId=52519415&slot=feet
-  app.route('/character/item').get(function(req,res){
-     var id = req.query.charId;
-     var slot = req.query.slot;
-   return  db.getItem(id,slot).then(function(item){
-        res.status(200).send(item[0]);
-      }).catch(function(err){
+app.route('/character/item').get(function (req, res) {
+    var id = req.query.charId;    
+    return db.getItems(id).then(function (items) {
+        res.status(200).send(items);
+    }).catch(function (err) {
         res.sendStatus(404);
-      })
-      
-  });
+    })
+
+});
 
 
-const port = process.env.PORT ? process.env.PORT : (process.env.NODE_ENV==='test' ? 4000 : 3000 )
+const port = process.env.PORT ? process.env.PORT : (process.env.NODE_ENV === 'test' ? 4000 : 3000);
 console.log('running on port', port);
 app.listen(port);
 //                                
