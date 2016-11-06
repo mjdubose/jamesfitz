@@ -68,71 +68,48 @@ app.route('/character')
                     d3.getCharacter(battleTag, charid)
                         .then(function (results) {
 
-                            db.insertCharacter(results.body.id, results.body.stats);
-                            if (typeof results.body.items.torso != 'undefined') {
-                                db.insertItem(results.body.id, 'head', results.body.items.head);
-                            }
-                            if (typeof results.body.items.torso != 'undefined') {
-                                db.insertItem(results.body.id, 'torso', results.body.items.torso);
-                            }
-                            if (typeof results.body.items.feet != 'undefined') {
-                                db.insertItem(results.body.id, 'feet', results.body.items.feet);
-                            }
-                            if (typeof results.body.items.hands != 'undefined') {
-                                db.insertItem(results.body.id, 'hands', results.body.items.hands);
-                            }
-                            if (typeof results.body.items.legs != 'undefined') {
-                                db.insertItem(results.body.id, 'legs', results.body.items.legs);
-                            }
-                            if (typeof results.body.items.bracers != 'undefined') {
-                                db.insertItem(results.body.id, 'bracers', results.body.items.bracers);
-                            }
-                            if (typeof results.body.items.mainHand != 'undefined') {
-                                db.insertItem(results.body.id, 'mainHand', results.body.items.mainHand);
-                            }
-                            if (typeof results.body.items.waist != 'undefined') {
-                                db.insertItem(results.body.id, 'waist', results.body.items.waist);
-                            }
-                            if (typeof results.body.items.rightFinger != 'undefined') {
-                                db.insertItem(results.body.id, 'rightFinger', results.body.items.rightFinger);
-                            }
-                            if (typeof results.body.items.leftFinger != 'undefined') {
-                                db.insertItem(results.body.id, 'leftFinger', results.body.items.leftFinger);
-                            }
-                            if (typeof results.body.items.shoulders != 'undefined') {
-                                db.insertItem(results.body.id, 'shoulders', results.body.items.shoulders);
-                            }
-                            if (typeof results.body.items.offHand != 'undefined') {
-                                db.insertItem(results.body.id, 'offHand', results.body.items.offHand);
-                            }
-                            if (typeof results.body.items.neck != 'undefined') {
-                                db.insertItem(results.body.id, 'neck', results.body.items.neck);
-                            }
-                            var array = results.body.skills.active;
+                            var items = results.body.items;
 
-                            if (array.length > 0) {
-                                array.map(function (skill) {
+                            db.insertCharacter(results.body.id, results.body.stats).then(function () {
+                                for (var prop in items) {
 
-                                    db.insertSkill(results.body.id, skill.skill, 'active');
-                                });
-                            }
-                            array = results.body.skills.passive;
-                            if (array.length >0) {
-                                array.map(function (skill) {
+                                    db.insertItem(results.body.id, prop, results.body.items[prop]);
+                                }
+                                return results;
+                            }).then(function ( results) {
 
-                                    db.insertSkill(results.body.id, skill.skill, 'passive').catch(function (err) {
-                                        console.log(err)
+                                var array = results.body.skills.active;
+
+                                if (Array.isArray(array) && array.length > 0) {
+                                    array.map(function (skill) {
+
+                                        db.insertSkill(results.body.id, skill.skill, 'active').catch(function (err) {
+
+                                        });
                                     });
-                                });
-                            }
+                                }
+                                return results;
+                            }).then(function (results) {
+                              var  array = results.body.skills.passive;
 
-                            return db.getCharacter(results.body.id)
-                                .then(function (results) {
-                                    res.status(200).send(results);
-                                })
+                                if (Array.isArray(array) && array.length > 0) {
+                                    array.map(function (skill) {
+                                        db.insertSkill(results.body.id, skill.skill, 'passive').catch(function (err) {
+                                            console.log(err.message);
+                                            res.status(404).send('error inserting passive skill ' + err.message);
+                                        });
+                                    });
+                                }
+                                return results;
+                            }).then(function (results) {
+                                return db.getCharacter(results.body.id)
+                                    .then(function (results) {
+                                        res.status(200).send(results);
+                                    })
+                            })
 
-                          
-                        })}
+                        })
+                }
                          else {
                     res.status(200).send(results);
                 }

@@ -147,24 +147,23 @@ knex.ensureSchema = function () {
     ])
 };
 knex.insertSkill = function (id, skill, state) {
-    return knex('skills').insert({
-        'slug': skill.slug,
-        'CharacterId': id,
-        'name': skill.name,
-        'icon': skill.icon,
-        'level': skill.level,
-        'categorySlug': skill.categorySlug,
-        'tooltipUrl': skill.tooltipUrl,
-        'description': skill.description,
-        'simpleDescription': skill.simpleDescription,
-        'skillCalcId': skill.skillCalcId,
-        'state': state
-    }).then(function(result){
-        console.log('result from skill insert',result);
-        return result;
-    }).catch(function(err){
-        console.log(err);
-    })
+         return knex('skills').insert({
+             'slug': skill.slug ? skill.slug : null,
+             'CharacterId': id,
+             'name': skill.name ? skill.name : null,
+             'icon': skill.icon ? skill.icon : null,
+             'level': skill.level ? skill.level : null,
+             'categorySlug': skill.categorySlug ? skill.categorySlug : null,
+             'tooltipUrl': skill.tooltipUrl ? skill.tooltipUrl : null,
+             'description': skill.description ? skill.description : null,
+             'simpleDescription': skill.simpleDescription ? skill.simpleDescription : null,
+             'skillCalcId': skill.skillCalcId ? skill.skillCalcId : null,
+             'state': state ? state: null
+         }).then(function (result) {
+             console.log('result from skill insert', result + 'skill' + state);
+             return result;
+         })
+
 };
 
 knex.getSkills = function (id) {
