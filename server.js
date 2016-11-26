@@ -131,7 +131,9 @@ app.route('/character/skills').get(function(req,res){
 //localhost:3000/character/item?charId=52519415&slot=feet
 app.route('/character/item').get(function (req, res) {
     var id = req.query.charId;    
+    console.log(id,' is the request id');
     return db.getItems(id).then(function (items) {
+        console.log(items[0]);
         res.status(200).send(items);
     }).catch(function (err) {
         res.sendStatus(404);

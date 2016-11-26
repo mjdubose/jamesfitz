@@ -1,17 +1,29 @@
-
 var path = require('path');
-console.log('database is running sqlite3');
-var knex = require('knex')({
-    client: 'sqlite3',
-    connection: {
-        filename: "./database/db.db"
+var pg =require('pg')
+console.log('database is running postgres');
+var config ={
+        client: 'pg',
+        connection: {
+            host: "localhost",
+            port: "5432",
+            user: "postgres",
+            password: "21wqsaxz",
+            database: "diablo3"         
     },
-    useNullAsDefault: true
-});
+        pool: {
+            min: 1,
+            max: 7
+        },
+          useNullAsDefault: true
+};
+var knex = require('knex')(config);
 
 module.exports = knex;
 
 knex.ensureSchema = function () {
+//     if (!config.pool || (config.pool && config.pool.max !== 0)) {
+//   this.initializePool(config);
+// }
     return Promise.all([
         knex.schema.hasTable('profileindex').then(function (exists) {
             if (!exists) {
@@ -37,38 +49,38 @@ knex.ensureSchema = function () {
             if (!exists) {
                 knex.schema.createTable('stats', function (table) {
                     table.increments('id').primary();
-                    table.integer('stat_id');
-                    table.integer('life');
-                    table.integer('damage');
-                    table.integer('toughness');
-                    table.integer('healing');
+                    table.double('stat_id');
+                    table.double('life');
+                    table.double('damage');
+                    table.double('toughness');
+                    table.double('healing');
                     table.float('attackSpeed');//
-                    table.integer('armor');
-                    table.integer('strength');
-                    table.integer('dexterity');
-                    table.integer('vitality');
-                    table.integer('intelligence');
-                    table.integer('physicalResist');
-                    table.integer('fireResist');
-                    table.integer('coldResist');
-                    table.integer('lightningResist');
-                    table.integer('poisonResist');
-                    table.integer('arcaneResist');
-                    table.integer('critDamage');
+                    table.double('armor');
+                    table.double('strength');
+                    table.double('dexterity');
+                    table.double('vitality');
+                    table.double('intelligence');
+                    table.double('physicalResist');
+                    table.double('fireResist');
+                    table.double('coldResist');
+                    table.double('lightningResist');
+                    table.double('poisonResist');
+                    table.double('arcaneResist');
+                    table.double('critDamage');
                     table.float('blockChance');
-                    table.integer('blockAmountMin');
-                    table.integer('blockAmountMax');
-                    table.integer('damageIncrease');
+                    table.double('blockAmountMin');
+                    table.double('blockAmountMax');
+                    table.double('damageIncrease');
                     table.float('critChance');
                     table.float('damageReduction');
-                    table.integer('thorns');
-                    table.integer('lifeSteal');
-                    table.integer('lifePerKill');
+                    table.double('thorns');
+                    table.double('lifeSteal');
+                    table.double('lifePerKill');
                     table.float('goldFind');
                     table.float('magicFind');
-                    table.integer('lifeOnHit');
-                    table.integer('primaryResource');
-                    table.integer('secondaryResource');
+                    table.double('lifeOnHit');
+                    table.double('primaryResource');
+                    table.double('secondaryResource');
                 }).then(function () {
                     console.log('Created stats table');
                 });
@@ -78,13 +90,13 @@ knex.ensureSchema = function () {
             if (!exists) {
                 knex.schema.createTable('items', function (table) {
                     table.increments('id').primary();
-                    table.string('item_id', 30);
+                    table.string('item_id', 50);
                     table.integer('characterID');
-                    table.string('name', 30);
+                    table.string('name', 50);
                     table.string('icon', 50);
                     table.string('displayColor', 10);
-                    table.string('tooltipParams', 250);
-                    table.string('slot', 10);
+                    table.string('tooltipParams', 400);
+                    table.string('slot', 13);
                 }).then(function () {
                     console.log('Created items table');
                 });
@@ -109,14 +121,14 @@ knex.ensureSchema = function () {
             if (!exists) {
                 knex.schema.createTable('skills', function (table) {
                     table.increments('id').primary();
-                    table.string('slug', 30);
+                    table.string('slug', 100);
                     table.integer('CharacterId');
-                    table.string('name', 30);
-                    table.string('icon', 30);
+                    table.string('name', 100);
+                    table.string('icon', 100);
                     table.integer('level');
-                    table.string('categorySlug', 30);
-                    table.string('tooltipUrl', 30);
-                    table.string('description', 255);
+                    table.string('categorySlug', 100);
+                    table.string('tooltipUrl', 100);
+                    table.string('description', 400);
                     table.string('simpleDescription', 255);
                     table.string('skillCalcId', 1);
                     table.string('state', 8);
@@ -232,10 +244,10 @@ knex.insertprofileindex = function (battletag, herotobeadded) {
         'level': herotobeadded.level,
         'kills': herotobeadded.kills.elites,
         'paragonLevel': herotobeadded.paragonLevel,
-        'hardcore': herotobeadded.hardcore,
-        'seasonal': herotobeadded.seasonal,
+        'hardcore': herotobeadded.hardcore ? 1 : 0,
+        'seasonal':  herotobeadded.seasonal  ? 1 : 0,
         'lastUpdated': time,
-        'dead': herotobeadded.dead
+        'dead': herotobeadded.dead  ? 1 : 0
     }).catch(function (err) {
             console.log(err.message);
         });
@@ -259,7 +271,7 @@ knex.insertItem = function (charId, slot, item) {
 };
 
 knex.getItems = function (charId) {
-    return knex('items').where({ characterId: charId}).select();
+    return knex('items').where({ characterID: charId}).select();
 };
 
 //close database connection
