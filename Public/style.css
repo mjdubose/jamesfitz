@@ -206,12 +206,16 @@ body { font-family: 'Exocet Light'; }
  -ms-animation: fadein 20s; /* Internet Explorer */
  -o-animation: fadein 20s; /* Opera < 12.1 */
  	animation: fadein 20s;
+ 	-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 .leoric {
 	position: fixed
 	z-index: -2;
 	max-height: 15em;
+	-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 .leoric-light {
@@ -228,6 +232,8 @@ body { font-family: 'Exocet Light'; }
   border-bottom-left-radius: 99%;
   border-top-left-radius: 99%;
   border-top-right-radius: 99%;
+  -webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 .tyrael-container {
@@ -240,12 +246,16 @@ body { font-family: 'Exocet Light'; }
   -ms-animation: fadein ease-in 40s; /* Internet Explorer */
    -o-animation: fadein ease-in 40s; /* Opera < 12.1 */
       animation: fadein ease-in 40s;
+-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 .tyrael {
 	position: fixed
 	z-index: -2;
 	max-height: 15em;
+-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 .auriel-container {
@@ -258,12 +268,16 @@ body { font-family: 'Exocet Light'; }
  -ms-animation: fadein ease-in 30s; /* Internet Explorer */
  -o-animation: fadein ease-in 30s; /* Opera < 12.1 */
  	animation: fadein ease-in 30s;
+-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 .auriel {
 	position: fixed
 	z-index: -50;
 	max-height: 15em;
+-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 /*.auriel-light {
@@ -295,6 +309,7 @@ body { font-family: 'Exocet Light'; }
 	float: left;
 	display: inline;
 	overflow: auto;
+	-webkit-backface-visibility: hidden;
 }
 
 .search-bar-inputs {
@@ -325,7 +340,8 @@ body { font-family: 'Exocet Light'; }
 .hero:hover {
 	text-shadow: 5px 0px 20px rgba(252, 121, 1, 1),
 	-10px 0px 20px rgba(252, 121, 1, 1), 0px 0px 20px rgba(252, 121, 1, 1);
-	font-weight: bold;
+	font-weight: bold;-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 /*	text-shadow: 1px -1px 2px orange;
 	color: #8C001A;*/
@@ -342,6 +358,8 @@ body { font-family: 'Exocet Light'; }
 	margin-top: 20px;	
 /*	margin-right: 30px;*/
 	float: right;
+	-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 	/*text-shadow: 1px -5px 20px rgba(252, 121, 1, 1);*/
@@ -354,6 +372,8 @@ body { font-family: 'Exocet Light'; }
 	text-align: center;
 	width : 50%;
 	float: right;
+	-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
  	/*text-shadow: 1px -5px 20px rgba(252, 121, 1, 1);*/
 
@@ -361,6 +381,8 @@ body { font-family: 'Exocet Light'; }
   margin: 20px 55px 20px 55px;
 	border-bottom: thin solid #8C7300;
 	animation: 	glow 2s infinite	alternate;
+	-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 @keyframes glow {
     to {
@@ -376,11 +398,15 @@ body { font-family: 'Exocet Light'; }
     color: #5C3317;
     text-shadow: 0px -1px 1px red, 0px 1px 1px rgba(252, 121, 1, 1);
     font-size: 20px;
+    -webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 .hero-equipment-header:hover {
 	box-shadow	: 5px 0px 10px rgba(252, 121, 1, 1),
 	-10px 0px 20px rgba(252, 121, 1, 1), 0px 0px 10px rgba(252, 121, 1, 1);
+	-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 
 .hero-equipemnt-table {
@@ -407,6 +433,8 @@ body { font-family: 'Exocet Light'; }
 	width: 50%;
 	background-color: rgba(0,0,0, .9);
 	float: right;
+	-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 .hero-stats-header {
 	margin-right: 5px;
@@ -415,12 +443,16 @@ body { font-family: 'Exocet Light'; }
 	font-weight: 	bold;
 	color: #5C3317;
   text-shadow: -1px 0px 1px red, 1px 0px 1px rgba(252, 121, 1, 1);
+  -webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
   font-size: 20px;
 }
 
 .hero-stats-header:hover {
 	box-shadow	: 5px 0px 10px rgba(252, 121, 1, 1),
 	-10px 0px 20px rgba(252, 121, 1, 1), 0px 0px 10px rgba(252, 121, 1, 1);
+	-webkit-perspective: 1000;
+-webkit-backface-visibility: hidden;
 }
 /*	text-shadow: 1px -2px 25px rgba(229, 228, 226, .5);*/
 	/*text-shadow: 1px -2px 25px rgba(229, 228, 226, .5);*/
@@ -481,4 +513,12 @@ body { font-family: 'Exocet Light'; }
   -webkit-animation-delay: 15s;
   -moz-animation-delay: 15s;
   animation-delay: 15s;
+}
+
+.single-skill {
+	width: 100px;
+}
+
+.skills {
+	width: 100px;
 }
