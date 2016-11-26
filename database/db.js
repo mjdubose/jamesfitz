@@ -1,21 +1,9 @@
 var path = require('path');
 var pg =require('pg')
+var config = require('../config.js')
 console.log('database is running postgres');
-var config ={
-        client: 'pg',
-        connection: {
-            host: "localhost",
-            port: "5432",
-            user: "postgres",
-            password: "21wqsaxz",
-            database: "diablo3"         
-    },
-        pool: {
-            min: 1,
-            max: 7
-        },
-          useNullAsDefault: true
-};
+
+
 var knex = require('knex')(config);
 
 module.exports = knex;

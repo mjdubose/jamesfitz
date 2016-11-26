@@ -7,7 +7,7 @@ var d3 = require('./apicalls/battlenet.js');
 var db = require('./database/db.js');
 var _ = require('underscore');
 console.log('calling db.ensureSchema');
-db.ensureSchema();
+db.ensureSchema().catch(function(err) {console.log('err',err)});
 module.exports = app;
 
 app.use('/', express.static(path.join(__dirname, "../Public")));
