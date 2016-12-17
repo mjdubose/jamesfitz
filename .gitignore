@@ -3,5 +3,5 @@ node_modules
 /.vscode
 /Public/bundle.js
 *.DS_Store
-/.idea
 config.js
+
