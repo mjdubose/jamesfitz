@@ -3,12 +3,12 @@ module.exports.configuration = function () {
     if (process.argv[2] === 'production') {
         return {
             client: 'pg',
-            connection: process.env.DATABASE_URL
+            connection: process.env.DATABASE_URL,
             // pool: {
             //     min: 1,
             //     max: 7
             // },
-            // useNullAsDefault: true
+            useNullAsDefault: true
         }
     } else {
         return {
