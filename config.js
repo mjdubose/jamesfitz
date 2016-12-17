@@ -1,6 +1,6 @@
 module.exports.configuration = function () {
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.argv[2] === 'production') {
         return {
             client: 'pg',
             connection: process.env.DIABLO_DATABASE,
