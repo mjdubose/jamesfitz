@@ -2,7 +2,7 @@ var path = require('path');
 var pg =require('pg')
 var config = require('../config.js')
 console.log('database is running postgres');
-
+console.log(config.configuration());
 var knex = require('knex')(config.configuration());
 
 module.exports = knex;
