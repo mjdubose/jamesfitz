@@ -7,7 +7,7 @@ var d3 = require('./apicalls/battlenet.js');
 var db = require('./database/db.js');
 var _ = require('underscore');
 console.log('calling db.ensureSchema');
-db.ensureSchema().catch(function(err) {console.log('err',err)});
+db.ensureSchema().catch(function (err) { console.log('err', err) });
 module.exports = app;
 
 app.use('/', express.static(path.join(__dirname, "../Public")));
@@ -20,8 +20,6 @@ app.route('/profile/')
         }
         db.getprofile(id)
             .then(function (results) {
-
-
                 if (Array.isArray(results) && results.length === 0) {
                     d3.getProfile(id).then(function (results) {
                         if (results.body.code === 'NOTFOUND') {
@@ -37,9 +35,9 @@ app.route('/profile/')
                             toBeSentBack.battleTag = battleTag;
                             toBeSentBack.heroes = results.body.heroes;
                             return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
-                                    db.insertprofileindex(toBeSentBack.battleTag, hero);
-                                    return toBeSentBack.battleTag;
-                                })
+                                db.insertprofileindex(toBeSentBack.battleTag, hero);
+                                return toBeSentBack.battleTag;
+                            })
                             ).then(function (ArrayofBattleTags) {
                                 return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
                                     res.status(200).send(results);
@@ -62,54 +60,52 @@ app.route('/character')
     .get(function (req, res) {
         var charid = req.query.charId;
         var battleTag = req.query.id;
-        db.getCharacter(charid)
+        return db.getCharacter(charid)
             .then(function (results) {
                 if (Array.isArray(results) && results.length === 0) {
-                    d3.getCharacter(battleTag, charid)
+                    return d3.getCharacter(battleTag, charid)
                         .then(function (results) {
-
+                            var results = results;
                             var items = results.body.items;
 
-                            db.insertCharacter(results.body.id, results.body.stats).then(function () {
+                            return db.insertCharacter(results.body.id, results.body.stats).then(function () {
+                                var itemprops = [];
                                 for (var prop in items) {
-
-                                    db.insertItem(results.body.id, prop, results.body.items[prop]);
+                                    itemprops.push(prop);                               
                                 }
-                                return results;
-                            }).then(function ( results) {
+                                return Promise.all(itemprops.map(function (prop) {
+                                    return db.insertItem(results.body.id, prop, results.body.items[prop]);
+                                })).then(function () {
+                                    return results;
+                                });
 
+                            }).then(function (results) {
+                                var results = results;
                                 var array = results.body.skills.active;
 
-                                if (Array.isArray(array) && array.length > 0) {
-                                    array.map(function (skill) {
-                                        if (skill.skill !==undefined) {
-                                            db.insertSkill(results.body.id, skill.skill, 'active');
-                                        }
-                                    });
-                                }
-                                return results;
+                                return Promise.all(array.map(function (skill) {
+                                    return db.insertSkill(results.body.id, skill.skill, 'active');
+                                })).then(function () {
+                                    return results;
+                                });
+
                             }).then(function (results) {
-                              var  array = results.body.skills.passive;
-
-                                if (Array.isArray(array) && array.length > 0) {
-
-                                    array.map(function (skill) {
-                                        if (skill.skill !==undefined) {
-                                            db.insertSkill(results.body.id, skill.skill, 'passive');
-                                        }
-                                    });
-                                }
-                                return results;
+                                  var results = results;
+                                var array = results.body.skills.passive;
+                                return Promise.all(array.map(function (skill) {
+                                    return db.insertSkill(results.body.id, skill.skill, 'passive');
+                                })).then(function () {
+                                    return results;
+                                });
                             }).then(function (results) {
                                 return db.getCharacter(results.body.id)
                                     .then(function (results) {
                                         res.status(200).send(results);
-                                    })
-                            })
-
+                                    });
+                            });
                         })
                 }
-                         else {
+                else {
                     res.status(200).send(results);
                 }
             })
@@ -119,25 +115,51 @@ app.route('/character')
     });
 
 //localhost:3000/character/skills?charId=52519415
-app.route('/character/skills').get(function(req,res){
+app.route('/character/skills').get(function (req, res) {
     var id = req.query.charId;
-    return db.getSkills(id).then(function(skills){
-       res.status(200).send(skills);
-    }).catch(function(err){
-       res.sendStatus(404);
+    return db.getSkills(id).then(function (skills) {
+        res.status(200).send(skills);
+    }).catch(function (err) {
+        res.sendStatus(404);
     })
 });
 
 //localhost:3000/character/item?charId=52519415&slot=feet
 app.route('/character/item').get(function (req, res) {
-    var id = req.query.charId;    
-    console.log(id,' is the request id');
+    var id = req.query.charId;
+    console.log(id, ' is the request id');
     return db.getItems(id).then(function (items) {
-        console.log(items[0]);
         res.status(200).send(items);
     }).catch(function (err) {
         res.sendStatus(404);
     })
+
+});
+//localhost:3000/profile/delete?id=slayeneq-1864
+app.route('/profile/delete').delete(function (req, res) {
+    var id = req.query.id;
+    console.log(id, 'is the request id');
+
+    return db.getprofile(id).then(function (results) {
+        var results = results;
+        return Promise.all(results.map(function (character) {
+            var charid = character.characterID;
+            console.log(charid);
+            return db.destroyItems(charid).then(function () {
+                return db.destroySkills(charid).then(function () {
+                    return db.destroyCharacterStats(charid).then(function () {
+                        return db.destroyProfile(id);
+                    });
+                });
+            });
+
+        })).then(function () {
+            res.sendStatus(200);
+        }).catch(function (err) {
+            res.send(err);
+        });
+
+    });
 
 });
 
