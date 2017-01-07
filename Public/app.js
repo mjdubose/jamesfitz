@@ -5,29 +5,30 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
     $scope.battleTag = 'slayeneq-1864';
     $scope.selectedId = '';
     $scope.getHeroInformation = function (tag) {
-        heroBackendService.getProfile(tag).then(function (response) {
+      return  heroBackendService.getProfile(tag).then(function (response) {
             $scope.heroList = response;
         })
     };
     $scope.displayHeroInformation = function (hero) {
 
         $scope.selectedId = hero.characterID;
-        heroBackendService.getStats($scope.selectedId, $scope.battleTag).then(function (response) {
-            $scope.character = {};
-            $scope.character = response;
-            $scope.character.name = hero.name;
-            $scope.character.level = hero.level;
-            $scope.character.class = hero.class;
-            $scope.character.paragonLevel = hero.paragonLevel;
-            $scope.character.kills = hero.kills;
+        return  heroBackendService.getStats($scope.selectedId, $scope.battleTag).then(function (response) {
+            var character ={};
+            character = {};
+           character = response;
+            character.name = hero.name;
+            character.level = hero.level;
+            character.class = hero.class;
+            character.paragonLevel = hero.paragonLevel;
+            character.kills = hero.kills;
+            $scope.character = character;
             $scope.show = true;
         }).then(function () {
-            heroBackendService.getSkills($scope.selectedId).then(function (response) {
+          return  heroBackendService.getSkills($scope.selectedId).then(function (response) {
                 $scope.character.skills = response;
             })
         })
             .then(function () {
-
                 $scope.character.feet = {};
                 $scope.character.head = {};
                 $scope.character.torso = {};
@@ -42,7 +43,7 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
                 $scope.character.shoulders = {};
                 $scope.character.offHand = {};
                 $scope.character.neck = {};
-                heroBackendService.getGear($scope.selectedId)
+             return  heroBackendService.getGear($scope.selectedId)
                     .then(function (response) {
                         response.forEach(function (item) {
                             $scope.character[item.slot] = item;
