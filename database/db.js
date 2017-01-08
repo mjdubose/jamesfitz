@@ -261,6 +261,22 @@ knex.getItems = function (charId) {
     return knex('items').where({ characterID: charId}).select();
 };
 
+knex.destroyItems = function(charId){
+    return knex('items').where({characterID: charId}).del();
+};
+
+knex.destroyCharacterStats = function(charId){
+    return knex('stats').where({stat_id : charId}).del();
+};
+
+knex.destroySkills = function(charId){
+     return knex('skills').where({CharacterId: charId}).del();
+};
+
+knex.destroyProfile = function(id){
+    return knex('profileindex').where({battleTag: id}).del();
+}
+
 //close database connection
 knex.closeDb = function () {
     knex.destroy().then(function () {

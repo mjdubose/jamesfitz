@@ -5,10 +5,17 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
     $scope.battleTag = 'slayeneq-1864';
     $scope.selectedId = '';
     $scope.getHeroInformation = function (tag) {
-        heroBackendService.getProfile(tag).then(function (response) {
+        return heroBackendService.getProfile(tag).then(function (response) {
             $scope.heroList = response;
-        })
+        });
     };
+    $scope.deleteHeroInformation = function (tag) {
+        return heroBackendService.deleteProfile(tag).then(function () {
+            $scope.show = false;
+            $scope.heroList = [];
+        });
+    }
+
     $scope.displayHeroInformation = function (hero) {
 
         $scope.selectedId = hero.characterID;
@@ -55,58 +62,65 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
             });
     };
 });
-    app.controller('Displayer', function ($scope) {
-        $scope.equipment = false;
-        $scope.statListing = false;
-        $scope.getCharacter = function () {
-            return $scope.character;
-        };
-        $scope.showId = function () {
-            return $scope.selectedId;
-        };
-        $scope.showbattleTag = function () {
-            return $scope.battleTag;
-        };
-        $scope.showStats = function () {
-            $scope.statListing = !$scope.statListing;
-        };
-        $scope.showEquipment = function () {
-            $scope.equipment = !$scope.equipment;
-        }
-    });
+app.controller('Displayer', function ($scope) {
+    $scope.equipment = false;
+    $scope.statListing = false;
+    $scope.getCharacter = function () {
+        return $scope.character;
+    };
+    $scope.showId = function () {
+        return $scope.selectedId;
+    };
+    $scope.showbattleTag = function () {
+        return $scope.battleTag;
+    };
+    $scope.showStats = function () {
+        $scope.statListing = !$scope.statListing;
+    };
+    $scope.showEquipment = function () {
+        $scope.equipment = !$scope.equipment;
+    }
+});
 
-    app.factory('heroBackendService', function ($http) {
-        var service = {};
-        service.getProfile = function (tag) {
-            return $http({method: 'Get', url: '/profile?id=' + tag})
-                .then(function (response) {
-                    return response.data;
-                });
-        };
-        service.getStats = function (charId, battleTag) {
-            return $http({
-                method: 'Get',
-                url: '/character?charId=' + charId + '&id=' + battleTag
-            }).then(function (response) {
-                return response.data[0];
-            });
-        };
-        service.getGear = function (charId) {
-            return $http({
-                method: 'Get',
-                url: '/character/item?charId=' + charId
-            }).then(function (response) {
+app.factory('heroBackendService', function ($http) {
+    var service = {};
+    service.getProfile = function (tag) {
+        return $http({ method: 'Get', url: '/profile?id=' + tag })
+            .then(function (response) {
                 return response.data;
             });
-        };
-        service.getSkills = function (charId) {
-            return $http({
-                method: 'Get',
-                url: '/character/skills?charId=' + charId
-            }).then(function (response) {
-                return response.data;
-            });
-        };
-        return service;
+    };
+    service.getStats = function (charId, battleTag) {
+        return $http({
+            method: 'Get',
+            url: '/character?charId=' + charId + '&id=' + battleTag
+        }).then(function (response) {
+            return response.data[0];
+        });
+    };
+    service.getGear = function (charId) {
+        return $http({
+            method: 'Get',
+            url: '/character/item?charId=' + charId
+        }).then(function (response) {
+            return response.data;
+        });
+    };
+    service.getSkills = function (charId) {
+        return $http({
+            method: 'Get',
+            url: '/character/skills?charId=' + charId
+        }).then(function (response) {
+            return response.data;
+        });
+    };
 
-    });
+    service.deleteProfile = function (battleTag) {
+        return $http({
+            method: 'Delete',
+            url: '/profile/delete?id=' + battleTag
+        });
+    }
+    return service;
+
+});
