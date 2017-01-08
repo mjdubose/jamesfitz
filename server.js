@@ -35,9 +35,9 @@ app.route('/profile/')
                             toBeSentBack.battleTag = battleTag;
                             toBeSentBack.heroes = results.body.heroes;
                             return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
-
-                                db.insertprofileindex(toBeSentBack.battleTag, hero);
-                                return toBeSentBack.battleTag;
+                              return  db.insertprofileindex(toBeSentBack.battleTag, hero).then(function(){
+                                 return toBeSentBack.battleTag;
+                              });                             
                             })
                             ).then(function (ArrayofBattleTags) {
                                 return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
@@ -50,9 +50,7 @@ app.route('/profile/')
                     res.status(200).send(results);
                 }
             })
-
-            .catch(function (err) {
-                // console.log(err.message);
+            .catch(function (err) {              
                 res.sendStatus(404);
             });
     });
@@ -72,7 +70,7 @@ app.route('/character')
                             return db.insertCharacter(results.body.id, results.body.stats).then(function () {
                                 var itemprops = [];
                                 for (var prop in items) {
-                                    itemprops.push(prop);                               
+                                    itemprops.push(prop);
                                 }
                                 return Promise.all(itemprops.map(function (prop) {
                                     return db.insertItem(results.body.id, prop, results.body.items[prop]);
@@ -83,43 +81,38 @@ app.route('/character')
                             }).then(function (results) {
                                 var results = results;
                                 var array = results.body.skills.active;
-                                console.log(array);
-                                if (array.length > 0){
-
-                                return Promise.all(array.map(function (skill) {
-                                    if (skill.skill){
-                                    return db.insertSkill(results.body.id, skill.skill, 'active');
-                                    }
-                                    else 
-                                    {
-                                        return true;
-                                    }
-                                })).then(function () {
-                                    return results;
-                                });
+                                if (array.length > 0) {
+                                    return Promise.all(array.map(function (skill) {
+                                        if (skill.skill) {
+                                            return db.insertSkill(results.body.id, skill.skill, 'active');
+                                        }
+                                        else {
+                                            return true;
+                                        }
+                                    })).then(function () {
+                                        return results;
+                                    });
                                 }
                                 else {
                                     return results;
                                 }
-
                             }).then(function (results) {
-                                  var results = results;
+                                var results = results;
                                 var array = results.body.skills.passive;
-                                console.log(array);
-                                if (array.length > 0){
-                                return Promise.all(array.map(function (skill) {
-                                    if (skill.skill){
-                                    return db.insertSkill(results.body.id, skill.skill, 'passive');
-                                    }
-                                    else {
-                                    return true;
-                                    }
-                                })).then(function () {
-                                    return results;
-                                });
+                                if (array.length > 0) {
+                                    return Promise.all(array.map(function (skill) {
+                                        if (skill.skill) {
+                                            return db.insertSkill(results.body.id, skill.skill, 'passive');
+                                        }
+                                        else {
+                                            return true;
+                                        }
+                                    })).then(function () {
+                                        return results;
+                                    });
                                 }
                                 else {
-                                    return  results;
+                                    return results;
                                 }
                             }).then(function (results) {
                                 return db.getCharacter(results.body.id)
@@ -151,7 +144,6 @@ app.route('/character/skills').get(function (req, res) {
 //localhost:3000/character/item?charId=52519415&slot=feet
 app.route('/character/item').get(function (req, res) {
     var id = req.query.charId;
-    console.log(id, ' is the request id');
     return db.getItems(id).then(function (items) {
         res.status(200).send(items);
     }).catch(function (err) {
@@ -162,8 +154,6 @@ app.route('/character/item').get(function (req, res) {
 //localhost:3000/profile/delete?id=slayeneq-1864
 app.route('/profile/delete').delete(function (req, res) {
     var id = req.query.id;
-    console.log(id, 'is the request id');
-
     return db.getprofile(id).then(function (results) {
         var results = results;
         return Promise.all(results.map(function (character) {
