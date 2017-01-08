@@ -18,7 +18,7 @@ app.route('/profile/')
         if (id.indexOf('-') === -1 && id.indexOf('#') === -1) {
             res.sendStatus(404);
         }
-        db.getprofile(id)
+      return  db.getprofile(id)
             .then(function (results) {
                 if (Array.isArray(results) && results.length === 0) {
                     d3.getProfile(id).then(function (results) {
@@ -41,13 +41,13 @@ app.route('/profile/')
                             })
                             ).then(function (ArrayofBattleTags) {
                                 return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
-                                    res.status(200).send(results);
+                                    res.status(200).json(results);
                                 })
 
                             })
                         })
                 } else {
-                    res.status(200).send(results);
+                    res.status(200).json(results);
                 }
             })
             .catch(function (err) {              
@@ -117,13 +117,13 @@ app.route('/character')
                             }).then(function (results) {
                                 return db.getCharacter(results.body.id)
                                     .then(function (results) {
-                                        res.status(200).send(results);
+                                        res.status(200).json(results);
                                     });
                             });
                         })
                 }
                 else {
-                    res.status(200).send(results);
+                    res.status(200).json(results);
                 }
             })
             .catch(function (err) {
@@ -135,7 +135,7 @@ app.route('/character')
 app.route('/character/skills').get(function (req, res) {
     var id = req.query.charId;
     return db.getSkills(id).then(function (skills) {
-        res.status(200).send(skills);
+        res.status(200).json(skills);
     }).catch(function (err) {
         res.sendStatus(404);
     })
@@ -145,7 +145,7 @@ app.route('/character/skills').get(function (req, res) {
 app.route('/character/item').get(function (req, res) {
     var id = req.query.charId;
     return db.getItems(id).then(function (items) {
-        res.status(200).send(items);
+        res.status(200).json(items);
     }).catch(function (err) {
         res.sendStatus(404);
     })
@@ -157,8 +157,7 @@ app.route('/profile/delete').delete(function (req, res) {
     return db.getprofile(id).then(function (results) {
         var results = results;
         return Promise.all(results.map(function (character) {
-            var charid = character.characterID;
-            console.log(charid);
+            var charid = character.characterID;         
             return db.destroyItems(charid).then(function () {
                 return db.destroySkills(charid).then(function () {
                     return db.destroyCharacterStats(charid).then(function () {
