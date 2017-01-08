@@ -17,46 +17,44 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
     }
 
     $scope.displayHeroInformation = function (hero) {
-
         $scope.selectedId = hero.characterID;
-     return  heroBackendService.getStats($scope.selectedId, $scope.battleTag).then(function (response) {
-           var character = response;
-               character.name = hero.name;
-               character.level = hero.level;                   
-           character.class = hero.class;
-           character.paragonLevel = hero.paragonLevel;
-            character.kills = hero.kills;            
-                character.feet = {};
-               character.head = {};
-               character.torso = {};
-               character.feet = {};
-                character.hands = {};
-               character.legs = {};
-               character.bracers = {};
-               character.mainhand = {};
-               character.waist = {};
-               character.rightFinger = {};
-              character.leftFinger = {};
-               character.shoulders = {};
-             character.offHand = {};
-               character.neck = {};
-           return character;
+        return heroBackendService.getStats($scope.selectedId, $scope.battleTag).then(function (response) {
+            var character = response;
+            character.name = hero.name;
+            character.level = hero.level;
+            character.class = hero.class;
+            character.paragonLevel = hero.paragonLevel;
+            character.kills = hero.kills;
+            character.feet = {};
+            character.head = {};
+            character.torso = {};
+            character.feet = {};
+            character.hands = {};
+            character.legs = {};
+            character.bracers = {};
+            character.mainhand = {};
+            character.waist = {};
+            character.rightFinger = {};
+            character.leftFinger = {};
+            character.shoulders = {};
+            character.offHand = {};
+            character.neck = {};
+            return character;
         }).then(function (character) {
-           return heroBackendService.getSkills($scope.selectedId).then(function (response) {
-               character.skills = response;
-               return character;
+            return heroBackendService.getSkills($scope.selectedId).then(function (response) {
+                character.skills = response;
+                return character;
             })
         })
             .then(function (character) {
-
-              return  heroBackendService.getGear($scope.selectedId)
+                return heroBackendService.getGear($scope.selectedId)
                     .then(function (response) {
                         response.forEach(function (item) {
-                           character[item.slot] = item;
-                        })
+                            character[item.slot] = item;
+                        });
                         return character;
                     });
-            }).then(function(character){
+            }).then(function (character) {
                 $scope.character = character;
                 $scope.show = true;
             });
