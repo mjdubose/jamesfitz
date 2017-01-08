@@ -35,6 +35,7 @@ app.route('/profile/')
                             toBeSentBack.battleTag = battleTag;
                             toBeSentBack.heroes = results.body.heroes;
                             return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
+
                                 db.insertprofileindex(toBeSentBack.battleTag, hero);
                                 return toBeSentBack.battleTag;
                             })
@@ -82,21 +83,44 @@ app.route('/character')
                             }).then(function (results) {
                                 var results = results;
                                 var array = results.body.skills.active;
+                                console.log(array);
+                                if (array.length > 0){
 
                                 return Promise.all(array.map(function (skill) {
+                                    if (skill.skill){
                                     return db.insertSkill(results.body.id, skill.skill, 'active');
+                                    }
+                                    else 
+                                    {
+                                        return true;
+                                    }
                                 })).then(function () {
                                     return results;
                                 });
+                                }
+                                else {
+                                    return results;
+                                }
 
                             }).then(function (results) {
                                   var results = results;
                                 var array = results.body.skills.passive;
+                                console.log(array);
+                                if (array.length > 0){
                                 return Promise.all(array.map(function (skill) {
+                                    if (skill.skill){
                                     return db.insertSkill(results.body.id, skill.skill, 'passive');
+                                    }
+                                    else {
+                                    return true;
+                                    }
                                 })).then(function () {
                                     return results;
                                 });
+                                }
+                                else {
+                                    return  results;
+                                }
                             }).then(function (results) {
                                 return db.getCharacter(results.body.id)
                                     .then(function (results) {
