@@ -4,4 +4,6 @@ node_modules
 /Public/bundle.js
 *.DS_Store
 config.js
+.idea
+
 
