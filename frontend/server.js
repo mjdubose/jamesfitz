@@ -9,7 +9,7 @@ module.exports = {
 
         app.use('/public',publicPath);
         app.get('/',function(_,res){res.sendFile(indexPath)});
-
+        app.set('json spaces', 2);
         return app
     }
 };
