@@ -158,10 +158,9 @@ knex.insertSkill = function (id, skill, state) {
              'simpleDescription': skill.simpleDescription,
              'skillCalcId': skill.skillCalcId ,
              'state': state
-         }).then(function (result) {
-             console.log('result from skill insert', result + 'skill' + state);
+         }).then(function (result) {        
              return result;
-         })
+         });
 
 };
 
@@ -212,8 +211,7 @@ knex.insertCharacter = function (id, character) {
     });
 };
 
-knex.getprofile = function (profilename) {
-  
+knex.getprofile = function (profilename) {  
     return knex('profileindex').where({ battleTag: profilename }).select();
 };
 
