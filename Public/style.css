@@ -182,7 +182,7 @@ body { font-family: 'Exocet Light'; }
 
 .butcher-light {
 	z-index: -3;
-	background-color: bottom: 10px;
+ bottom: 10px;
 	right: 10px;
 	min-height: 100px;
 	min-width: 100px;
@@ -211,7 +211,6 @@ body { font-family: 'Exocet Light'; }
 }
 
 .leoric {
-	position: fixed
 	z-index: -2;
 	max-height: 15em;
 	-webkit-perspective: 1000;
@@ -220,7 +219,7 @@ body { font-family: 'Exocet Light'; }
 
 .leoric-light {
 	z-index: -1;
-	background-color: bottom: 10px;
+ bottom: 10px;
 	right: 10px;
 	min-height: 100px;
 	min-width: 52px;
@@ -251,7 +250,6 @@ body { font-family: 'Exocet Light'; }
 }
 
 .tyrael {
-	position: fixed
 	z-index: -2;
 	max-height: 15em;
 -webkit-perspective: 1000;
@@ -273,7 +271,7 @@ body { font-family: 'Exocet Light'; }
 }
 
 .auriel {
-	position: fixed
+	
 	z-index: -50;
 	max-height: 15em;
 -webkit-perspective: 1000;
@@ -413,14 +411,12 @@ body { font-family: 'Exocet Light'; }
 	margin-left: auto;
 	margin-right: auto;
 }
-.equipmennt-scroll {
-}
+
 .equipment-cell {
 	margin: 0;
 	padding: 0;
 }
-.equipment-scroll {
-}
+
 .red {
 	padding-left: 10px;
 	display: inline;

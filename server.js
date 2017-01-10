@@ -84,7 +84,11 @@ app.route('/character')
                                 var array = results.body.skills.active;
 
                                 return Promise.all(array.map(function (skill) {
+                                    if (skill.skill){
                                     return db.insertSkill(results.body.id, skill.skill, 'active');
+                                    }
+                                    else 
+                                    {return true;}
                                 })).then(function () {
                                     return results;
                                 });
@@ -93,7 +97,11 @@ app.route('/character')
                                   var results = results;
                                 var array = results.body.skills.passive;
                                 return Promise.all(array.map(function (skill) {
+                                    if (skill.skill){
                                     return db.insertSkill(results.body.id, skill.skill, 'passive');
+                                    } 
+                                    else 
+                                    {return true};
                                 })).then(function () {
                                     return results;
                                 });
