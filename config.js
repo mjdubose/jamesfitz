@@ -25,4 +25,4 @@ module.exports.configuration = function () {
             useNullAsDefault: true
         };
     }
-}
+};

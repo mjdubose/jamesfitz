@@ -28,7 +28,7 @@ describe('Database calls', function(){
 				chai.request(app)
 					.get('/profile?id=slayeneq')			
 					.end(function(err, res){
-						expect(res).to.have.status(404)
+						expect(res).to.have.status(404);
 						done();
 					})
 			});
@@ -38,7 +38,7 @@ describe('Database calls', function(){
 				.get('/profile')
 				.query({charId:'52519415', id: 'slayeneq-1864'})
 				.end(function(err, res) {
-					expect(res).to.have.status(200)
+					expect(res).to.have.status(200);
 					done();
 			})
 		});
@@ -49,7 +49,7 @@ describe('Database calls', function(){
 				.get('/profile')
 				.query({charId:'5251941', id: 'slayeneq-186'})
 				.end(function(err, res) {
-					expect(res).to.have.status(404)
+					expect(res).to.have.status(404);
 					done();
 			})
 		});
@@ -61,7 +61,7 @@ describe('Database calls', function(){
 				///character/item?CharId=52519415&slot=feet
 				.query({charId:'52519415', slot:'feet'})
 				.end(function(err, res) {
-					expect(res).to.have.status(200)
+					expect(res).to.have.status(200);
 					done();
 			})
 		})
@@ -71,7 +71,7 @@ describe('Database calls', function(){
 				.get('/character/item')			
 				.query({charId:'5251941', slot:'boot'})
 				.end(function(err, res) {
-					expect(res).to.have.status(200)
+					expect(res).to.have.status(200);
 					done();
 			})
 		})

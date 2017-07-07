@@ -64,7 +64,7 @@ app.route('/character')
                 if (Array.isArray(results) && results.length === 0) {
                     return d3.getCharacter(battleTag, charid)
                         .then(function (results) {
-                            var results = results;
+
                             var items = results.body.items;
 
                             return db.insertCharacter(results.body.id, results.body.stats).then(function () {
@@ -79,7 +79,7 @@ app.route('/character')
                                 });
 
                             }).then(function (results) {
-                                var results = results;
+
                                 var array = results.body.skills.active;
                                 if (array.length > 0) {
                                     return Promise.all(array.map(function (skill) {
@@ -97,7 +97,7 @@ app.route('/character')
                                     return results;
                                 }
                             }).then(function (results) {
-                                var results = results;
+
                                 var array = results.body.skills.passive;
                                 if (array.length > 0) {
                                     return Promise.all(array.map(function (skill) {
@@ -155,7 +155,7 @@ app.route('/character/item').get(function (req, res) {
 app.route('/profile/delete').delete(function (req, res) {
     var id = req.query.id;
     return db.getprofile(id).then(function (results) {
-        var results = results;
+
         return Promise.all(results.map(function (character) {
             var charid = character.characterID;         
             return db.destroyItems(charid).then(function () {

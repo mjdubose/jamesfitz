@@ -1,6 +1,6 @@
 var path = require('path');
-var pg =require('pg')
-var config = require('../config.js')
+var pg =require('pg');
+var config = require('../config.js');
 console.log('database is running postgres');
 console.log(config.configuration());
 var knex = require('knex')(config.configuration());
@@ -273,7 +273,7 @@ knex.destroySkills = function(charId){
 
 knex.destroyProfile = function(id){
     return knex('profileindex').where({battleTag: id}).del();
-}
+};
 
 //close database connection
 knex.closeDb = function () {

@@ -182,8 +182,6 @@ body { font-family: 'Exocet Light'; }
 
 .butcher-light {
 	z-index: -3;
- bottom: 10px;
-	right: 10px;
 	min-height: 100px;
 	min-width: 100px;
 	position: absolute;
@@ -198,7 +196,7 @@ body { font-family: 'Exocet Light'; }
 
 .leoric-container {
 	position: fixed;
-	bottom: 0px;
+	bottom: 0;
 	right: 200px;
 	z-index: -2;
  -webkit-animation: fadein 20s; /* Safari, Chrome and Opera > 12.1 */
@@ -219,8 +217,6 @@ body { font-family: 'Exocet Light'; }
 
 .leoric-light {
 	z-index: -1;
- bottom: 10px;
-	right: 10px;
 	min-height: 100px;
 	min-width: 52px;
 	position: absolute;
@@ -367,7 +363,6 @@ body { font-family: 'Exocet Light'; }
 	text-align: center;
 	color: rgba(229, 228, 226, 1);
 	cursor: default;	
-	text-align: center;
 	width : 50%;
 	float: right;
 	-webkit-perspective: 1000;
@@ -489,8 +484,7 @@ body { font-family: 'Exocet Light'; }
     -moz-transform: translateX(-50%) translateY(-50%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    background: url(polina.jpg) no-repeat;
-    background-size: cover; 
+    background-size: cover;
     opacity: 1;
     -webkit-animation: fadein ease-in 45s; /* Safari, Chrome and Opera > 12.1 */
     -moz-animation: fadein ease-in 45s; /* Firefox < 16 */
