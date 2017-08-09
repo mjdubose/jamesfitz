@@ -1,7 +1,6 @@
 var path = require('path');
 var pg =require('pg');
 var config = require('../config.js');
-console.log('database is running postgres');
 console.log(config.configuration());
 var knex = require('knex')(config.configuration());
 
@@ -73,6 +72,7 @@ knex.ensureSchema = function () {
                 });
             }
         }),
+
         knex.schema.hasTable('items').then(function (exists) {
             if (!exists) {
                 knex.schema.createTable('items', function (table) {
@@ -143,7 +143,22 @@ knex.ensureSchema = function () {
                 });
             }
         })
-    ])
+    ]),
+        knex.schema.hasTable('cube').then(function(exists){
+            if (!exists){
+          knex.schema.createTable('cube', function (table) {
+                    table.increments('id').primary();
+                    table.integer('charId');
+                    table.string('item_id', 50);
+                    table.string('name', 50);
+                    table.string('icon', 50);
+                    table.string('displayColor', 10);
+                    table.string('tooltipParams', 400);        
+                }).then(function () {
+                    console.log('Created cube table');
+                });
+            }
+        })
 };
 knex.insertSkill = function (id, skill, state) {
          return knex('skills').insert({
@@ -171,6 +186,19 @@ knex.getSkills = function (id) {
 knex.getCharacter = function (id) {
     return knex('stats').where({ stat_id: id }).select();
 };
+
+knex.insertCubeItem = function(id, item){
+    return knex('cube').insert({
+     'charId': id,
+     'item_id':item.id,
+     'name': item.name,
+     'icon': item.icon,
+     'displayColor': item.displayColor,
+     'tooltipParams': item.tooltipParams
+    }).catch(function (err) {
+        console.log(err.message);
+    });
+}
 
 knex.insertCharacter = function (id, character) {
     return knex('stats').insert({
@@ -259,6 +287,10 @@ knex.getItems = function (charId) {
     return knex('items').where({ characterID: charId}).select();
 };
 
+knex.getCubeItems = function(charId){
+  return knex('cube').where({charId: charId}).select();s
+};
+
 knex.destroyItems = function(charId){
     return knex('items').where({characterID: charId}).del();
 };
@@ -270,6 +302,10 @@ knex.destroyCharacterStats = function(charId){
 knex.destroySkills = function(charId){
      return knex('skills').where({CharacterId: charId}).del();
 };
+
+knex.destroyCubeItems = function(charId){
+      return knex('cube').where({charId : charId}).del();
+}
 
 knex.destroyProfile = function(id){
     return knex('profileindex').where({battleTag: id}).del();

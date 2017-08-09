@@ -54,7 +54,16 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
                         });
                         return character;
                     });
-            }).then(function (character) {
+            }).then(function(character){
+                return heroBackendService.getCubeItems($scope.selectedId)
+                .then(function(response){
+                    character.cubeItems= response;
+                    console.log(character);
+                    return character;
+                })
+            })
+                
+            .then(function (character) {
                 $scope.character = character;
                 $scope.show = true;
             });
@@ -104,6 +113,15 @@ app.factory('heroBackendService', function ($http) {
             return response.data;
         });
     };
+
+    service.getCubeItems = function(charId){
+        return $http({
+            method: 'Get',
+            url: '/character/cube?charId=' +charId
+        }).then(function(response){
+            return response.data;
+        });
+    }
     service.getSkills = function (charId) {
         return $http({
             method: 'Get',

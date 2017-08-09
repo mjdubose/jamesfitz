@@ -211,6 +211,11 @@
                         </td>
                         <td class='equipment-cell'></td>
                     </tr>
+                    <tr >
+                             <td ng-repeat="slot in character.cubeItems track by slot.id" class='equipment-cell'><a href="https://us.battle.net/d3/en/{{slot.tooltipParams}}"><img
+                                src="http://media.blizzard.com/d3/icons/items/large/{{slot.icon}}.png"></a>
+                        </td>
+                    </tr>
                 </table>
             </div>
 

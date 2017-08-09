@@ -65,6 +65,11 @@ app.route('/character')
                     return d3.getCharacter(battleTag, charid)
                         .then(function (results) {
 
+                           var cube = results.body.legendaryPowers.filter(function(item){
+                               return (item != null);
+                           });
+                          console.log(cube);
+           
                             var items = results.body.items;
 
                             return db.insertCharacter(results.body.id, results.body.stats).then(function () {
@@ -73,9 +78,15 @@ app.route('/character')
                                     itemprops.push(prop);
                                 }
                                 return Promise.all(itemprops.map(function (prop) {
+                                    console.log(prop);
                                     return db.insertItem(results.body.id, prop, results.body.items[prop]);
                                 })).then(function () {
+                                   return Promise.all(cube.map(function (element) {
+                                    console.log(element);
+                                     return db.insertCubeItem(results.body.id, element);
+                                })).then(function(){
                                     return results;
+                                })
                                 });
 
                             }).then(function (results) {
@@ -130,6 +141,15 @@ app.route('/character')
                 res.sendStatus(404);
             })
     });
+//localhost:3000/character/cube?charId=52519415
+    app.route('/character/cube').get(function(req,res){
+ var id = req.query.charId;
+ return db.getCubeItems(id).then(function(cubeItems){
+     res.status(200).json(cubeItems);
+ }).catch(function(error){
+     res.sendStatus(404);
+ })
+    });
 
 //localhost:3000/character/skills?charId=52519415
 app.route('/character/skills').get(function (req, res) {
@@ -141,7 +161,7 @@ app.route('/character/skills').get(function (req, res) {
     })
 });
 
-//localhost:3000/character/item?charId=52519415&slot=feet
+//localhost:3000/character/item?charId=52519415
 app.route('/character/item').get(function (req, res) {
     var id = req.query.charId;
     return db.getItems(id).then(function (items) {
@@ -161,7 +181,10 @@ app.route('/profile/delete').delete(function (req, res) {
             return db.destroyItems(charid).then(function () {
                 return db.destroySkills(charid).then(function () {
                     return db.destroyCharacterStats(charid).then(function () {
-                        return db.destroyProfile(id);
+                        return db.destroyCubeItems(charid).then(function(){
+                            return db.destroyProfile(id);
+                        });
+                      
                     });
                 });
             });
