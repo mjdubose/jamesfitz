@@ -58,8 +58,7 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
                 return heroBackendService.getCubeItems($scope.selectedId)
                 .then(function(response){
                     character.cubeItems= response;
-                    console.log(character);
-                    return character;
+                      return character;
                 })
             })
                 

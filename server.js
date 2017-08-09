@@ -68,7 +68,7 @@ app.route('/character')
                            var cube = results.body.legendaryPowers.filter(function(item){
                                return (item != null);
                            });
-                          console.log(cube);
+            
            
                             var items = results.body.items;
 
@@ -77,12 +77,10 @@ app.route('/character')
                                 for (var prop in items) {
                                     itemprops.push(prop);
                                 }
-                                return Promise.all(itemprops.map(function (prop) {
-                                    console.log(prop);
+                                return Promise.all(itemprops.map(function (prop) {                          
                                     return db.insertItem(results.body.id, prop, results.body.items[prop]);
                                 })).then(function () {
-                                   return Promise.all(cube.map(function (element) {
-                                    console.log(element);
+                                   return Promise.all(cube.map(function (element) {                           
                                      return db.insertCubeItem(results.body.id, element);
                                 })).then(function(){
                                     return results;
