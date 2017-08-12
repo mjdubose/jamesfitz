@@ -21,6 +21,8 @@
     "supertest": "^2.0.0"
   },
   "dependencies": {
+    "angular-loading-overlay": "^1.1.1",
+    "angular-loading-overlay-spinjs": "^1.0.2",
     "axios": "^0.13.0",
     "babel-plugin-transform-class-properties": "^6.10.2",
     "battlenet-api": "^0.11.0",

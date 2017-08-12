@@ -1,12 +1,18 @@
-var app = angular.module('D3App', []);
-app.controller('SearchBar', function ($scope, heroBackendService) {
+var app = angular.module('D3App', ['bsLoadingOverlay','bsLoadingOverlaySpinJs']).run(function(bsLoadingOverlayService){
+bsLoadingOverlayService.setGlobalConfig({
+    templateUrl: 'bsLoadingOverlaySpinJs'
+})
+});
+app.controller('SearchBar', function ($scope, heroBackendService, bsLoadingOverlayService) {
     $scope.show = false;
     $scope.heroList = [];
     $scope.battleTag = 'slayeneq-1864';
     $scope.selectedId = '';
     $scope.getHeroInformation = function (tag) {
+        bsLoadingOverlayService.start();
         return heroBackendService.getProfile(tag).then(function (response) {
             $scope.heroList = response;
+            bsLoadingOverlayService.stop();
         });
     };
     $scope.deleteHeroInformation = function (tag) {
@@ -18,6 +24,7 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
 
     $scope.displayHeroInformation = function (hero) {
         $scope.selectedId = hero.characterID;
+   bsLoadingOverlayService.start();
         return heroBackendService.getStats($scope.selectedId, $scope.battleTag).then(function (response) {
             var character = response;
             character.name = hero.name;
@@ -60,9 +67,9 @@ app.controller('SearchBar', function ($scope, heroBackendService) {
                     character.cubeItems= response;
                       return character;
                 })
-            })
-                
+            })                
             .then(function (character) {
+                bsLoadingOverlayService.stop();
                 $scope.character = character;
                 $scope.show = true;
             });
@@ -94,7 +101,9 @@ app.factory('heroBackendService', function ($http) {
         return $http({ method: 'Get', url: '/profile?id=' + tag })
             .then(function (response) {
                 return response.data;
-            });
+            }, function(error){
+            console.log(error);
+        });
     };
     service.getStats = function (charId, battleTag) {
         return $http({
@@ -102,6 +111,8 @@ app.factory('heroBackendService', function ($http) {
             url: '/character?charId=' + charId + '&id=' + battleTag
         }).then(function (response) {
             return response.data[0];
+        }, function(error){
+            console.log(error);
         });
     };
     service.getGear = function (charId) {
@@ -110,6 +121,8 @@ app.factory('heroBackendService', function ($http) {
             url: '/character/item?charId=' + charId
         }).then(function (response) {
             return response.data;
+        }, function(error){
+            console.log(error);
         });
     };
 
@@ -119,6 +132,8 @@ app.factory('heroBackendService', function ($http) {
             url: '/character/cube?charId=' +charId
         }).then(function(response){
             return response.data;
+        }, function(error){
+            console.log(error);
         });
     }
     service.getSkills = function (charId) {
@@ -127,6 +142,8 @@ app.factory('heroBackendService', function ($http) {
             url: '/character/skills?charId=' + charId
         }).then(function (response) {
             return response.data;
+        }, function(error){
+            console.log(error);
         });
     };
 

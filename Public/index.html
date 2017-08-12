@@ -4,6 +4,7 @@
 <head>
 
     <link href='/public/style.css' rel='stylesheet'>
+  
 
 </head>
 
@@ -36,8 +37,8 @@
             </div>
         </div>
     </div>
-
-    <div class='hero-equipment-container ' ng-controller='Displayer' ng-show="show" ng-cloak>
+<div class="bs-loading-container" bs-loading-overlay bs-loading-overlay-template-options="{radius:8, width:2, length: 5, color: 'red'}">
+    <div class='hero-equipment-container' ng-controller='Displayer' ng-show="show" ng-cloak ng-model='character'>
         <div class='hero-stats'>
         <div class='hero-stats-header' style="cursor: url('/Public/images/CursorDI.png'), auto;" ng-click='showStats()' ng-cloak>
             Character stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
@@ -155,10 +156,10 @@
                 </div><div class='chara-stat'> {{character.secondaryResource}}</div> <br>
             </div>
         </div>
-        <div class='hero-equipment '> 
+        <div class='hero-equipment ' > 
             <div class='hero-equipment-header' ng-click='showEquipment()'>Hero's Equipment</div>
             <div class='border'></div>
-            <div class='equipment-scroll ' ng-show='equipment'>
+            <div class='equipment-scroll  ' ng-show='equipment' >
                 <table class= 'hero-equipment-table'>
                     <tr>
                         <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.shoulders.tooltipParams}}"><img
@@ -283,6 +284,8 @@
 -->
 
 <script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
+<script type ="text/javascript" src='/scripts/angular-loading-overlay/dist/angular-loading-overlay.js'></script>
+  <script type ="text/javascript" src='/scripts/angular-loading-overlay-spinjs/dist/angular-loading-overlay-spinjs.js'> </script>
 </body>
 
 </html>
