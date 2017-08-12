@@ -16,9 +16,11 @@ app.controller('SearchBar', function ($scope, heroBackendService, bsLoadingOverl
         });
     };
     $scope.deleteHeroInformation = function (tag) {
+           bsLoadingOverlayService.start();
         return heroBackendService.deleteProfile(tag).then(function () {
             $scope.show = false;
             $scope.heroList = [];
+              bsLoadingOverlayService.stop();
         });
     }
 
@@ -95,15 +97,19 @@ app.controller('Displayer', function ($scope) {
     }
 });
 
-app.factory('heroBackendService', function ($http) {
+app.factory('heroBackendService', function ($http, bsLoadingOverlayService) {
     var service = {};
     service.getProfile = function (tag) {
+          bsLoadingOverlayService.start();
         return $http({ method: 'Get', url: '/profile?id=' + tag })
             .then(function (response) {
                 return response.data;
+                  bsLoadingOverlayService.stop();
             }, function(error){
             console.log(error);
+              bsLoadingOverlayService.stop();
         });
+      
     };
     service.getStats = function (charId, battleTag) {
         return $http({
