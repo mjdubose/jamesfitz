@@ -137,6 +137,7 @@ app.factory('heroBackendService', function ($http, bsLoadingOverlayService) {
             method: 'Get',
             url: '/character/cube?charId=' +charId
         }).then(function(response){
+            console.log(response.data);
             return response.data;
         }, function(error){
             console.log(error);

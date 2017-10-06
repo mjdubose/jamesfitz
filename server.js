@@ -143,6 +143,7 @@ app.route('/character')
     app.route('/character/cube').get(function(req,res){
  var id = req.query.charId;
  return db.getCubeItems(id).then(function(cubeItems){
+     console.log(cubeItems);
      res.status(200).json(cubeItems);
  }).catch(function(error){
      res.sendStatus(404);

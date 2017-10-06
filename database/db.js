@@ -288,7 +288,8 @@ knex.getItems = function (charId) {
 };
 
 knex.getCubeItems = function(charId){
-  return knex('cube').where({charId: charId}).select();s
+    console.log(charId);
+  return knex('cube').where({charId: charId}).select();
 };
 
 knex.destroyItems = function(charId){
