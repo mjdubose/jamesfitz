@@ -12,15 +12,13 @@
   "license": "ISC",
   "devDependencies": {
     "jquery": "^3.4.1",
-    "jsdom": "^8.1.0",
-    "mocha": "^3.5.3"
+    "jsdom": "^8.1.0"
   },
   "dependencies": {
     "angular-loading-overlay": "^1.1.1",
     "angular-loading-overlay-spinjs": "^1.0.2",
     "axios": "^0.19.0",
     "babel-plugin-transform-class-properties": "^6.10.2",
-    "battlenet-api": "^0.11.0",
     "core-js": "^2.6.10",
     "express": "^4.17.1",
     "knex": "^0.20.3",
