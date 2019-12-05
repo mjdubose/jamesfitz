@@ -1,203 +1,182 @@
 'use strict';
-var Server = require('./frontend/server.js');
-var express = require('express');
-var path = require('path');
-var app = Server.app();
-var d3 = require('./apicalls/battlenet.js');
-var db = require('./database/db.js');
-var _ = require('underscore');
+const Server = require('./frontend/server.js');
+const express = require('express');
+const path = require('path');
+const app = Server.app();
+const d3 = require('./apicalls/battlenet.js');
+const db = require('./database/db.js');
+const _ = require('underscore');
 console.log('calling db.ensureSchema');
-db.ensureSchema().catch(function (err) { console.log('err', err) });
+db.ensureSchema().catch(function (err) {
+    console.log('err', err)
+});
 module.exports = app;
 
 app.use('/', express.static(path.join(__dirname, "../Public")));
 // http://localhost:3000/profile?id=slayeneq-1864
 app.route('/profile/')
-    .get(function (req, res) {
-        var id = req.query.id;
-        if (id.indexOf('-') === -1 && id.indexOf('#') === -1) {
+    .get(async (req, res) => {
+        try {
+            let id = req.query.id;
+            if (id.indexOf('-') === -1 && id.indexOf('#') === -1) {
+                res.sendStatus(404);
+            }
+            let results = await db.getprofile(id);
+
+            if (Array.isArray(results) && results.length === 0) {
+                results = await d3.getProfile(id);
+                if (results.body.code === 'NOTFOUND') {
+                    res.sendStatus(404);
+                    return;
+                }
+
+                let toBeSentBack = {};
+                let battleTag = results.body.battleTag;
+                battleTag = battleTag.toLowerCase();
+                battleTag = battleTag.replace("#", "-");
+                toBeSentBack.battleTag = battleTag;
+                toBeSentBack.heroes = results.body.heroes;
+                let ArrayOfBattleTags = await Promise.all(_.map(toBeSentBack.heroes, async (hero) => {
+                    await db.insertprofileindex(toBeSentBack.battleTag, hero);
+                    return toBeSentBack.battleTag;
+                }));
+
+                let results = db.getprofile(ArrayOfBattleTags[0]);
+                res.status(200).json(results);
+
+            } else {
+                res.status(200).json(results);
+            }
+
+        } catch (err) {
             res.sendStatus(404);
         }
-      return  db.getprofile(id)
-            .then(function (results) {
-                if (Array.isArray(results) && results.length === 0) {
-                    d3.getProfile(id).then(function (results) {
-                        if (results.body.code === 'NOTFOUND') {
-                            res.sendStatus(404);
-                        }
-                        return results;
-                    })
-                        .then(function (results) {
-                            var toBeSentBack = {};
-                            var battleTag = results.body.battleTag;
-                            battleTag = battleTag.toLowerCase();
-                            battleTag = battleTag.replace("#", "-");
-                            toBeSentBack.battleTag = battleTag;
-                            toBeSentBack.heroes = results.body.heroes;
-                            return Promise.all(_.map(toBeSentBack.heroes, function (hero) {
-                              return  db.insertprofileindex(toBeSentBack.battleTag, hero).then(function(){
-                                 return toBeSentBack.battleTag;
-                              });                             
-                            })
-                            ).then(function (ArrayofBattleTags) {
-                                return db.getprofile(ArrayofBattleTags[0]).then(function (results) {
-                                    res.status(200).json(results);
-                                })
-
-                            })
-                        })
-                } else {
-                    res.status(200).json(results);
-                }
-            })
-            .catch(function (err) {              
-                res.sendStatus(404);
-            });
     });
 //localhost:3000/character?charId=52519415&id=slayeneq-1864
 app.route('/character')
-    .get(function (req, res) {
-        var charid = req.query.charId;
-        var battleTag = req.query.id;
-        return db.getCharacter(charid)
-            .then(function (results) {
-                if (Array.isArray(results) && results.length === 0) {
-                    return d3.getCharacter(battleTag, charid)
-                        .then(function (results) {
+    .get(async (req, res) => {
 
-                           var cube = results.body.legendaryPowers.filter(function(item){
-                               return (item != null);
-                           });
-            
-           
-                            var items = results.body.items;
+        try {
+            const charid = req.query.charId;
+            const battleTag = req.query.id;
+            let results = await db.getCharacter(charid);
 
-                            return db.insertCharacter(results.body.id, results.body.stats).then(function () {
-                                var itemprops = [];
-                                for (var prop in items) {
-                                    itemprops.push(prop);
-                                }
-                                return Promise.all(itemprops.map(function (prop) {                          
-                                    return db.insertItem(results.body.id, prop, results.body.items[prop]);
-                                })).then(function () {
-                                   return Promise.all(cube.map(function (element) {                           
-                                     return db.insertCubeItem(results.body.id, element);
-                                })).then(function(){
-                                    return results;
-                                })
-                                });
-
-                            }).then(function (results) {
-
-                                var array = results.body.skills.active;
-                                if (array.length > 0) {
-                                    return Promise.all(array.map(function (skill) {
-                                        if (skill.skill) {
-                                            return db.insertSkill(results.body.id, skill.skill, 'active');
-                                        }
-                                        else {
-                                            return true;
-                                        }
-                                    })).then(function () {
-                                        return results;
-                                    });
-                                }
-                                else {
-                                    return results;
-                                }
-                            }).then(function (results) {
-
-                                var array = results.body.skills.passive;
-                                if (array.length > 0) {
-                                    return Promise.all(array.map(function (skill) {
-                                        if (skill.skill) {
-                                            return db.insertSkill(results.body.id, skill.skill, 'passive');
-                                        }
-                                        else {
-                                            return true;
-                                        }
-                                    })).then(function () {
-                                        return results;
-                                    });
-                                }
-                                else {
-                                    return results;
-                                }
-                            }).then(function (results) {
-                                return db.getCharacter(results.body.id)
-                                    .then(function (results) {
-                                        res.status(200).json(results);
-                                    });
-                            });
-                        })
-                }
-                else {
-                    res.status(200).json(results);
-                }
-            })
-            .catch(function (err) {
+            if (Array.isArray(results) && results.length === 0) {
                 res.sendStatus(404);
-            })
+
+                // results = await d3.getCharacter(battleTag, charid);
+                // let cube = results.body.legendaryPowers.filter((item) => {
+                //     return (item != null);
+                // });
+                //
+                // let items = results.body.items;
+                //
+                // await db.insertCharacter(results.body.id, results.body.stats);
+                // let itemprops = [];
+                // for (let prop in items) {
+                //     itemprops.push(prop);
+                // }
+                // await Promise.all(itemprops.map((prop) => {
+                //     return db.insertItem(results.body.id, prop, results.body.items[prop]);
+                // }));
+                // await Promise.all(cube.map(function (element) {
+                //     return db.insertCubeItem(results.body.id, element);
+                // }));
+                //
+                //
+                // let array = results.body.skills.active;
+                // if (array.length > 0) {
+                //     await Promise.all(array.map((skill) => {
+                //         if (skill.skill) {
+                //             return db.insertSkill(results.body.id, skill.skill, 'active');
+                //         } else {
+                //             return true;
+                //         }
+                //     }))
+                // }
+                //
+                // array = results.body.skills.passive;
+                // if (array.length > 0) {
+                //     await Promise.all(array.map((skill) => {
+                //         if (skill.skill) {
+                //             return db.insertSkill(results.body.id, skill.skill, 'passive');
+                //         } else {
+                //             return true;
+                //         }
+                //     }));
+                // }
+                //
+                // results = await db.getCharacter(results.body.id)
+                // res.status(200).json(results);
+            } else {
+                res.status(200).json(results);
+            }
+
+        } catch (err) {
+            res.sendStatus(404);
+        }
     });
 //localhost:3000/character/cube?charId=52519415
-    app.route('/character/cube').get(function(req,res){
- var id = req.query.charId;
- return db.getCubeItems(id).then(function(cubeItems){
-     console.log(cubeItems);
-     res.status(200).json(cubeItems);
- }).catch(function(error){
-     res.sendStatus(404);
- })
-    });
+app.route('/character/cube').get(async (req, res) => {
+    try {
+        let id = req.query.charId;
+   let cubeItems = await db.getCubeItems(id);
+        console.log(cubeItems);
+        res.status(200).json(cubeItems);
+    } catch (err) {
+            res.sendStatus(404);
+        }
+});
 
 //localhost:3000/character/skills?charId=52519415
-app.route('/character/skills').get(function (req, res) {
-    var id = req.query.charId;
-    return db.getSkills(id).then(function (skills) {
+app.route('/character/skills').get(async (req, res) => {
+    try {
+        let id = req.query.charId;
+        let skills = await db.getSkills(id);
         res.status(200).json(skills);
-    }).catch(function (err) {
+    } catch (err) {
         res.sendStatus(404);
-    })
+    }
 });
 
 //localhost:3000/character/item?charId=52519415
-app.route('/character/item').get(function (req, res) {
-    var id = req.query.charId;
-    return db.getItems(id).then(function (items) {
+app.route('/character/item').get(async (req, res) => {
+
+    try {
+        let id = req.query.charId;
+        let items = await db.getItems(id);
         res.status(200).json(items);
-    }).catch(function (err) {
+    } catch (err) {
         res.sendStatus(404);
-    })
+    }
 
 });
 //localhost:3000/profile/delete?id=slayeneq-1864
 app.route('/profile/delete').delete(function (req, res) {
-    var id = req.query.id;
-    return db.getprofile(id).then(function (results) {
-
-        return Promise.all(results.map(function (character) {
-            var charid = character.characterID;         
-            return db.destroyItems(charid).then(function () {
-                return db.destroySkills(charid).then(function () {
-                    return db.destroyCharacterStats(charid).then(function () {
-                        return db.destroyCubeItems(charid).then(function(){
-                            return db.destroyProfile(id);
-                        });
-                      
-                    });
-                });
-            });
-
-        })).then(function () {
-            res.sendStatus(200);
-        }).catch(function (err) {
-            res.send(err);
-        });
-
-    });
-
+    // var id = req.query.id;
+    // return db.getprofile(id).then(function (results) {
+    //     return Promise.all(results.map(function (character) {
+    //         var charid = character.characterID;
+    //         return db.destroyItems(charid).then(function () {
+    //             return db.destroySkills(charid).then(function () {
+    //                 return db.destroyCharacterStats(charid).then(function () {
+    //                     return db.destroyCubeItems(charid).then(function () {
+    //                         return db.destroyProfile(id);
+    //                     });
+    //
+    //                 });
+    //             });
+    //         });
+    //
+    //     })).then(function () {
+    //         res.sendStatus(200);
+    //     }).catch(function (err) {
+    //         res.send(err);
+    //     });
+    //
+    // });
+               res.sendStatus(200);
 });
-
 
 const port = process.env.PORT ? process.env.PORT : (process.env.NODE_ENV === 'test' ? 4000 : 3000);
 console.log('running on port', port);

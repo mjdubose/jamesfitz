@@ -1,7 +1,7 @@
-var app = angular.module('D3App', ['bsLoadingOverlay','bsLoadingOverlaySpinJs']).run(function(bsLoadingOverlayService){
-bsLoadingOverlayService.setGlobalConfig({
-    templateUrl: 'bsLoadingOverlaySpinJs'
-})
+const app = angular.module('D3App', ['bsLoadingOverlay', 'bsLoadingOverlaySpinJs']).run(function (bsLoadingOverlayService) {
+    bsLoadingOverlayService.setGlobalConfig({
+        templateUrl: 'bsLoadingOverlaySpinJs'
+    })
 });
 app.controller('SearchBar', function ($scope, heroBackendService, bsLoadingOverlayService) {
     $scope.show = false;
@@ -15,20 +15,30 @@ app.controller('SearchBar', function ($scope, heroBackendService, bsLoadingOverl
             bsLoadingOverlayService.stop();
         });
     };
-    $scope.deleteHeroInformation = function (tag) {
-           bsLoadingOverlayService.start();
-        return heroBackendService.deleteProfile(tag).then(function () {
+    $scope.deleteHeroInformation = async (tag) => {
+        try {
+            bsLoadingOverlayService.start();
+            await heroBackendService.deleteProfile(tag);
             $scope.show = false;
             $scope.heroList = [];
-              bsLoadingOverlayService.stop();
-        });
-    }
+            bsLoadingOverlayService.stop();
+        } catch (error) {
+            console.log(error);
+            bsLoadingOverlayService.stop();
+        }
 
-    $scope.displayHeroInformation = function (hero) {
-        $scope.selectedId = hero.characterID;
-   bsLoadingOverlayService.start();
-        return heroBackendService.getStats($scope.selectedId, $scope.battleTag).then(function (response) {
-            var character = response;
+    };
+
+    $scope.displayHeroInformation = async (hero) => {
+        try {
+              console.log(hero);
+            $scope.selectedId = hero.characterID;
+            bsLoadingOverlayService.start();
+            let character = await heroBackendService.getStats($scope.selectedId, $scope.battleTag);
+
+          if (typeof character === "undefined")
+          {    bsLoadingOverlayService.stop();
+              return;}
             character.name = hero.name;
             character.level = hero.level;
             character.class = hero.class;
@@ -48,118 +58,108 @@ app.controller('SearchBar', function ($scope, heroBackendService, bsLoadingOverl
             character.shoulders = {};
             character.offHand = {};
             character.neck = {};
-            return character;
-        }).then(function (character) {
-            return heroBackendService.getSkills($scope.selectedId).then(function (response) {
-                character.skills = response;
-                return character;
-            })
-        })
-            .then(function (character) {
-                return heroBackendService.getGear($scope.selectedId)
-                    .then(function (response) {
-                        response.forEach(function (item) {
-                            character[item.slot] = item;
-                        });
-                        return character;
-                    });
-            }).then(function(character){
-                return heroBackendService.getCubeItems($scope.selectedId)
-                .then(function(response){
-                    character.cubeItems= response;
-                      return character;
-                })
-            })                
-            .then(function (character) {
-                bsLoadingOverlayService.stop();
-                $scope.character = character;
-                $scope.show = true;
+
+            character.skills = await heroBackendService.getSkills($scope.selectedId);
+
+            let gear = await heroBackendService.getGear($scope.selectedId);
+
+            gear.forEach(item => {
+                character[item.slot] = item;
             });
-    };
-});
-app.controller('Displayer', function ($scope) {
-    $scope.equipment = false;
-    $scope.statListing = false;
-    $scope.getCharacter = function () {
-        return $scope.character;
-    };
-    $scope.showId = function () {
-        return $scope.selectedId;
-    };
-    $scope.showbattleTag = function () {
-        return $scope.battleTag;
-    };
-    $scope.showStats = function () {
-        $scope.statListing = !$scope.statListing;
-    };
-    $scope.showEquipment = function () {
-        $scope.equipment = !$scope.equipment;
-    }
-});
 
-app.factory('heroBackendService', function ($http, bsLoadingOverlayService) {
-    var service = {};
-    service.getProfile = function (tag) {
-          bsLoadingOverlayService.start();
-        return $http({ method: 'Get', url: '/profile?id=' + tag })
-            .then(function (response) {
+            character.cubeItems = await heroBackendService.getCubeItems($scope.selectedId);
+            bsLoadingOverlayService.stop();
+            $scope.character = character;
+            $scope.show = true;
+        } catch (error) {
+            console.log(error);
+            bsLoadingOverlayService.stop();
+        }
+    }
+    });
+    app.controller('Displayer', function ($scope) {
+        $scope.equipment = false;
+        $scope.statListing = false;
+        $scope.getCharacter = function () {
+            return $scope.character;
+        };
+        $scope.showId = function () {
+            return $scope.selectedId;
+        };
+        $scope.showbattleTag = function () {
+            return $scope.battleTag;
+        };
+        $scope.showStats = function () {
+            $scope.statListing = !$scope.statListing;
+        };
+        $scope.showEquipment = function () {
+            $scope.equipment = !$scope.equipment;
+        }
+    });
+
+    app.factory('heroBackendService', ($http, bsLoadingOverlayService) => {
+        var service = {};
+        service.getProfile = function (tag) {
+            bsLoadingOverlayService.start();
+            return $http({method: 'Get', url: '/profile?id=' + tag})
+                .then(function (response) {
+                    bsLoadingOverlayService.stop();
+                    return response.data;
+                }, function (error) {
+                    console.log(error);
+                    bsLoadingOverlayService.stop();
+                });
+
+        };
+        service.getStats = function (charId, battleTag) {
+            return $http({
+                method: 'Get',
+                url: '/character?charId=' + charId + '&id=' + battleTag
+            }).then(function (response) {
+                return response.data[0];
+            }, function (error) {
+                console.log(error);
+            });
+        };
+        service.getGear = function (charId) {
+            return $http({
+                method: 'Get',
+                url: '/character/item?charId=' + charId
+            }).then(function (response) {
                 return response.data;
-                  bsLoadingOverlayService.stop();
-            }, function(error){
-            console.log(error);
-              bsLoadingOverlayService.stop();
-        });
-      
-    };
-    service.getStats = function (charId, battleTag) {
-        return $http({
-            method: 'Get',
-            url: '/character?charId=' + charId + '&id=' + battleTag
-        }).then(function (response) {
-            return response.data[0];
-        }, function(error){
-            console.log(error);
-        });
-    };
-    service.getGear = function (charId) {
-        return $http({
-            method: 'Get',
-            url: '/character/item?charId=' + charId
-        }).then(function (response) {
-            return response.data;
-        }, function(error){
-            console.log(error);
-        });
-    };
+            }, function (error) {
+                console.log(error);
+            });
+        };
 
-    service.getCubeItems = function(charId){
-        return $http({
-            method: 'Get',
-            url: '/character/cube?charId=' +charId
-        }).then(function(response){
-            console.log(response.data);
-            return response.data;
-        }, function(error){
-            console.log(error);
-        });
-    }
-    service.getSkills = function (charId) {
-        return $http({
-            method: 'Get',
-            url: '/character/skills?charId=' + charId
-        }).then(function (response) {
-            return response.data;
-        }, function(error){
-            console.log(error);
-        });
-    };
+        service.getCubeItems = function (charId) {
+            return $http({
+                method: 'Get',
+                url: '/character/cube?charId=' + charId
+            }).then(function (response) {
+                console.log(response.data);
+                return response.data;
+            }, function (error) {
+                console.log(error);
+            });
+        };
+        service.getSkills = function (charId) {
+            return $http({
+                method: 'Get',
+                url: '/character/skills?charId=' + charId
+            }).then(function (response) {
+                return response.data;
+            }, function (error) {
+                console.log(error);
+            });
+        };
 
-    service.deleteProfile = function (battleTag) {
-        return $http({
-            method: 'Delete',
-            url: '/profile/delete?id=' + battleTag
-        });
-    }
-    return service;
+        service.deleteProfile = function (battleTag) {
+            return $http({
+                method: 'Delete',
+                url: '/profile/delete?id=' + battleTag
+            });
+        };
+        return service;
 
-});
+    });

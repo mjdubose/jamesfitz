@@ -1,36 +1,33 @@
 //bnet.d3.profile.career({origin: 'us', tag: 'slayeneq-1864'}, callback);
 
-var bnet = require('battlenet-api')('yn8yrwnakpvw4zg45u6xany4udcrt5w7');
+ //const bnet = require('battlenet-api')('yn8yrwnakpvw4zg45u6xany4udcrt5w7');
 
-var diablo3 = module.exports;
+const diablo3 = module.exports;
 
-diablo3.getProfile = function (profile) {
+diablo3.getProfile =  (profile) => {
 
     return new Promise(function (fulfill, reject) {
-        bnet.d3.profile.career({ origin: 'us', tag: profile }, function (err, res, data) {
-            if (err) {
+    //    bnet.d3.profile.career({ origin: 'us', tag: profile }, function (err, res, data) {
+        //    if (err) {
                 reject(err);
-            }
-            else {
-                fulfill(data);
-            }
-        });
+       //     }
+        //    else {
+         //       fulfill(data);
+     //       }
+    //    });
 
-    })
-
-
-
+    });
 };
 
-diablo3.getCharacter = function (bnetTag,characterId) {
+diablo3.getCharacter = (bnetTag,characterId) => {
     return new Promise(function(fulfill, reject) {
-        bnet.d3.profile.hero({origin: 'us', tag: bnetTag, hero: characterId}, function(err,res,data) {
-            if (err){
+      //  bnet.d3.profile.hero({origin: 'us', tag: bnetTag, hero: characterId}, function(err,res,data) {
+        //    if (err){
                 reject(err)
-            }
-            else {
-                fulfill(data)
-            }
-        })
-    })
+      //      }
+        //    else {
+          //      fulfill(data)
+         //   }
+      //  })
+    });
 };
