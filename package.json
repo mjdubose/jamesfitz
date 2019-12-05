@@ -26,6 +26,9 @@
     "node-pre-gyp": "^0.6.29",
     "pg": "^6.4.2",
     "sqlite3": "^4.1.1",
-    "underscore": "^1.9.1"
+    "underscore": "^1.9.1",
+    "nwmatcher": ">=1.4.4",
+    "hoek": ">=4.2.1",
+    "cryptiles": ">=4.1.2"
   }
 }
