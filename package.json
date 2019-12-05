@@ -11,13 +11,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
-    "chai-http": "^3.0.0",
     "jquery": "^3.4.1",
     "jsdom": "^8.1.0",
-    "mocha": "^3.5.3",
-    "supertest": "^2.0.0"
+    "mocha": "^3.5.3"
   },
   "dependencies": {
     "angular-loading-overlay": "^1.1.1",
@@ -28,7 +24,7 @@
     "core-js": "^2.6.10",
     "express": "^4.17.1",
     "knex": "^0.20.3",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.15",
     "node-pre-gyp": "^0.6.29",
     "pg": "^6.4.2",
     "sqlite3": "^4.1.1",
