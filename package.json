@@ -12,7 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "jquery": "^3.5.0",
-    "jsdom": "^8.1.0"
+    "jsdom": "^16.5.0"
   },
   "dependencies": {
     "angular-loading-overlay": "^1.1.1",
