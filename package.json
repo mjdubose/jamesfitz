@@ -21,7 +21,7 @@
     "babel-plugin-transform-class-properties": "^6.10.2",
     "core-js": "^2.6.10",
     "express": "^4.17.1",
-    "knex": "^0.20.3",
+    "knex": "^2.4.0",
     "lodash": "^4.17.21",
     "node-pre-gyp": "^0.6.29",
     "pg": "^6.4.2",
